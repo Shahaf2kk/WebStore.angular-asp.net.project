@@ -17,15 +17,15 @@ Project in process.
 ## DB.class
 
 - class that include whole the command to the DB server (sql server).
- - TODO:
+  - TODO:
   1. whole method for other controllers.
  
 ## Model (model folder)
 
 - Only did the product.cs file.
   - TODO:
-   1. cart.cs.
-   2. orders.cs.
+  1. cart.cs.
+  2. orders.cs.
  
 ## Angular
 
