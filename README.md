@@ -2,10 +2,6 @@
 
 Project in process.
 
-The 'client side' is the ClientApp folder include angular 2+.
-whole other files is the 'server side'.
-
-
 # Asp.net project with SQL-SERVER DB:
 - right now only local with SQLQuerySQL-SERVER.sql file to build tables - i need to add users table and for track users orders and wishlist table to(with relationship).
 # Controllers:
