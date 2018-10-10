@@ -1,0 +1,35 @@
+<div class="container">
+  <ul>
+    <li>
+      <a routerLinkActive="active" routerLink="/register"> 
+        <fa-icon [icon]="faPlusSquare" size="s"></fa-icon> Register
+      </a>
+    </li>
+    <li>
+      <a routerLinkActive="active" (click)="openQuickLogin()" >
+        <fa-icon [icon]="faSignInAlt" size="s"></fa-icon>
+        Login
+      </a>
+   </li>
+    <li *ngIf="quickLogin" class="quickLogin">
+      <div class="inputDiv">
+          <input [(ngModel)]="username" type="text" class="username" placeholder="Enter User Name" autofocus>
+          <input [(ngModel)]="pass" type="password" class="pass" placeholder="Enter Password" (keydown)="onPassEnter($event)">
+          <div class="button"> 
+            <button class="btnIcon" (click)="cancelQuickLogin()" title="Cancel">
+              <fa-icon class="cancel" [icon]="faBan"></fa-icon>
+            </button>
+            <button class="btnIcon" title="Submit">
+              <fa-icon class="submit" [icon]="faArrowAltCircleRight"></fa-icon>
+            </button>
+          </div>
+      </div>
+    </li>
+  </ul>
+  <ng-template #isLogin>
+      <ul>
+        <li>Sing out</li>
+        <li>Account Info</li>
+      </ul>
+  </ng-template>
+</div>

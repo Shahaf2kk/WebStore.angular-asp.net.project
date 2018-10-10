@@ -1,0 +1,18 @@
+<div class="background clickOut"></div>
+<div class="category-details-container clickOut">
+  <div class="category-name-title clickOut"><p> {{ categorySelected | titlecase }} </p></div>
+  <div class="category-details-item clickOut">
+    <ul class="list-of-details clickOut">
+        <li class="sub-categories-names clickOut" *ngFor="let item of getSubCategoryNames()"> 
+            <p>{{ item | titlecase }}</p>
+            <ul class="categories-image clickOut">
+                <li class="clickOut" *ngFor="let img of getReviewProduct(item)"> 
+                  <span>
+                    <img [src]="img.imagePath" [title]="img.name" [routerLink]="['/shop', img.id]" >
+                  </span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+  </div>
+</div>

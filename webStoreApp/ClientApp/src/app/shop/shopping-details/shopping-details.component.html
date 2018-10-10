@@ -1,0 +1,19 @@
+<div class="details-container" *ngIf="hasProduct">
+  <div class="item-container">
+    <div class="title"> {{ item.name | titlecase }} </div>
+    <div class="item">
+      <div class="des">
+        <p class="des-title-p">Description:</p>
+        <p class="des-p"> {{ item.description }} </p> 
+      </div>
+      <div class="sell-box">
+        <div class="price-div">
+          <p>Price:</p>
+          <p class="price"> {{ item.price }} </p>
+        </div>
+        <button class="add-to-cart-btn"> ADD TO CART </button>
+      </div>
+    </div>
+    <div class="img"> <img [src]="item.imagePath" alt=""> </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="category-list" *ngFor="let categoryName of categoryNames" >
+        <div class="category-title">
+            <h1 [routerLink]="['/shop', 'category', categoryName]">{{ categoryName | titlecase }}</h1>
+        </div>
+        <div class="category-container">
+            <div class="category-item" *ngFor="let product of getProductByCategory(categoryName)" [routerLink]="['/shop', product.id]">
+                <img [src]="product.imagePath" [title]="product.name">
+                <p title="See More"> {{ product.name }} </p>
+                <span title="Price"> {{ product.price }} </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+}
+input {
+    width: 280px;
+    height: 25px;
+    padding-left: 35px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid gray;
+    color: black;
+    transition: .3s;
+
+}
+div input:focus + fa-icon {
+    color: #333;
+    border-color: #333;
+    /* color: dodgerblue; */
+    /* border-color: rgb(146, 199, 251); */
+}
+fa-icon {
+    position: absolute;
+    left: 0;    
+    padding: 4px 8px 4px 8px;    
+    color: #aaaaaa;
+    border-right: 1px solid gray;
+    border-radius: 3px;
+    transition: .3s;
+}
+input:focus {
+    /* border-color: #333; */
+    border: 2px solid dodgerblue;
+    /* border-color: dodgerblue; */
+    /* box-shadow: 0 0 0 #333; */
+} 

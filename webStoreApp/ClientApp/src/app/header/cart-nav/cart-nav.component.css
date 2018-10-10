@@ -1,0 +1,16 @@
+* {
+    font-family: 'Raleway', sans-serif; 
+    font-weight: 400;
+    font-size: 15px;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+}
+ul li {
+    cursor: pointer;
+    padding: 0 10px;
+}
+
