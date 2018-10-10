@@ -4,7 +4,7 @@ Project in process.
 
 ## Asp.net project with SQL-SERVER DB
 
-- right now only local with SQLQuerySQL-SERVER.sql file to build tables - i need to add users table and for track users orders and wishlist table to(with relationship).
+- SQLQuerySQL-SERVER.sql file - query build tables - i need to add users, cart-user and orders tables.
 
 ## Controllers
 
@@ -16,13 +16,13 @@ Project in process.
   
 ## DB.class
 
-- class that include whole the command to the DB server (sql server).
+- Include command to the DB server (sql server).
   - TODO:
   1. whole method for other controllers.
  
 ## Model (model folder)
 
-- Only did the product.cs file.
+- product.cs file - product class.
   - TODO:
   1. cart.cs.
   2. orders.cs.
@@ -31,9 +31,11 @@ Project in process.
 
 - Using angular 6+ (lastes verstion).
 - Learning Angular from udemy course (Maximilian Schwarzmüller).
-- Im try to build it as readable and orderly as i could. Responsive web app using css3 layout(flexbox, grid) and media query.
-- The 'client side' is build and translate the data into a category and sub category not matter how match there is. and its need alot of work but i thinks i got somthing to show and learn from it. (also im only got written directly data, still not get method from the server).
-
+- Im try to build it as readable and orderly as i could. also as a responsive web app using with css3 layout(flexbox, grid) and media query.
+- The 'client side' is build and translate the data into a category and sub category dynamic and its need more alot of work but i thinks i got somthing to shared (to learn from it) . (also im only got written directly data, still not use get methodes).
+ 
+[ 
+ 
 # Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -54,7 +56,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-
+]
 
 
 

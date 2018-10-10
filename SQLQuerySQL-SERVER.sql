@@ -1,9 +1,5 @@
 DROP TABLE IF EXISTS product;
 
---CREATE TABLE ProductsList(
---	product_id INT IDENTITY(1, 1),
---	CONSTRAINT PK_ProductsList PRIMARY KEY (product_id),
---);
 
 CREATE TABLE product(
 	product_id INT IDENTITY(1, 1)
