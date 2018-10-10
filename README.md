@@ -2,27 +2,33 @@
 
 Project in process.
 
-## Asp.net project with SQL-SERVER DB:
+## Asp.net project with SQL-SERVER DB
+
 - right now only local with SQLQuerySQL-SERVER.sql file to build tables - i need to add users table and for track users orders and wishlist table to(with relationship).
-## Controllers:
+
+## Controllers
+
 - im only did the product controller.
   - TODO:
   1. users controller: - login option. - add new user.
   2. cart controller: - add more product to specific user.
   3. orders controller: - with relationship between users/cart.
   
-## DB.class:
+## DB.class
+
 - class that include whole the command to the DB server (sql server).
  - TODO:
- 1. whole method for other controllers.
+  1. whole method for other controllers.
  
-## Model (model folder):
+## Model (model folder)
+
 - Only did the product.cs file.
   - TODO:
- 1. cart.cs.
- 2. orders.cs.
+   1. cart.cs.
+   2. orders.cs.
  
-## Angular:
+## Angular
+
 - Using angular 6+ (lastes verstion).
 - Learning Angular from udemy course (Maximilian Schwarzmüller).
 - Im try to build it as readable and orderly as i could. Responsive web app using css3 layout(flexbox, grid) and media query.
