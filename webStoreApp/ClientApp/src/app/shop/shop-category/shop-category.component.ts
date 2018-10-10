@@ -17,7 +17,6 @@ export class ShopCategoryComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    console.log('into get category product inside if');
     this.categoryTitle = this.route.snapshot.params['cate'];
     this.getCategoryProduct();
     this.route.params.subscribe(

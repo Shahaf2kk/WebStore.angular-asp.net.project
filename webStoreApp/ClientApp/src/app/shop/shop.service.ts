@@ -22,27 +22,23 @@ export class ShopService {
         new ProductList(13, 'motors', 'car', '1956 Chevrolet Bel Air/150/210', 'This is a 1956 Chevrolet Bel Air 2 Door Sedan that has been completely renovated (Frame Off Restoration) and customized to represent the very best an American Classic can be. The car has 184 miles on it since the completion of its restoration and is finished in a beautiful 3 Stage Paint job in two-tone Root Beer and White, complemented by a Root Beer and White vinyl interior. The paint, the chrome, the engine compartment and the interior are all near perfect.', 800.68, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg'),
         new ProductList(14, 'motors', 'car', '1956 Chevrolet Bel Air/150/210', 'This is a 1956 Chevrolet Bel Air 2 Door Sedan that has been completely renovated (Frame Off Restoration) and customized to represent the very best an American Classic can be. The car has 184 miles on it since the completion of its restoration and is finished in a beautiful 3 Stage Paint job in two-tone Root Beer and White, complemented by a Root Beer and White vinyl interior. The paint, the chrome, the engine compartment and the interior are all near perfect.', 800.68, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg'),
         new ProductList(15, 'motors', 'car', '1956 Chevrolet Bel Air/150/210', 'This is a 1956 Chevrolet Bel Air 2 Door Sedan that has been completely renovated (Frame Off Restoration) and customized to represent the very best an American Classic can be. The car has 184 miles on it since the completion of its restoration and is finished in a beautiful 3 Stage Paint job in two-tone Root Beer and White, complemented by a Root Beer and White vinyl interior. The paint, the chrome, the engine compartment and the interior are all near perfect.', 800.68, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg'),
-        new ProductList(16, 'motors', 'motorcycle', '1976 Honda CB750 four', '1976 cb750 Four Fresh powder coat all over Fresh paint by (Nascar Team Painter) All new factory Honda emblems and switches cb550 front forks (1 1/2 lower tubes) Clip on bars (bolted to forks) Multiple (Joker parts)  4 inch extended swing arm (have factory arm as well) Nitrogen filled adjustable rear shocks- Front rim is 19inch with vintage Firestone tire  Rear rim is 16inch Harley rim laced with cb hub (hard to come by) with vintage Firestone tire $350 extended drag chain $300 drag battery which is light weight and holds a charge for years Dyna Digital ignition system with duel crank sensors for accurate timing, adjustable rev. limiter up to 12,500 rpm, 4 timing advance and 5 retard settings, 2 digital outputs for digital dash, NOS solenoid, or wide band o2 system (dont have). With the daytona Wego IV wide band which has a digital input and data logger gives the bike ability to log timing curve and air fuel ratio on a graph right on a laptop on a 76 motorcycle, awesome right! (02 bung already welded in header) Fresh carb rebuild with bigger jets Royal purple fluids Also comes with tons of spare parts and an enclosed trailer ', 1488.2, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg'),
-        new ProductList(17, 'motors', 'motorcycle', '1976 Honda CB750 four', '1976 cb750 Four Fresh powder coat all over Fresh paint by (Nascar Team Painter) All new factory Honda emblems and switches cb550 front forks (1 1/2 lower tubes) Clip on bars (bolted to forks) Multiple (Joker parts)  4 inch extended swing arm (have factory arm as well) Nitrogen filled adjustable rear shocks- Front rim is 19inch with vintage Firestone tire  Rear rim is 16inch Harley rim laced with cb hub (hard to come by) with vintage Firestone tire $350 extended drag chain $300 drag battery which is light weight and holds a charge for years Dyna Digital ignition system with duel crank sensors for accurate timing, adjustable rev. limiter up to 12,500 rpm, 4 timing advance and 5 retard settings, 2 digital outputs for digital dash, NOS solenoid, or wide band o2 system (dont have). With the daytona Wego IV wide band which has a digital input and data logger gives the bike ability to log timing curve and air fuel ratio on a graph right on a laptop on a 76 motorcycle, awesome right! (02 bung already welded in header) Fresh carb rebuild with bigger jets Royal purple fluids Also comes with tons of spare parts and an enclosed trailer ', 1488.2, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg'),
         new ProductList(18, 'motors', 'motorcycle', '1976 Honda CB750 four', '1976 cb750 Four Fresh powder coat all over Fresh paint by (Nascar Team Painter) All new factory Honda emblems and switches cb550 front forks (1 1/2 lower tubes) Clip on bars (bolted to forks) Multiple (Joker parts)  4 inch extended swing arm (have factory arm as well) Nitrogen filled adjustable rear shocks- Front rim is 19inch with vintage Firestone tire  Rear rim is 16inch Harley rim laced with cb hub (hard to come by) with vintage Firestone tire $350 extended drag chain $300 drag battery which is light weight and holds a charge for years Dyna Digital ignition system with duel crank sensors for accurate timing, adjustable rev. limiter up to 12,500 rpm, 4 timing advance and 5 retard settings, 2 digital outputs for digital dash, NOS solenoid, or wide band o2 system (dont have). With the daytona Wego IV wide band which has a digital input and data logger gives the bike ability to log timing curve and air fuel ratio on a graph right on a laptop on a 76 motorcycle, awesome right! (02 bung already welded in header) Fresh carb rebuild with bigger jets Royal purple fluids Also comes with tons of spare parts and an enclosed trailer ', 1488.2, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg')
     ];
-
     getCategoryName() {
-        return ['electronics', 'fashion', 'motors'];
+        const categoriesNames: string[] = [this.products[0].category];
+        for (let i = 1; i < this.products.length; i++) {
+            for (let j = 0; j < categoriesNames.length; j++) {
+                if (categoriesNames[j] === this.products[i].category) {
+                    break;
+                } else if ( j === categoriesNames.length - 1 ) {
+                    categoriesNames.push(this.products[i].category);
+                } else {
+                    continue;
+                }
+            }
+        }
+        return categoriesNames;
     }
-    // getAconst() {
-    //     const p: [{category: string, product: ProductList[]}] =
-    //     [
-    //         {'category': this.getCategoryName()[0], 'product': this.getProductByCategory(this.getCategoryName()[0])},
-    //         {'category': this.getCategoryName()[1], 'product': this.getProductByCategory(this.getCategoryName()[1])},
-    //         {'category': this.getCategoryName()[2], 'product': this.getProductByCategory(this.getCategoryName()[2])}
-    //     ];
-    //     return p;
-    // }
-        // const productList = {
-        //     'electronics', this.getProductByCategory('electronics'),
-        //     'fashion', (array)=> {return this.getProductByCategory('fashion')}
-        // };
     getProductById(id: number) {
         for (let index = 0; index < this.products.length; index++) {
             if (this.products[index].id === id) {
