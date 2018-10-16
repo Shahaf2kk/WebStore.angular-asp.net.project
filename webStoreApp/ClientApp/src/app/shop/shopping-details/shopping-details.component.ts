@@ -17,8 +17,10 @@ export class ShoppingDetailsComponent implements OnInit {
               private shopItem: ShopService) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['i'];
-    this.getItemById();
+    // not obserable:
+    // this.id = this.route.snapshot.params['i'];
+    // this.getItemById();
+    // obserable:
     this.route.params.subscribe(
       (params: Params) => {
         this.id = params['i'];

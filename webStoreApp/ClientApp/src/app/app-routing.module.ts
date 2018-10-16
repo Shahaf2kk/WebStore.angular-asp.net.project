@@ -10,9 +10,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ShopCategoryComponent } from './shop/shop-category/shop-category.component';
 
 
-// import { ShoppingListComponent } from './shop/shopping-list/shopping-list.component';
-
-
 const appRoutes: Routes = [
     { path: '', redirectTo: '/shop/list', pathMatch: 'full' },
     { path: 'shop', component: ShopComponent, children: [

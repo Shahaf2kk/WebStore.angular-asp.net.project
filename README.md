@@ -8,7 +8,7 @@ Project in process.
 
 ## Controllers
 
-- im only did the product controller.
+- I only did the product controller.
   - TODO:
   1. users controller: - login option. - add new user.
   2. cart controller: - add more product to specific user.
@@ -31,7 +31,7 @@ Project in process.
 
 - Using angular 6+ (lastes verstion).
 - Learning Angular from udemy course (Maximilian Schwarzmüller).
-- Im try to build it as readable and orderly as i could. also as a responsive web app using with css3 layout(flexbox, grid) and media query.
+- I try to build it as readable and orderly as i could. also as a responsive web app using with css3 layout(flexbox, grid) and media query.
 - The 'client side' is build and translate the data into a category and sub category dynamic and its need more alot of work but i thinks i got somthing to shared (to learn from it) . (also im only got written directly data, still not use get methodes).
  
 [ 

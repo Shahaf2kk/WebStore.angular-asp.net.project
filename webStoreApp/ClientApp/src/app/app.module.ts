@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +23,7 @@ import { ShopService } from './shop/shop.service';
 import { ClickOutsideModule } from 'ng4-click-outside';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ShopCategoryComponent } from './shop/shop-category/shop-category.component';
+import { ServerService } from './server.service';
 
 
 @NgModule({
@@ -48,9 +50,17 @@ import { ShopCategoryComponent } from './shop/shop-category/shop-category.compon
     FontAwesomeModule,
     FormsModule,
     ClickOutsideModule,
+    HttpModule,
     AppRoutingModule
   ],
-  providers: [ShopService],
+  providers: [
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: 
+    // },
+    ShopService,
+    ServerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

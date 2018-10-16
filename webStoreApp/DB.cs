@@ -19,7 +19,8 @@ namespace webStoreApp
                 using (SqlConnection conn = new SqlConnection(con))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM product", conn))
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
+                        " product_name, product_description, product_price, product_image_path FROM product", conn))
                     {
                         using (SqlDataReader rd = cmd.ExecuteReader())
                         {
