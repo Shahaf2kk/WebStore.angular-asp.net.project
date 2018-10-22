@@ -25,6 +25,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ShopCategoryComponent } from './shop/shop-category/shop-category.component';
 import { ServerService } from './server.service';
 
+export function productsProviderFactory(serverService: ServerService) {
+  return () => serverService.loadProductFromServer();
+}
 
 @NgModule({
   declarations: [
@@ -54,12 +57,11 @@ import { ServerService } from './server.service';
     AppRoutingModule
   ],
   providers: [
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: 
-    // },
     ShopService,
-    ServerService
+    ServerService,
+    {
+      provide: APP_INITIALIZER, useFactory: productsProviderFactory, deps: [ServerService], multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -2,13 +2,12 @@ DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
-	userID INT IDENTITY(1, 1),
 	userName VARCHAR(250) NOT NULL,
 	userEmail VARCHAR(250) NOT NULL,
 	userPass VARCHAR(250) NOT NULL,
-	lastLogin datatimeeoffset(7)
+	lastLogin datetimeoffset(7) NULL,
+	CONSTRAINT PK_userName PRIMARY KEY (userName)
 );
-
 
 CREATE TABLE product(
 	product_id INT IDENTITY(1, 1),

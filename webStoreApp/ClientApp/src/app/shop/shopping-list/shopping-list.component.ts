@@ -7,9 +7,6 @@ import { ProductList } from '../shop.module';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
-  listOfElectronics: ProductList[];
-  listOfFashion: ProductList[];
-  listOfMotors: ProductList[];
 
   constructor() {}
 

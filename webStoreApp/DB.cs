@@ -7,10 +7,32 @@ using webStoreApp.Model;
 
 namespace webStoreApp
 {
-    public class DB
+    public static class DB
     {
-        public static string con = @"Data Source=DESKTOP-IVS15MU\SQLEXPRESS;Initial Catalog=AppStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public static string con; // = @"Data Source=DESKTOP-IVS15MU\SQLEXPRESS;Initial Catalog=AppStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
+        public static class users
+        {
+            public static bool SingIn(string userName, string pass)
+            {
+                if(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(pass))
+                {
+                    return false;
+                }
+                using (SqlConnection conn = new SqlConnection(con)) 
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin WHERE userName=@userName, userPass=@userPass", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
+                        cmd.Parameters.AddWithValue("@userName", userName);
+                        cmd.Parameters.AddWithValue("@userPass", pass);
+                        return cmd.ExecuteNonQuery() == 1;
+                    }
+                }
+                return false;
+            }
+        }
         public static class Products
         {
             public static List<product> GetProducts()

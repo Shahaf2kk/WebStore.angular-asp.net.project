@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServerService } from './server.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'WebStorE';
+  constructor(private serverService: ServerService) {}
   ngOnInit() {
+    // this.serverService.getProduct();
   }
 }

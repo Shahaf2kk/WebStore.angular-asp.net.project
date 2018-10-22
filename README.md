@@ -1,37 +1,51 @@
 ## WebStore.angular-asp.net.project
 
-Project in process.
+Project 
+in process.
+
 
 ## Asp.net project with SQL-SERVER DB
 
-- SQLQuerySQL-SERVER.sql file - query build tables - i need to add users, cart-user and orders tables.
+- SQLQuerySQL-SERVER.sql
+ file - query build tables - i need to add users, cart-user and orders tables.
+
 
 ## Controllers
 
-- I only did the product controller.
-  - TODO:
-  1. users controller: - login option. - add new user.
-  2. cart controller: - add more product to specific user.
-  3. orders controller: - with relationship between users/cart.
-  
+- im only did the product controller.
+
+ - TODO:
+	1. users controller: - login option. - add new user.
+
+	2. cart controller: - add more product to specific user.
+ 
+	3. orders controller: - with relationship between users/cart.
+ 
+ 
 ## DB.class
 
 - Include command to the DB server (sql server).
-  - TODO:
-  1. whole method for other controllers.
  
+ - TODO:
+	1. whole method for other controllers.
+ 
+
 ## Model (model folder)
 
 - product.cs file - product class.
+
   - TODO:
-  1. cart.cs.
-  2. orders.cs.
  
+	1. cart.cs.
+
+	2. orders.cs.
+ 
+
 ## Angular
 
 - Using angular 6+ (lastes verstion).
 - Learning Angular from udemy course (Maximilian Schwarzmüller).
-- I try to build it as readable and orderly as i could. also as a responsive web app using with css3 layout(flexbox, grid) and media query.
+- Im try to build it as readable and orderly as i could. also as a responsive web app using with css3 layout(flexbox, grid) and media query.
 - The 'client side' is build and translate the data into a category and sub category dynamic and its need more alot of work but i thinks i got somthing to shared (to learn from it) . (also im only got written directly data, still not use get methodes).
  
 [ 
@@ -57,9 +71,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ]
-
-
-
-
-
-
