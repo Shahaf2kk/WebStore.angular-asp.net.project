@@ -1,38 +1,99 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 using webStoreApp.Model;
 
 namespace webStoreApp
 {
     public static class DB
     {
-        public static string con; // = @"Data Source=DESKTOP-IVS15MU\SQLEXPRESS;Initial Catalog=AppStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public static string con;
 
-        public static class users
+        public static class Users
         {
-            public static bool SingIn(string userName, string pass)
+            public static IActionResult SignIn(User user)
             {
-                if(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(pass))
+                if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass))
                 {
-                    return false;
+                    return new BadRequestObjectResult("user name or passwornd are empty");
                 }
-                using (SqlConnection conn = new SqlConnection(con)) 
+                using (SqlConnection conn = new SqlConnection(con))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin WHERE userName=@userName, userPass=@userPass", conn))
+                    using (SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin WHERE userName=@userName AND userPass=@userPass", conn))
                     {
                         cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
-                        cmd.Parameters.AddWithValue("@userName", userName);
-                        cmd.Parameters.AddWithValue("@userPass", pass);
-                        return cmd.ExecuteNonQuery() == 1;
+                        cmd.Parameters.AddWithValue("@userName", user.userName);
+                        cmd.Parameters.AddWithValue("@userPass", user.pass);
+                        if (cmd.ExecuteNonQuery() == 1)
+                            return new OkResult();
+                        return new NotFoundResult();
                     }
                 }
-                return false;
+            }
+            private static bool CheckUsername(User user, SqlConnection conn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userName=@userName", conn))
+                {
+                    cmd.Parameters.AddWithValue("@userName", user.userName);
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
+            private static bool CheckUserEmail(User user, SqlConnection conn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userEmail=@userEmail", conn))
+                {
+                    cmd.Parameters.AddWithValue("@userEmail", user.email);
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
+            public static IActionResult SignUp(User user)
+            {
+                if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
+                {
+                    return new BadRequestObjectResult("user name or passwornd are empty");
+                }
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    if (!CheckUsername(user, conn) || !CheckUserEmail(user, conn))
+                        return new BadRequestObjectResult("user name or email are in used");
+
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO users(userName, userEmail, userPass, lastLogin) " +
+                        "VALUES (@userName, @userEmail, @userPass, @lastLogin)", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userName", user.userName);
+                        cmd.Parameters.AddWithValue("@userEmail", user.email);
+                        cmd.Parameters.AddWithValue("@userPass", user.pass);
+                        cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
+                        int c = cmd.ExecuteNonQuery();
+                        if(c != 1)
+                            return new NotFoundObjectResult("error");
+
+                    }
+                }
+                user = UserService.UserAuthenticate(user);
+                if (user == null)
+                    return new NotFoundObjectResult("error");
+                return new OkObjectResult(user);
             }
         }
+
         public static class Products
         {
             public static List<product> GetProducts()
@@ -67,4 +128,6 @@ namespace webStoreApp
             }
         }
     }
+
 }
+

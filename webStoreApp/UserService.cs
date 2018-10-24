@@ -17,13 +17,12 @@ namespace webStoreApp
 
         public static User UserAuthenticate(User user)
         {
-            if(!string.IsNullOrEmpty(user.token))
-            {
-                return TokenAuthenticate(user);
-            }
             if(string.IsNullOrEmpty(user.userName))
-            return null;
-            return null;
+            {
+                user = null;
+                return user;
+            }
+                return TokenAuthenticate(user);
         }
         private static User TokenAuthenticate(User user)
         {
@@ -32,8 +31,6 @@ namespace webStoreApp
                 new Claim(ClaimTypes.Name, user.userName)
             };
         
-            if(user.token != null)
-            {
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSetting));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -47,8 +44,6 @@ namespace webStoreApp
                 user.token = new JwtSecurityTokenHandler().WriteToken(token);
                 user.pass = null;
                 return user;
-            }
-            return null;
         }
     }
 }
