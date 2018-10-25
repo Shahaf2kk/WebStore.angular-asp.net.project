@@ -26,47 +26,9 @@ export class ServerService {
             });
         });
     }
-    // getProduct() {
-    //     return new Promise((resolve, reject) => {
-    //         this.http.get('https://localhost:44327/product')
-    //         .map(res => res.json())
-    //         .subscribe(
-    //             response => {
-    //                 this.shopService.setDataProduct(response['value']);
-    //                 resolve(true);
-    //             }
-    //         );
-    //     });
-    // }
-    // loadProduct() {
-    //     this.http.get('https://localhost:44327/product')
-    //         .pipe(map(
-    //             (response: Response) => {
-    //                 const data = response.json();
-    //                 return data;
-    //             }
-    //         ))
-    //         .subscribe(
-    //             (product: ProductList[]) => {
-    //                 this.product = product;
-    //             }
-    //         );
-    //     if (this.product != null) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    // getProduct() {
-    //     console.log('get product from server service');
-    //     this.http.get('https://localhost:44327/product')
-    //     .pipe(map(
-    //         (response: Response) => {
-    //             const product: ProductList[] = response.json();
-    //             this.shopService.setDataProduct(product);
-    //             console.log(product);
 
-    //         },
-    //         (error: any) => { console.log(error); }
-    //     ));
+    // signUp() {
     // }
-}
+
+    // signIn() {
+    // }
