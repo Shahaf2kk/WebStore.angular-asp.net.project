@@ -28,7 +28,7 @@ namespace webStoreApp
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, user.userName)
+                new Claim(ClaimTypes.Name, user.userName),
             };
         
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSetting));

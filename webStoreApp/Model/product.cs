@@ -14,7 +14,7 @@ namespace webStoreApp.Model
         public string description { get; set; }
         public decimal price { get; set; }
         public string imagePath { get; set; }
-
+      
         //product(int id, string category, string subCategory, string name, string description, float price, string imagePath)
         //{
         //    this.id = id;

@@ -32,36 +32,6 @@ namespace webStoreApp
                     }
                 }
             }
-            private static bool CheckUsername(User user, SqlConnection conn)
-            {
-                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userName=@userName", conn))
-                {
-                    cmd.Parameters.AddWithValue("@userName", user.userName);
-                    using (SqlDataReader rd = cmd.ExecuteReader())
-                    {
-                        while (rd.Read())
-                        {
-                            return false;
-                        }
-                        return true;
-                    }
-                }
-            }
-            private static bool CheckUserEmail(User user, SqlConnection conn)
-            {
-                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userEmail=@userEmail", conn))
-                {
-                    cmd.Parameters.AddWithValue("@userEmail", user.email);
-                    using (SqlDataReader rd = cmd.ExecuteReader())
-                    {
-                        while (rd.Read())
-                        {
-                            return false;
-                        }
-                        return true;
-                    }
-                }
-            }
             public static IActionResult SignUp(User user)
             {
                 if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
@@ -92,6 +62,36 @@ namespace webStoreApp
                     return new NotFoundObjectResult("error");
                 return new OkObjectResult(user);
             }
+            private static bool CheckUsername(User user, SqlConnection conn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userName=@userName", conn))
+                {
+                    cmd.Parameters.AddWithValue("@userName", user.userName);
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
+            private static bool CheckUserEmail(User user, SqlConnection conn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userEmail=@userEmail", conn))
+                {
+                    cmd.Parameters.AddWithValue("@userEmail", user.email);
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
         }
 
         public static class Products
@@ -111,13 +111,13 @@ namespace webStoreApp
                             {
                                 product product = new product()
                                 {
-                                    id = (int)rd["product_id"],
-                                    category = rd["product_category"].ToString(),
-                                    subCategory = rd["product_sub_category"].ToString(),
-                                    name = rd["product_name"].ToString(),
-                                    description = rd["product_description"].ToString(),
-                                    price = (decimal)rd["product_price"],
-                                    imagePath = rd["product_image_path"].ToString()
+                                    id = rd.GetInt32(0), //(int)rd["product_id"],
+                                    category = rd.GetString(1), //rd["product_category"].ToString(),
+                                    subCategory = rd.GetString(2), //rd["product_sub_category"].ToString(),
+                                    name = rd.GetString(3), //rd["product_name"].ToString(),
+                                    description = rd.GetString(4), //rd["product_description"].ToString(),
+                                    price = (decimal)rd.GetDecimal(5), //(int)rd["product_price"],
+                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6): null //rd["product_image_path"].ToString()
                                 };
                                 products.Add(product);
                             }

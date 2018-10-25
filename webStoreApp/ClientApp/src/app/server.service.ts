@@ -15,7 +15,7 @@ export class ServerService {
 
     loadProductFromServer(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.http.get('https://localhost:44327/product')
+            this.http.get('https://localhost:44327/product/')
             .pipe(map((response: Response) => {
                 const data = response.json();
                 return data;
@@ -26,9 +26,10 @@ export class ServerService {
             });
         });
     }
+}
 
     // signUp() {
     // }
 
     // signIn() {
-    // }
+

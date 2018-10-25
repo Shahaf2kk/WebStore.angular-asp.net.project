@@ -4,7 +4,6 @@ import { ServerService } from '../server.service';
 
 @Injectable()
 export class ShopService {
-    private serverData: ProductList[];
     private products: ProductList[] = [];
     // [
     //     new ProductList(1, 'electronics', 'watch', 'Casio Classic F91W-1 Wrist Watch for Men', 'The Casio F91W-1 wristwatch for men has been a popular digital model since its release in the early 1990s. The black resin band looks good with most daytime wear, and the digital accessories are useful and convenient. Made with study materials and using reliable quartz movement, this watch is perfect for men or women who value function and efficiency. This sporty chronograph watch features a 1/100 digital stopwatch that runs up to just shy of an hour. It is useful for athletes in training, coaches, and referees', 35.85, 'https://www.w3schools.com/howto/img_forest.jpg'),
@@ -30,9 +29,41 @@ export class ShopService {
     // ];
     constructor(private serverService: ServerService) {
         this.products = this.serverService.getProduct();
-        console.log('server data: ');
-        console.log(this.products);
+        this.convertToArrayOfImage();
+        // console.log('server data: ');
+        // console.log(this.products);
     }
+    convertToArrayOfImage() {
+        let imageProductArray = [];
+        for (let i = 0; i < this.products.length; i++) {
+            let counter = 0;
+            if (this.products[i].imagePath === null) {
+                continue;
+            }
+           for (let j = 0; j < this.products[i].imagePath.length; j++) {
+            //    if (this.products[i].imagePath[j] === '[') {
+            //     j++;
+            //    }
+            //    if (this.products[i].imagePath[j] === ']') {
+            //     j--;
+            //    }
+            if (this.products[i].imagePath[j] === ',' || j === this.products[i].imagePath.length) {
+                imageProductArray.push(this.products[i].imagePath.slice(counter, j));
+                counter = j;
+            }
+        }
+        this.products[i].imagePath = imageProductArray;
+        imageProductArray = [];
+       }
+    }
+    // conventImageStringToArray(id: number) {
+    //     for (let index = 0; index < this.products.length; index++) {
+    //         let imageProduct = this.products[index].imagePath;
+    //         for (let index = 0; index < imageProduct.length; index++) {
+
+    //         }
+    //     }
+    // }
         // this.products = this.serverData;
         // console.log(this.serverData);
         // console.log(this.serverData[0].description);
