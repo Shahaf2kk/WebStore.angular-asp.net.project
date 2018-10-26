@@ -30,71 +30,26 @@ export class ShopService {
     constructor(private serverService: ServerService) {
         this.products = this.serverService.getProduct();
         this.convertToArrayOfImage();
-        // console.log('server data: ');
-        // console.log(this.products);
     }
     convertToArrayOfImage() {
-        let imageProductArray = [];
-        for (let i = 0; i < this.products.length; i++) {
-            let counter = 0;
-            if (this.products[i].imagePath === null) {
-                continue;
+            let imageProductArray = [];
+            for (let i = 0; i < this.products.length; i++) {
+                let counter = 0;
+                if (this.products[i].imagePath === null) {
+                    this.products.splice(i, 1);
+                    continue;
+                }
+               for (let j = 0; j < this.products[i].imagePath.length; j++) {
+                 if (this.products[i].imagePath[j] === ',' || j === this.products[i].imagePath.length) {
+                    imageProductArray.push(this.products[i].imagePath.slice(counter, j));
+                    counter = j;
+                }
             }
-           for (let j = 0; j < this.products[i].imagePath.length; j++) {
-            //    if (this.products[i].imagePath[j] === '[') {
-            //     j++;
-            //    }
-            //    if (this.products[i].imagePath[j] === ']') {
-            //     j--;
-            //    }
-            if (this.products[i].imagePath[j] === ',' || j === this.products[i].imagePath.length) {
-                imageProductArray.push(this.products[i].imagePath.slice(counter, j));
-                counter = j;
-            }
-        }
-        this.products[i].imagePath = imageProductArray;
-        imageProductArray = [];
-       }
+            this.products[i].imagePath = imageProductArray;
+            imageProductArray = [];
+           }
+
     }
-    // conventImageStringToArray(id: number) {
-    //     for (let index = 0; index < this.products.length; index++) {
-    //         let imageProduct = this.products[index].imagePath;
-    //         for (let index = 0; index < imageProduct.length; index++) {
-
-    //         }
-    //     }
-    // }
-        // this.products = this.serverData;
-        // console.log(this.serverData);
-        // console.log(this.serverData[0].description);
-        // this.getDataProduct();
-        // console.log('sad');
-    // }
-    // getProduct() {
-    //     this.serverService.getProduct()
-    //     .subscribe(
-    //         (response: Response) => {
-    //             this.serverData = response.json();
-    //             // console.log(this.serverData);
-    //             console.log(this.serverData[0].category);
-
-    //         },
-    //         (error) => {
-    //             console.log('error is:  ' + error);
-    //         }
-    //     );
-    // }
-    // getDataProduct() {
-    //     console.log('adsasdsad');
-    //     this.ServerService.getProduct()
-    //         .subscribe(
-    //             (product: ProductList[]) => {
-    //                 this.serverData = product;
-    //                 console.log(this.serverData);
-    //             },
-    //             (error) => console.log(error)
-    //         );
-    // }
     getCategoryName() {
         if (this.products === null) {
             return;
@@ -142,6 +97,7 @@ export class ShopService {
     }
 
     getSubCategoryNames(category: string) {
+
         const subCategoryList: string[] = [];
         for (let index = 0; index < this.products.length; index++) {
             if (this.products[index].category === category ) {
