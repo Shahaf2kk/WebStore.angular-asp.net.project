@@ -26,7 +26,7 @@ import { ShopCategoryComponent } from './shop/shop-category/shop-category.compon
 import { ServerService } from './server.service';
 
 export function productsProviderFactory(serverService: ServerService) {
-  return () => serverService.loadProductFromServer();
+  return () => serverService.loadCategoriesNames();
 }
 
 @NgModule({

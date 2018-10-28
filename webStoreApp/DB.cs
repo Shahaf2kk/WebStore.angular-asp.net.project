@@ -96,7 +96,7 @@ namespace webStoreApp
 
         public static class Products
         {
-            public static List<product> GetProducts()
+            public static IActionResult GetProducts()
             {
                 List<product> products = new List<product>();
                 using (SqlConnection conn = new SqlConnection(con))
@@ -121,10 +121,49 @@ namespace webStoreApp
                                 };
                                 products.Add(product);
                             }
+                            return new OkObjectResult(products);
                         }
                     }
                 }
-                return products;
+            }
+
+            public static IActionResult GetProductsCate()
+            {
+                List<productsCategoryNames> productsNames = new List<productsCategoryNames>();
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_category, product_sub_category FROM product", conn))
+                    {
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                productsCategoryNames names = new productsCategoryNames();
+                                names.categoryNames = rd.GetString(0);
+                                names.subCategoryNamesArray = new List<string> { rd.GetString(1) };
+
+                                if (productsNames.Count == 0)
+                                {
+                                    productsNames.Add(names);
+                                    continue;
+                                }
+
+                                int index = productsNames.FindIndex(x => x.categoryNames == names.categoryNames);
+                                if (index != -1)
+                                {
+                                    if (!productsNames[index].subCategoryNamesArray.Exists(x => x == names.subCategoryNamesArray[0]))
+                                    {
+                                        productsNames[index].subCategoryNamesArray.Add(names.subCategoryNamesArray[0]);
+                                    }
+                                    continue;
+                                }
+                                productsNames.Add(names);
+                            }
+                            return new OkObjectResult(productsNames);
+                        }
+                    }
+                }
             }
         }
     }

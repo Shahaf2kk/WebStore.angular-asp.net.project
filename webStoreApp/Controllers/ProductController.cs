@@ -15,9 +15,10 @@ namespace webStoreApp.Controllers
     public class ProductController : ControllerBase
     {
         [HttpGet]
-        public List<product> GetProduct()
+        public IActionResult GetProduct(bool onlyNames)
         {
-            return DB.Products.GetProducts(); 
+            return onlyNames ? DB.Products.GetProductsCate() : DB.Products.GetProducts();
         }
+
     }
 }

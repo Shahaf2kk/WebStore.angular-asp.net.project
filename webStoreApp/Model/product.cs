@@ -15,15 +15,10 @@ namespace webStoreApp.Model
         public decimal price { get; set; }
         public string imagePath { get; set; }
       
-        //product(int id, string category, string subCategory, string name, string description, float price, string imagePath)
-        //{
-        //    this.id = id;
-        //    this.category = category;
-        //    this.subCategory = subCategory;
-        //    this.name = name;
-        //    this.description = description;
-        //    this.price = price;
-        //    this.imagePath = imagePath;
-        //}
+    }
+    public class productsCategoryNames
+    {
+        public string categoryNames { get; set; }
+        public List<string> subCategoryNamesArray { get; set; }
     }
 }

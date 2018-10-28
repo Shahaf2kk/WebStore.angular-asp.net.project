@@ -7,10 +7,14 @@ import { ProductList } from './shop/shop.module';
 @Injectable()
 export class ServerService {
     private product: ProductList[] = [];
+    private categoriesNames;
 
     constructor(private http: Http) {}
     public getProduct() {
         return this.product;
+    }
+    public getCategoriesNames() {
+        return this.categoriesNames;
     }
 
     loadProductFromServer(): Promise<any> {
@@ -23,6 +27,19 @@ export class ServerService {
             .subscribe((product: ProductList[]) => {
                 this.product = product;
                 resolve(true);
+            });
+        });
+    }
+    loadCategoriesNames(): Promise<any> {
+        return new Promise((res, reject) => {
+            this.http.get('https://localhost:44327/product?onlyNames=true')
+            .pipe(map((resp: Response) => {
+                const data = resp.json();
+                return data;
+        }))
+            .subscribe((categoriesNames: any) => {
+                this.categoriesNames = categoriesNames;
+                res(true);
             });
         });
     }
