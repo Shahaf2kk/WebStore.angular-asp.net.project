@@ -13,10 +13,10 @@ export class ShopItemsComponent implements OnInit {
   constructor(private productService: ShopService) { }
 
   ngOnInit() {
-    this.categoryNames = this.productService.getCategoryName();
+    // this.categoryNames = this.productService.getCategoryName();
   }
-  getProductByCategory(category: string) {
-    return this.productService.getProductByCategory(category).slice(0, 6);
-  }
+  // getProductByCategory(category: string) {
+  //   return this.productService.getProductByCategory(category).slice(0, 6);
+  // }
 
 }

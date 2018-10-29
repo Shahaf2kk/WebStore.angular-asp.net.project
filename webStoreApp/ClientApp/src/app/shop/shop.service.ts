@@ -29,27 +29,34 @@ export class ShopService {
     //     new ProductList(18, 'motors', 'motorcycle', '1976 Honda CB750 four', '1976 cb750 Four Fresh powder coat all over Fresh paint by (Nascar Team Painter) All new factory Honda emblems and switches cb550 front forks (1 1/2 lower tubes) Clip on bars (bolted to forks) Multiple (Joker parts)  4 inch extended swing arm (have factory arm as well) Nitrogen filled adjustable rear shocks- Front rim is 19inch with vintage Firestone tire  Rear rim is 16inch Harley rim laced with cb hub (hard to come by) with vintage Firestone tire $350 extended drag chain $300 drag battery which is light weight and holds a charge for years Dyna Digital ignition system with duel crank sensors for accurate timing, adjustable rev. limiter up to 12,500 rpm, 4 timing advance and 5 retard settings, 2 digital outputs for digital dash, NOS solenoid, or wide band o2 system (dont have). With the daytona Wego IV wide band which has a digital input and data logger gives the bike ability to log timing curve and air fuel ratio on a graph right on a laptop on a 76 motorcycle, awesome right! (02 bung already welded in header) Fresh carb rebuild with bigger jets Royal purple fluids Also comes with tons of spare parts and an enclosed trailer ', 1488.2, 'https://i.ebayimg.com/images/g/kAAAAOSw5S9bkJC~/s-l500.jpg')
     // ];
     constructor(private serverService: ServerService) {
-        this.productsCategoryNames = this.serverService.getCategoriesNames();
         this.products = this.serverService.getProduct();
+        console.log(this.products);
+        this.productsCategoryNames = this.serverService.getCategoriesNames();
         this.convertToArrayOfImage();
     }
     convertToArrayOfImage() {
-            let imageProductArray = [];
-            for (let i = 0; i < this.products.length; i++) {
-                let counter = 0;
-                if (this.products[i].imagePath === null) {
-                    this.products.splice(i, 1);
-                    continue;
-                }
-               for (let j = 0; j < this.products[i].imagePath.length; j++) {
-                 if (this.products[i].imagePath[j] === ',' || j === this.products[i].imagePath.length) {
-                    imageProductArray.push(this.products[i].imagePath.slice(counter, j));
-                    counter = j;
-                }
+        console.log('sadsadsadsad');
+        let imageProductArray = [];
+        if (this.products === null) {
+            setTimeout(() => {
+            }, 2000);
+        }
+        for (let i = 0; i < this.products.length; i++) {
+            let counter = 0;
+            if (this.products[i].imagePath === null) {
+                this.products.splice(i, 1);
+                continue;
             }
-            this.products[i].imagePath = imageProductArray;
-            imageProductArray = [];
-           }
+            for (let j = 0; j < this.products[i].imagePath.length; j++) {
+                if (this.products[i].imagePath[j] === ',' || j === this.products[i].imagePath.length) {
+                imageProductArray.push(this.products[i].imagePath.slice(counter, j));
+                counter = j;
+            }
+        }
+        this.products[i].imagePath = imageProductArray;
+        imageProductArray = [];
+        }
+        console.log('sadsadsadsad');
 
     }
     getCategoryName() {

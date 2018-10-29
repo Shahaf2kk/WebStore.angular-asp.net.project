@@ -78,6 +78,7 @@ namespace webStoreApp
 
                 if (env.IsDevelopment())
                 {
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:44327");
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
