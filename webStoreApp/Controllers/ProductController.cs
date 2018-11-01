@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,15 +10,16 @@ using webStoreApp.Model;
 
 namespace webStoreApp.Controllers
 {
-    //[Authorize]
     [Route("product")]
     [ApiController]
     public class ProductController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetProduct(bool onlyNames)
+        public IActionResult GetProduct(bool? onlyNames)
         {
-            return onlyNames ? DB.Products.GetProductsCate() : DB.Products.GetProducts();
+            if (onlyNames == null)
+                onlyNames = false;
+            return onlyNames == true ? DB.Products.GetProductsCate() : DB.Products.GetProducts();
         }
 
     }

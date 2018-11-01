@@ -16,20 +16,16 @@ namespace webStoreApp.Controllers
         [HttpPost]
         public IActionResult GetToken(string u, string p)
         {
+            if (string.IsNullOrEmpty(u) || string.IsNullOrEmpty(p))
+                return new BadRequestObjectResult("user name or passwornd are empty");
             User user = new User
             {
                 userName = u,
                 pass = p,
                 token = null
             };
-            //return user;
-            if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass))
-            {
-                user = null;
-                return new BadRequestObjectResult("user name or passwornd are empty");
-            }
-               
-            if (DB.Users.SignIn(user) == new OkResult())
+            user = DB.Users.SignIn(user);
+            if (user != null)
                 return new OkObjectResult(UserService.UserAuthenticate(user).token);
 
             return new NotFoundObjectResult("Username or Password are wrong");

@@ -12,11 +12,11 @@ namespace webStoreApp
 
         public static class Users
         {
-            public static IActionResult SignIn(User user)
+            public static User SignIn(User user)
             {
                 if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass))
                 {
-                    return new BadRequestObjectResult("user name or passwornd are empty");
+                    return null;
                 }
                 using (SqlConnection conn = new SqlConnection(con))
                 {
@@ -26,10 +26,11 @@ namespace webStoreApp
                         cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
                         cmd.Parameters.AddWithValue("@userName", user.userName);
                         cmd.Parameters.AddWithValue("@userPass", user.pass);
-                        if (cmd.ExecuteNonQuery() == 1)
-                            return new OkResult();
-                        return new NotFoundResult();
+                        if (cmd.ExecuteNonQuery() != 1)
+                            return null;
                     }
+                    user.pass = null;
+                    return user;
                 }
             }
             public static IActionResult SignUp(User user)
@@ -51,10 +52,8 @@ namespace webStoreApp
                         cmd.Parameters.AddWithValue("@userEmail", user.email);
                         cmd.Parameters.AddWithValue("@userPass", user.pass);
                         cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
-                        int c = cmd.ExecuteNonQuery();
-                        if(c != 1)
+                        if(cmd.ExecuteNonQuery() != 1)
                             return new NotFoundObjectResult("error");
-
                     }
                 }
                 user = UserService.UserAuthenticate(user);
@@ -161,6 +160,42 @@ namespace webStoreApp
                                 productsNames.Add(names);
                             }
                             return new OkObjectResult(productsNames);
+                        }
+                    }
+                }
+            }
+        }
+
+        public static class CartShop
+        {
+            public static IActionResult getCartProduct(string userName)
+            {
+                if (string.IsNullOrEmpty(userName))
+                    return new BadRequestResult();
+                using(SqlConnection conn = new SqlConnection(con))
+                {
+                    List<Cart> cart = new List<Cart>();
+                    conn.Open();
+                    using(SqlCommand cmd = new SqlCommand("SELECT product.product_id, product.product_name, cart.qty, product.product_price," +
+                        " cart.qty * product.product_price AS total_price FROM cart JOIN product ON cart.product_id = product.product_id" +
+                        " WHERE cart.userName = @userName", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userName", userName);
+                        using(SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while(rd.Read())
+                            {
+                                Cart cartRow = new Cart
+                                {
+                                    productId = rd.GetInt32(0),
+                                    productName = rd.GetString(1),
+                                    qty = rd.GetInt32(2),
+                                    productPrice = (decimal)rd.GetDecimal(3),
+                                    totalCost = (decimal)rd.GetDecimal(4)
+                                };
+                                cart.Add(cartRow);
+                            }
+                            return new OkObjectResult(cart);
                         }
                     }
                 }
