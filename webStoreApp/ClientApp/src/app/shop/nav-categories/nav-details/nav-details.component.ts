@@ -19,9 +19,9 @@ export class NavDetailsComponent implements OnInit {
   getSubCategoryNames() {
     return this.shopService.getSubCategoryNames(this.categorySelected);
   }
-  getReviewProduct(subCategory: string) {
-    const subCategoryProduct: ProductList[]  = this.shopService.getProductBySubCategory(this.categorySelected, subCategory);
-    return subCategoryProduct.slice(0, 3);
-  }
+  // getReviewProduct(subCategory: string) {
+  //   const subCategoryProduct: ProductList[]  = this.shopService.getProductBySubCategory(this.categorySelected, subCategory);
+  //   return subCategoryProduct.slice(0, 3);
+  // }
 
 }

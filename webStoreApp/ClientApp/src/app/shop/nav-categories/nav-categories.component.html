@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="div-category">
     <ul class="category clickOut">
       <li
@@ -6,10 +6,11 @@
       *ngFor="let item of categories; let i = index"
       (click)="clickOnCategory(item, i)"
       [class.active-category]="i == itemSelected"
-      (clickOutside)="outSideClick($event)">
+      (clickOutside)="outSideClick($event)"
+      >
         <span [title]="item | titlecase" class="clickOut"> {{ item | titlecase }} </span>
       </li>
     </ul>
   <app-nav-details class="clickOut" *ngIf="activeSubCateDiv" [categorySelected]="categorySelected"></app-nav-details>
 </div>
-</div>
+</div> -->

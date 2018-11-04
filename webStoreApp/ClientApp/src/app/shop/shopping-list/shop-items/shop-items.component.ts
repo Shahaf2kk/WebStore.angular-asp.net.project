@@ -12,11 +12,6 @@ export class ShopItemsComponent implements OnInit {
   categoryNames: string[];
   constructor(private productService: ShopService) { }
 
-  ngOnInit() {
-    // this.categoryNames = this.productService.getCategoryName();
-  }
-  // getProductByCategory(category: string) {
-  //   return this.productService.getProductByCategory(category).slice(0, 6);
-  // }
+  ngOnInit() { }
 
 }

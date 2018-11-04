@@ -33,17 +33,21 @@ namespace webStoreApp
                     return user;
                 }
             }
-            public static IActionResult SignUp(User user)
+            public static User SignUp(User user)
             {
                 if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
                 {
-                    return new BadRequestObjectResult("user name or passwornd are empty");
+                    user.pass = null;
+                    return user;
                 }
                 using (SqlConnection conn = new SqlConnection(con))
                 {
                     conn.Open();
                     if (!CheckUsername(user, conn) || !CheckUserEmail(user, conn))
-                        return new BadRequestObjectResult("user name or email are in used");
+                    {
+                        user = null;
+                        return user;
+                    }
 
                     using (SqlCommand cmd = new SqlCommand("INSERT INTO users(userName, userEmail, userPass, lastLogin) " +
                         "VALUES (@userName, @userEmail, @userPass, @lastLogin)", conn))
@@ -52,14 +56,14 @@ namespace webStoreApp
                         cmd.Parameters.AddWithValue("@userEmail", user.email);
                         cmd.Parameters.AddWithValue("@userPass", user.pass);
                         cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
-                        if(cmd.ExecuteNonQuery() != 1)
-                            return new NotFoundObjectResult("error");
+                        if (cmd.ExecuteNonQuery() != 1)
+                            return null;
                     }
                 }
-                user = UserService.UserAuthenticate(user);
+                user = UserService.GetToken(user);
                 if (user == null)
-                    return new NotFoundObjectResult("error");
-                return new OkObjectResult(user);
+                    return null;
+                return user;
             }
             private static bool CheckUsername(User user, SqlConnection conn)
             {
@@ -95,36 +99,36 @@ namespace webStoreApp
 
         public static class Products
         {
-            public static IActionResult GetProducts()
-            {
-                List<product> products = new List<product>();
-                using (SqlConnection conn = new SqlConnection(con))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
-                        " product_name, product_description, product_price, product_image_path FROM product", conn))
-                    {
-                        using (SqlDataReader rd = cmd.ExecuteReader())
-                        {
-                            while (rd.Read())
-                            {
-                                product product = new product()
-                                {
-                                    id = rd.GetInt32(0), //(int)rd["product_id"],
-                                    category = rd.GetString(1), //rd["product_category"].ToString(),
-                                    subCategory = rd.GetString(2), //rd["product_sub_category"].ToString(),
-                                    name = rd.GetString(3), //rd["product_name"].ToString(),
-                                    description = rd.GetString(4), //rd["product_description"].ToString(),
-                                    price = (decimal)rd.GetDecimal(5), //(int)rd["product_price"],
-                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6): null //rd["product_image_path"].ToString()
-                                };
-                                products.Add(product);
-                            }
-                            return new OkObjectResult(products);
-                        }
-                    }
-                }
-            }
+            //public static IActionResult GetProducts()
+            //{
+            //    List<product> products = new List<product>();
+            //    using (SqlConnection conn = new SqlConnection(con))
+            //    {
+            //        conn.Open();
+            //        using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
+            //            " product_name, product_description, product_price, product_image_path FROM product", conn))
+            //        {
+            //            using (SqlDataReader rd = cmd.ExecuteReader())
+            //            {
+            //                while (rd.Read())
+            //                {
+            //                    product product = new product()
+            //                    {
+            //                        id = rd.GetInt32(0), //(int)rd["product_id"],
+            //                        category = rd.GetString(1), //rd["product_category"].ToString(),
+            //                        subCategory = rd.GetString(2), //rd["product_sub_category"].ToString(),
+            //                        name = rd.GetString(3), //rd["product_name"].ToString(),
+            //                        description = rd.GetString(4), //rd["product_description"].ToString(),
+            //                        price = (decimal)rd.GetDecimal(5), //(int)rd["product_price"],
+            //                        imagePath = !rd.IsDBNull(6) ? rd.GetString(6): null //rd["product_image_path"].ToString()
+            //                    };
+            //                    products.Add(product);
+            //                }
+            //                return new OkObjectResult(products);
+            //            }
+            //        }
+            //    }
+            //}
 
             public static IActionResult GetProductsCate()
             {
@@ -164,6 +168,41 @@ namespace webStoreApp
                     }
                 }
             }
+            public static IActionResult GetProductsByCate(string category)
+            {
+                if(string.IsNullOrEmpty(category))
+                    return new NotFoundResult();
+                List<product> products = new List<product>();
+                using(SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    using(SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
+                        " product_name, product_description, product_price, product_image_path FROM product WHERE product_category = @product_category", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@product_category", category);
+                        using(SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while(rd.Read())
+                            {
+                                product product = new product
+                                {
+                                    id = rd.GetInt32(0),
+                                    category = rd.GetString(1),
+                                    subCategory = rd.GetString(2),
+                                    name = rd.GetString(3),
+                                    description = rd.GetString(4),
+                                    price = (decimal)rd.GetDecimal(5),
+                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
+                                };
+                                products.Add(product);
+                            }
+                            if (products == null)
+                                return new BadRequestResult();
+                            return new OkObjectResult(products);
+                        }
+                    }
+                }
+            }
         }
 
         public static class CartShop
@@ -199,6 +238,25 @@ namespace webStoreApp
                         }
                     }
                 }
+            }
+            public static IActionResult setCartProduct(Cart cart, string userName)
+            {
+                if (cart.productId.ToString() == null || cart.qty.ToString() == null || string.IsNullOrEmpty(userName))
+                    return new BadRequestResult();
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    using(SqlCommand cmd = new SqlCommand("INSERT INTO cart(userName, product_id, qty)" +
+                        " VALUES (@userName, @productId, @cartQty) ", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userName", userName);
+                        cmd.Parameters.AddWithValue("@productId", cart.productId);
+                        cmd.Parameters.AddWithValue("@cartQty", cart.qty);
+                        if(cmd.ExecuteNonQuery() == 1)
+                            return new OkResult();
+                    }
+                }
+                return new BadRequestResult();
             }
         }
     }

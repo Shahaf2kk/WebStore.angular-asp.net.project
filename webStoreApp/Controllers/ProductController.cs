@@ -10,17 +10,31 @@ using webStoreApp.Model;
 
 namespace webStoreApp.Controllers
 {
-    [Route("product")]
+    [Route("product/names")]
+    [ApiController]
+    public class CategoryController : ControllerBase
+    {
+        [HttpGet]
+        public IActionResult GetCategoryNames()
+        {
+            return DB.Products.GetProductsCate();
+        }
+    
+    }
+
+    [Route("product/cate")]
     [ApiController]
     public class ProductController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetProduct(bool? onlyNames)
+        public IActionResult GetProductByCategory(string category)
         {
-            if (onlyNames == null)
-                onlyNames = false;
-            return onlyNames == true ? DB.Products.GetProductsCate() : DB.Products.GetProducts();
-        }
+            if (string.IsNullOrEmpty(category))
+                return NotFound();
+            return DB.Products.GetProductsByCate(category);
 
+
+        }
     }
+
 }

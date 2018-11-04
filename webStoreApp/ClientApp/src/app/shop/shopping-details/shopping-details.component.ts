@@ -21,20 +21,20 @@ export class ShoppingDetailsComponent implements OnInit {
     // this.id = this.route.snapshot.params['i'];
     // this.getItemById();
     // obserable:
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = params['i'];
-        this.getItemById();
-      }
-    );
+    // this.route.params.subscribe(
+    //   (params: Params) => {
+    //     this.id = params['i'];
+    //     this.getItemById();
+    //   }
+    // );
   }
-  getItemById() {
-    const product = this.shopItem.getProductById(+this.id);
-    if (product != null) {
-      this.item = product;
-      this.hasProduct = true;
-    } else {
-      this.router.navigate(['/notfound' , { m: this.id }]);
-    }
-  }
+  // getItemById() {
+  //   const product = this.shopItem.getProductById(+this.id);
+  //   if (product != null) {
+  //     this.item = product;
+  //     this.hasProduct = true;
+  //   } else {
+  //     this.router.navigate(['/notfound' , { m: this.id }]);
+  //   }
+  // }
 }
