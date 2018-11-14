@@ -17,7 +17,7 @@ export class NavDetailsComponent implements OnInit {
   ngOnInit() {
   }
   getSubCategoryNames() {
-    return this.shopService.getSubCategoryNames(this.categorySelected);
+    // return this.shopService.getSubCategoryNames(this.categorySelected);
   }
   // getReviewProduct(subCategory: string) {
   //   const subCategoryProduct: ProductList[]  = this.shopService.getProductBySubCategory(this.categorySelected, subCategory);

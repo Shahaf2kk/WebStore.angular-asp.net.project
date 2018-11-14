@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-row-gap: 10px;
+}
+.div-username {
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+.div-pass {
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+.div-btn {
+  grid-row-start: 3;
+  grid-row-end: 3;
+}
+.div-error-msg {
+  border: 1px solid red;
+}

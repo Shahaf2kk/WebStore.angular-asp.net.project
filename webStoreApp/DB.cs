@@ -129,7 +129,36 @@ namespace webStoreApp
             //        }
             //    }
             //}
-
+            public static IActionResult GetProductsById(int id)
+            {
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
+                        " product_name, product_description, product_price, product_image_path FROM product WHERE product_id = @product_id ", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@product_id", id);
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                product product = new product
+                                {
+                                    id = rd.GetInt32(0),
+                                    category = rd.GetString(1),
+                                    subCategory = rd.GetString(2),
+                                    name = rd.GetString(3),
+                                    description = rd.GetString(4),
+                                    price = (decimal)rd.GetDecimal(5),
+                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
+                                };
+                                return new OkObjectResult(product);
+                            }
+                            return new BadRequestResult();
+                        }
+                    }
+                }
+            }
             public static IActionResult GetProductsCate()
             {
                 List<productsCategoryNames> productsNames = new List<productsCategoryNames>();
@@ -178,7 +207,7 @@ namespace webStoreApp
                     conn.Open();
                     using(SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
                         " product_name, product_description, product_price, product_image_path FROM product WHERE product_category = @product_category", conn))
-                    {
+                    {   
                         cmd.Parameters.AddWithValue("@product_category", category);
                         using(SqlDataReader rd = cmd.ExecuteReader())
                         {
@@ -198,6 +227,41 @@ namespace webStoreApp
                             }
                             if (products == null)
                                 return new BadRequestResult();
+                            return new OkObjectResult(products);
+                        }
+                    }
+                }
+            }
+            public static IActionResult GetProductsBySubCat(string category, string subCategory)
+            {
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(subCategory))
+                        return new BadRequestResult();
+                    conn.Open();
+                    List<product> products = new List<product>();
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
+                        " product_name, product_description, product_price, product_image_path FROM product" +
+                        " WHERE product_category = @product_category AND product_sub_category = @product_sub_category", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@product_category", category);
+                        cmd.Parameters.AddWithValue("@product_sub_category", subCategory);
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                product product = new product
+                                {
+                                    id = rd.GetInt32(0),
+                                    category = rd.GetString(1),
+                                    subCategory = rd.GetString(2),
+                                    name = rd.GetString(3),
+                                    description = rd.GetString(4),
+                                    price = (decimal)rd.GetDecimal(5),
+                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
+                                };
+                                products.Add(product);
+                            }
                             return new OkObjectResult(products);
                         }
                     }
@@ -257,6 +321,36 @@ namespace webStoreApp
                     }
                 }
                 return new BadRequestResult();
+            }
+        }
+
+        public static class UserData
+        {
+            // get details from cart table or in the same request query with relantion tables get cart detils?
+            public IActionResult getUserData(string username)
+            {
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    if (!SigninByToken(username, conn))
+                        return new NotFoundResult();
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, qty FROM cart WHERE userName", conn))
+                    {
+                        
+                    }
+                }
+            }
+            private static bool SigninByToken(string username, SqlConnection conn)
+            {
+                using(SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin " +
+                    "WHERE userName=@userName", conn))
+                {
+                    cmd.Parameters.AddWithValue("lastLogin", DateTimeOffset.Now);
+                    cmd.Parameters.AddWithValue("@userName", username);
+                    if (cmd.ExecuteNonQuery() != 1)
+                        return false;
+                    return true;
+                }
             }
         }
     }

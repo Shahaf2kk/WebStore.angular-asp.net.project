@@ -15,36 +15,36 @@ namespace webStoreApp.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        // public DateTimeOffset? DataTimeOfSet { get; private set; }
 
-        [HttpPost]
-        public IActionResult SignIn(string u, string p)
+        [HttpGet("signin")]
+        public IActionResult SignIn(string username, string pass)
         {
-            if (string.IsNullOrEmpty(u) || string.IsNullOrEmpty(p))
-                return new BadRequestObjectResult("user name or passwornd are empty");
+            string userName = User.Identity.Name;
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(pass))
+                return new NotFoundObjectResult("user name or passwornd are empty");
             User user = new User
             {
-                userName = u,
-                pass = p,
+                userName = username,
+                pass = pass,
                 token = null
             };
             user = DB.Users.SignIn(user);
             if (user != null)
                 return new OkObjectResult(UserService.GetToken(user).token);
 
-            return new NotFoundObjectResult("Username or Password are wrong");
+            return new BadRequestObjectResult("Username or Password are wrong");
         }
 
-        [HttpGet]
-        public IActionResult SignUp(string u, string p, string e)
+        [HttpPost("signup")]
+        public IActionResult SignUp(string username,string pass, string email)
         {
-            if (string.IsNullOrEmpty(u) || string.IsNullOrEmpty(p) || string.IsNullOrEmpty(e))
-                return new BadRequestObjectResult("username, password or email are empty");
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(pass) || string.IsNullOrEmpty(email))
+                return new NotFoundObjectResult("username, password or email are empty");
 
             User user;
-            user = DB.Users.SignUp(new User { userName = u, pass = p, email = e });
+            user = DB.Users.SignUp(new User { userName = username, pass = pass, email = email });
             if (user == null)
-                return new BadRequestResult();
+                return new BadRequestObjectResult("username or email is taken, please select others");
             return new OkObjectResult(user);
         }
         //public HttpResponseMessage SignUp(string u, string p, string e)

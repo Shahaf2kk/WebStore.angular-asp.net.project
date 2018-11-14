@@ -27,13 +27,12 @@ export class ShopCategoryComponent implements OnInit {
     );
   }
   getCategoryProduct() {
-    const products = this.shopService.getProductByCategory(this.categoryTitle);
-    if (products != null) {
-      this.productsCategory = products;
-      this.hasProduct = true;
-    } else {
-      this.router.navigate(['/notfound' , { m: this.categoryTitle }]);
-    }
+    // this.productsCategory = this.shopService.getProductByCategory(this.categoryTitle);
+        // if (data !== null) {
+        //   this.productsCategory = data;
+        // } else {
+        //   this.router.navigate(['/notfound' , { m: this.categoryTitle }]);
+        // }
+    //  console.log(this.productsCategory);
   }
-
 }

@@ -9,7 +9,7 @@ import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-ico
 export class CartNavComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   faCartArrowDown = faCartArrowDown;
-  
+
   constructor() { }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from './server.service';
+import { ServerService } from './shared/data-share.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,5 @@ export class AppComponent implements OnInit {
   title = 'WebStorE';
   constructor(private serverService: ServerService) {}
   ngOnInit() {
-    // this.serverService.getProduct();
   }
 }

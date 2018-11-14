@@ -1,0 +1,31 @@
+<div class="container">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form">
+    <div class="div-username">
+      <input type="text" class="input-username"
+      placeholder="Enter Username"
+      ngModel
+      name="username"
+      required
+      >
+    </div>
+    <div class="div-pass">
+      <input type="password" class="input-pass"
+      placeholder="Enter Password"
+      ngModel
+      name="pass"
+      required
+      >
+    </div>
+    <div class="div-btn">
+      <button
+       type="submit"
+        class="btn-login"
+       [disabled]="!f.valid"
+       >Login</button>
+      <button routerLink="/signup" type="button" class="btn-register">Register</button>
+    </div>
+    <div *ngIf="afterSubmit" class="div-error-msg">
+      <span> {{ errorMsg }} </span>
+    </div>
+  </form>
+</div>

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
 import { faSignInAlt, faBan, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-user-nav',
@@ -15,35 +18,52 @@ export class UserNavComponent implements OnInit {
   faBan = faBan;
   faArrowAltCircleRight = faArrowAltCircleRight;
 
-  quickLogin: boolean;
-  username: string;
-  pass: string;
+  isAuth: boolean;
+  quickLogin = false;
+  user: string;
 
-  constructor(private router: Router) { }
+
+
+  constructor(private router: Router,
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
-    this.quickLogin = false;
-    this.username = '';
-    this.pass = '';
+    this.isAuth = this.authService.isAuth();
   }
-
+  // setAuth(isAuth: boolean) {
+  //   this.isAuth = isAuth;
+  // }
 
   cancelQuickLogin() {
     this.quickLogin = false;
   }
-  onPassEnter(event: any) {
-    if (this.username === '') {
-      console.log('user name empty');
-      return;
-    }
-    if (event.key === 'Enter') {
-      console.log('enter');
+  signOut() {
+    this.authService.delToken();
+    // this.isAuth = false;
+    this.authService.homeUrl();
+  }
+  onSubmitNav(form: NgForm) {
+    if (form.valid) {
+     this.user = form.controls['username'].value;
+      const pass = form.controls['pass'].value;
+      this.authService.signinUser(this.user, pass);
+      this.cancelQuickLogin();
+     // this.isAuth = true;
     }
   }
+  // onPassEnter(event: any) {
+  //   if (this.username === '') {
+  //     console.log('user name empty');
+  //     return;
+  //   }
+  //   if (event.key === 'Enter') {
+  //   }
+  // }
   openQuickLogin() {
     if (this.quickLogin === true) {
       this.quickLogin = false;
-      this.router.navigate(["login"]);
+      this.router.navigate(['signin']);
     } else {
       this.quickLogin = true;
     }

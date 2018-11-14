@@ -1,7 +1,21 @@
 <div class="container">
-  <ul>
+  <ul *ngIf="!isAuth">
     <li>
-      <a routerLinkActive="active" routerLink="/register"> 
+      <div>
+        <p>
+          hellow {{ user | titlecase }}
+        </p>
+      </div>
+    </li>
+    <li>
+      <button (click)="signOut()">
+        log out
+      </button>
+    </li>
+  </ul>
+  <ul *ngIf="isAuth">
+    <li>
+      <a routerLinkActive="active" routerLink="/signup"> 
         <fa-icon [icon]="faPlusSquare" size="s"></fa-icon> Register
       </a>
     </li>
@@ -11,18 +25,44 @@
         Login
       </a>
    </li>
-    <li *ngIf="quickLogin" class="quickLogin">
-      <div class="inputDiv">
-          <input [(ngModel)]="username" type="text" class="username" placeholder="Enter User Name" autofocus>
-          <input [(ngModel)]="pass" type="password" class="pass" placeholder="Enter Password" (keydown)="onPassEnter($event)">
-          <div class="button"> 
-            <button class="btnIcon" (click)="cancelQuickLogin()" title="Cancel">
-              <fa-icon class="cancel" [icon]="faBan"></fa-icon>
-            </button>
-            <button class="btnIcon" title="Submit">
-              <fa-icon class="submit" [icon]="faArrowAltCircleRight"></fa-icon>
-            </button>
-          </div>
+    <li *ngIf="quickLogin" class="quickLogin" >
+      <div>
+          <form #f="ngForm" (ngSubmit)="onSubmitNav(f)" class="inputDiv" >
+            <div>
+              <input 
+              type="text" 
+              class="username"
+              placeholder="Enter User Name" 
+              ngModel 
+              name="username" 
+              required
+               >
+            </div>
+               <div>
+                 <input
+                 type="password"
+                 class="pass"
+                 placeholder="Enter Password" 
+                 name="pass"
+                 required
+                 ngModel
+                     >
+               </div>
+              <div class="button"> 
+                  <button 
+                  class="btnIcon"
+                  type="submit"
+                 [disabled]="!f.valid"
+                 [routerLink]=''
+                    >
+                    <fa-icon 
+                    class="submit" [icon]="faArrowAltCircleRight"></fa-icon>
+                  </button>
+                <button class="btnIcon" (click)="cancelQuickLogin()" title="Cancel">
+                  <fa-icon class="cancel" [icon]="faBan"></fa-icon>
+                </button>
+              </div>
+          </form>
       </div>
     </li>
   </ul>
