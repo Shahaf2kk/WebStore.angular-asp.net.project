@@ -19,6 +19,7 @@ namespace webStoreApp.Controllers
         {
             return DB.Products.GetProductsCate();
         }
+
         [HttpGet("category")]
         public IActionResult GetProductByCategory(string category, string subCategory)
         {
@@ -30,6 +31,15 @@ namespace webStoreApp.Controllers
 
             return DB.Products.GetProductsBySubCat(category, subCategory);
         }
+
+
+        // need to add best sells.
+        //[HttpGet("top")] 
+        //public IActionResult GetTopProduct()
+        //{
+
+        //}
+
         [HttpGet("id")]
         public IActionResult GetProductById(int? id)
         {

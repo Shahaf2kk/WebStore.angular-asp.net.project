@@ -1,15 +1,13 @@
-// import { Injectable } from '@angular/core';
-import { ProductList } from './shop.module';
-// import { ServerService } from '../server.service';
 
-// @Injectable()
 export class ShopService {
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
 
+    constructor() { }
+
     setCategoryName(cateName: any) {
         this.productsCategoryNames = cateName;
-        console.log(this.productsCategoryNames);
     }
+
     getCategoryName() {
         const categoriesNames = [];
         this.productsCategoryNames.forEach(element => {

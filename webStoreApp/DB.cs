@@ -99,36 +99,6 @@ namespace webStoreApp
 
         public static class Products
         {
-            //public static IActionResult GetProducts()
-            //{
-            //    List<product> products = new List<product>();
-            //    using (SqlConnection conn = new SqlConnection(con))
-            //    {
-            //        conn.Open();
-            //        using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_category, product_sub_category," +
-            //            " product_name, product_description, product_price, product_image_path FROM product", conn))
-            //        {
-            //            using (SqlDataReader rd = cmd.ExecuteReader())
-            //            {
-            //                while (rd.Read())
-            //                {
-            //                    product product = new product()
-            //                    {
-            //                        id = rd.GetInt32(0), //(int)rd["product_id"],
-            //                        category = rd.GetString(1), //rd["product_category"].ToString(),
-            //                        subCategory = rd.GetString(2), //rd["product_sub_category"].ToString(),
-            //                        name = rd.GetString(3), //rd["product_name"].ToString(),
-            //                        description = rd.GetString(4), //rd["product_description"].ToString(),
-            //                        price = (decimal)rd.GetDecimal(5), //(int)rd["product_price"],
-            //                        imagePath = !rd.IsDBNull(6) ? rd.GetString(6): null //rd["product_image_path"].ToString()
-            //                    };
-            //                    products.Add(product);
-            //                }
-            //                return new OkObjectResult(products);
-            //            }
-            //        }
-            //    }
-            //}
             public static IActionResult GetProductsById(int id)
             {
                 using (SqlConnection conn = new SqlConnection(con))
@@ -267,6 +237,7 @@ namespace webStoreApp
                     }
                 }
             }
+            // public static IActionResult GetProductTop
         }
 
         public static class CartShop
@@ -277,7 +248,6 @@ namespace webStoreApp
                     return new BadRequestResult();
                 using(SqlConnection conn = new SqlConnection(con))
                 {
-                    List<Cart> cart = new List<Cart>();
                     conn.Open();
                     using(SqlCommand cmd = new SqlCommand("SELECT product.product_id, product.product_name, cart.qty, product.product_price," +
                         " cart.qty * product.product_price AS total_price FROM cart JOIN product ON cart.product_id = product.product_id" +
@@ -286,6 +256,7 @@ namespace webStoreApp
                         cmd.Parameters.AddWithValue("@userName", userName);
                         using(SqlDataReader rd = cmd.ExecuteReader())
                         {
+                            List<Cart> cart = new List<Cart>();
                             while(rd.Read())
                             {
                                 Cart cartRow = new Cart
@@ -324,19 +295,39 @@ namespace webStoreApp
             }
         }
 
-        public static class UserData
+        public static class GetUserData
         {
             // get details from cart table or in the same request query with relantion tables get cart detils?
-            public IActionResult getUserData(string username)
+            public static IActionResult getUserData(string username)
             {
                 using (SqlConnection conn = new SqlConnection(con))
                 {
                     conn.Open();
                     if (!SigninByToken(username, conn))
-                        return new NotFoundResult();
-                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, qty FROM cart WHERE userName", conn))
+                        return new NotFoundObjectResult("invalide user name " + username);
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, qty FROM cart WHERE userName=@username", conn))
                     {
-                        
+                        cmd.Parameters.AddWithValue("@username", username);
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            List<Cart> cartDetailsList = new List<Cart>();
+                            UserData userData;
+                            while (rd.Read())
+                            {
+                                Cart cartDetails = new Cart
+                                {
+                                    productId = rd.GetInt32(0),
+                                    qty = rd.GetInt32(1)
+                                };
+                                cartDetailsList.Add(cartDetails);
+                            }
+                            userData = new UserData
+                            {
+                                userName = username,
+                                cartDetails = cartDetailsList
+                            };
+                            return new OkObjectResult(userData);
+                        }
                     }
                 }
             }

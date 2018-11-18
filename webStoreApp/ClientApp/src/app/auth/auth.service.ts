@@ -1,26 +1,32 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { EventEmitter } from 'events';
 import { User } from '../user.model';
-// import { UserNavComponent } from '../header/user-nav/user-nav.component';
 
 @Injectable()
 export class AuthService {
-  private t = null;
+  private token;
   private baseUrl = 'https://localhost:44327/';
   private headers: HttpHeaders;
-  errorMsg;
+  private user: User = new User();
+
+// ---- object for nav user - if isAuth - start
+  private authSubject = new BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
+  userDetails = this.authSubject.asObservable();
+// ---- object for nav user - if isAuth - end
+
+
   constructor (private http: HttpClient,
      private router: Router) {
-    this.t = this.getToken();
+    this.isAuth();
   }
 
-  getErrorMsg() {
-    return this.errorMsg;
+  changeIfAuth(isAuth: boolean) {
+    this.authSubject.next({ User: this.user, isAuth: isAuth });
   }
+
   signinUser(usernmae: string, pass: string): Observable<any> {
     return this.http.get(this.baseUrl + 'users/signin',
     { params: { 'username': usernmae, 'pass': pass },
@@ -28,67 +34,110 @@ export class AuthService {
       // catchError(this.handleError)
       // );
     }
-    signupUser(user: User): Observable<any> {
-      return this.http.post(this.baseUrl + 'users/signup', {}, { params: {
-        'username': user.userName,
-        'pass': user.pass,
-        'email': user.email
-      }, responseType: 'text', observe: 'response'});
-      // this.http.post(this.baseUrl + 'users/signup', {},
-      // {params: {
-        //   'username': username,
-        //   'pass': pass,
-        //   'email': email }, responseType: 'text', observe: 'body' }).pipe(catchError(this.handleError)).subscribe(
-          //     (res) => {
-            //       const token = JSON.parse(res['token']);
-            //       this.setToken(token);
-            //       this.homeUrl();
-            //     }
-            //   );
-          }
-          homeUrl() {
-            this.router.navigate(['']);
-          }
-          handleError(errorRes: HttpErrorResponse) {
-            if (errorRes.error instanceof ErrorEvent) {
-              console.error('client side: ' + errorRes.error.message);
-              console.error('status code ' + errorRes.status);
-              this.router.navigate(['']);
-            } else {
-              if (errorRes.status === 400) {
-                return errorRes.error;
-              }
-              if (errorRes.status === 404) {
-                return errorRes.error;
-              }
-            }
-            console.log('end error handler');
-            return throwError('');
-          }
-          setToken(token: string) {
-    this.delToken();
-    localStorage.setItem('t', 'Bearer ' + token);
-   // this.userNavAuth.setAuth(true);
+
+
+  signupUser(user: User): Observable<any> {
+    return this.http.post(this.baseUrl + 'users/signup', {}, { params: {
+      'username': user.userName,
+      'pass': user.pass,
+      'email': user.email
+    }, responseType: 'text', observe: 'response'});
+
   }
-  getToken() {
-    return localStorage.getItem('t');
+
+  afterSignInOrUp(data) {
+    this.setToken(data);
+    this.getUserNavData().subscribe(
+      (userData) => {
+        this.user.userName = userData.body['userName'];
+        this.user.listOfCart = userData.body['cartDetails'];
+        this.authSubject.next({ User: this.user, isAuth: true });
+      },
+      (error) => {
+        console.log('error msg ');
+        console.log(error);
+        this.authSubject.next({ User: this.user, isAuth: false });
+      }
+    );
+    this.homeUrl();
   }
-  setHeaders() {
-    if (this.t !== null) {
-      this.headers = new HttpHeaders().set('Authorization', this.getToken());
+
+  homeUrl() {
+    this.router.navigate(['']);
+  }
+
+  getUserNavData() {
+    if (this.getTokenAndSetHeaders()) {
+      return this.http.get(this.baseUrl + 'data', { headers: this.headers, responseType: 'json', observe: 'response' });
     }
   }
+
+  setToken(token: string) {
+  this.delToken();
+  localStorage.setItem('t', 'Bearer ' + token);
+  }
+  getTokenAndSetHeaders() {
+    const t = localStorage.getItem('t');
+    if (t !== null) {
+      this.headers = new HttpHeaders().set('Authorization', t);
+      return true;
+    }
+    return false;
+  }
+
+
+  delToken() {
+    localStorage.clear();
+    this.user = new User();
+    this.authSubject.next({ User: this.user, isAuth: false });
+  }
+  isAuth() {
+    if (this.getTokenAndSetHeaders()) {
+      this.getUserNavData().subscribe(
+        (data) => {
+          this.user.userName = data.body['userName'];
+          this.user.listOfCart = data.body['cartDetails'];
+          this.authSubject.next({ User: this.user, isAuth: true });
+        },
+        (error) => {
+          this.delToken();
+        }
+      );
+    } else {
+      this.authSubject.next({ User: this.user, isAuth: false });
+    }
+  }
+
   getHeaders() {
     return this.headers;
   }
-  delToken() {
-    localStorage.clear();
+  handleError(errorRes: HttpErrorResponse) {
+    if (errorRes.error instanceof ErrorEvent) {
+      console.error('client side: ' + errorRes.error.message);
+      console.error('status code ' + errorRes.status);
+      this.router.navigate(['']);
+    } else {
+      if (errorRes.status === 400) {
+        return errorRes.error;
+      }
+      if (errorRes.status === 404) {
+        return errorRes.error;
+      }
+    }
+    return throwError('');
   }
-  isAuth() {
-    const a = this.getToken();
-    console.log(a);
-    return this.getToken() !== null;
-  }
+
+  // this.http.post(this.baseUrl + 'users/signup', {},
+    // {params: {
+      //   'username': username,
+      //   'pass': pass,
+      //   'email': email }, responseType: 'text', observe: 'body' }).pipe(catchError(this.handleError)).subscribe(
+        //     (res) => {
+          //       const token = JSON.parse(res['token']);
+          //       this.setToken(token);
+          //       this.homeUrl();
+          //     }
+          //   );
   // signinUser(username: string, pass: string) {
         //   const request = new HttpRequest<string>('GET', this.baseUrl + 'users/signin?username=' + username + '&pass=' + pass,
         //      { reportProgress: true }, );

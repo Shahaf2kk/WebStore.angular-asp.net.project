@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ShopComponent } from './shop/shop.component';
 import { ShoppingDetailsComponent } from './shop/shopping-details/shopping-details.component';
 import { ShopItemsComponent } from './shop/shopping-list/shop-items/shop-items.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -13,7 +12,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'shop', component: ShopComponent, children: [
+    { path: 'shop', component: HomeComponent, children: [
         { path: '', redirectTo: 'list', pathMatch: 'full' },
         { path: 'list', component: ShopItemsComponent},
         { path: ':i', component: ShoppingDetailsComponent},

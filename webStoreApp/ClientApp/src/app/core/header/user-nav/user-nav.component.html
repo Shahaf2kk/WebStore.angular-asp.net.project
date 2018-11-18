@@ -1,10 +1,11 @@
 <div class="container">
-  <ul *ngIf="!isAuth">
+  <ul *ngIf="userAuth">
     <li>
       <div>
         <p>
-          hellow {{ user | titlecase }}
+          hello {{ userName | titlecase }}
         </p>
+        <p> number of product in the cart {{ cartProduct }} </p>
       </div>
     </li>
     <li>
@@ -13,7 +14,7 @@
       </button>
     </li>
   </ul>
-  <ul *ngIf="isAuth">
+  <ul *ngIf="!userAuth">
     <li>
       <a routerLinkActive="active" routerLink="/signup"> 
         <fa-icon [icon]="faPlusSquare" size="s"></fa-icon> Register
@@ -62,14 +63,11 @@
                   <fa-icon class="cancel" [icon]="faBan"></fa-icon>
                 </button>
               </div>
+              <div class="errorMsg" *ngIf="afterSubmit">
+                <span> {{ errorMsg }} </span>
+              </div>
           </form>
       </div>
     </li>
   </ul>
-  <ng-template #isLogin>
-      <ul>
-        <li>Sing out</li>
-        <li>Account Info</li>
-      </ul>
-  </ng-template>
 </div>

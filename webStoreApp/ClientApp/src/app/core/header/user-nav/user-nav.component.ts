@@ -4,7 +4,8 @@ import { NgForm } from '@angular/forms';
 import { faSignInAlt, faBan, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '../../../auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-nav',
@@ -18,37 +19,50 @@ export class UserNavComponent implements OnInit {
   faBan = faBan;
   faArrowAltCircleRight = faArrowAltCircleRight;
 
-  isAuth: boolean;
   quickLogin = false;
-  user: string;
-
+  userAuth: boolean;
+  userName: string;
+  cartProduct: number;
+  errorMsg: string;
+  afterSubmit: boolean;
 
 
   constructor(private router: Router,
     private authService: AuthService
-    ) { }
+    ) {
+      this.afterSubmit = false;
+     }
 
   ngOnInit() {
-    this.isAuth = this.authService.isAuth();
+    this.authService.userDetails.subscribe( userData => {
+        this.userAuth = userData.isAuth;
+        if (this.userAuth) {
+          this.userName = userData.User.userName;
+          this.cartProduct = userData.User.listOfCart.length;
+        }
+      });
   }
-  // setAuth(isAuth: boolean) {
-  //   this.isAuth = isAuth;
-  // }
 
   cancelQuickLogin() {
     this.quickLogin = false;
   }
   signOut() {
     this.authService.delToken();
-    // this.isAuth = false;
     this.authService.homeUrl();
   }
   onSubmitNav(form: NgForm) {
     if (form.valid) {
-     this.user = form.controls['username'].value;
+      const username = form.controls['username'].value;
       const pass = form.controls['pass'].value;
-      this.authService.signinUser(this.user, pass);
-      this.cancelQuickLogin();
+      this.authService.signinUser(username, pass).subscribe((data) => {
+        const userData = data.body;
+        this.authService.afterSignInOrUp(userData);
+      },
+      (error) => {
+        this.errorMsg = this.authService.handleError(error);
+        this.afterSubmit = true;
+      });
+      form.reset();
      // this.isAuth = true;
     }
   }

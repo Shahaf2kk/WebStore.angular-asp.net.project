@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
@@ -28,12 +28,12 @@ export class SigninComponent implements OnInit {
   }
   onSubmit(form: NgForm) {
     if (form.valid) {
-      const usernmae = form.controls['username'].value;
+      const username = form.controls['username'].value;
       const pass = form.controls['pass'].value;
-      this.authService.signinUser(usernmae, pass)
+      this.authService.signinUser(username, pass)
       .subscribe((data) => {
-        this.authService.setToken(data.body);
-        this.authService.homeUrl();
+        const userData = data.body;
+        this.authService.afterSignInOrUp(userData);
       },
       (error) => {
         this.errorMsg = this.authService.handleError(error);

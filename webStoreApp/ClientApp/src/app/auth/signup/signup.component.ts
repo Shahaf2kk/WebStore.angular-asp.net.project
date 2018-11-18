@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { User } from 'src/app/user.model';
+import { User } from '../../user.model';
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +10,7 @@ import { User } from 'src/app/user.model';
 })
 export class SignupComponent implements OnInit, OnDestroy {
 
-  user: User;
+  user: User = new User();
   errorMsg;
   afterSubmit: boolean;
 
@@ -20,9 +20,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.afterSubmit = false;
   }
   ngOnDestroy() {
-    console.log('ng destroy ' + this.user);
     this.user = null;
-    console.log('ng destroy after ' + this.user);
   }
   onSubmit(form: NgForm) {
     if (form.valid) {
@@ -32,8 +30,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.authService.signupUser(this.user)
       .subscribe((data) => {
         this.user = JSON.parse(data.body);
-        this.authService.setToken(this.user.token);
-        this.authService.homeUrl();
+        const userData = this.user.token;
+        this.authService.afterSignInOrUp(userData);
       }, (error) => {
         this.errorMsg = this.authService.handleError(error);
         this.afterSubmit = true;
