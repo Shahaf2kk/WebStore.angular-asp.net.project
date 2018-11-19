@@ -22,10 +22,18 @@ namespace webStoreApp.Controllers
         [HttpGet]
         public IActionResult getUserData()
         {
-            string user = User.Identity.Name;
-            if (string.IsNullOrEmpty(user))
+            string username = User.Identity.Name;
+            if (string.IsNullOrEmpty(username))
                 return new BadRequestResult();
-            return DB.GetUserData.getUserData(user);
+            return DB.GetUserData.getUserSigninData(username);
+        }
+        [HttpGet("cart")]
+        public IActionResult GetCartProduct()
+        {
+            UserData user = new UserData { userName = User.Identity.Name };
+            if (string.IsNullOrEmpty(user.userName))
+                return new NotFoundResult();
+            return DB.GetUserData.getUserCartProduct(user);
         }
     }
 }

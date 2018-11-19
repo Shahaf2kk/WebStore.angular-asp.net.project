@@ -1,33 +1,24 @@
 import { Injectable } from '@angular/core';
 
-import { ShopService } from '../shop/shop.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class ProductsDataService {
     private baseUrl = 'https://localhost:44327/';
 
-    constructor(private shopService: ShopService,
-                private http: HttpClient ) {
+    constructor(
+                private http: HttpClient,
+                private authService: AuthService ) {
     }
 
-    // --- call from APP_INITIALIZER
-    getCategoriesNames(): Promise<any> {
-        return new Promise((res, req) => {
-            this.http.get(this.baseUrl + 'product/names', { responseType: 'json', observe: 'response'})
-            .subscribe(
-                data => {
-                    this.shopService.setCategoryName(data.body);
-                    res(true);
-                },
-                error => {
-                    console.log(error);
-                }
-            );
-        });
+
+
+    getCartProduct(): Observable<any> {
+        return this.http.get(this.baseUrl + 'data/cart', { headers: this.authService.getHeaders(),
+        responseType: 'json', observe: 'response'});
     }
-    // --- End
 
     getProductByCategory(cate: string): Observable<any> {
         return this.http.get(this.baseUrl + 'product/category', { params: {

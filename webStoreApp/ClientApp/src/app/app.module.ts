@@ -25,10 +25,14 @@ import { HomeComponent } from './core/home/home.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthService } from './auth/auth.service';
+import { CartComponent } from './items/cart/cart.component';
+import { ItemService } from './items/item.service';
+import { AppLoadSErvice } from './app-load.service';
+import { AuthGuard } from './auth/auth-guard.service';
 // import { AuthGuardService } from './auth/auth-guard.service';
 
-export function productsProviderFactory(productsDataService: ProductsDataService) {
- return () => productsDataService.getCategoriesNames();
+export function categoryNamesProviderFactory(appLoad: AppLoadSErvice) {
+ return () => appLoad.getCategoriesNames();
 }
 
 @NgModule({
@@ -47,7 +51,8 @@ export function productsProviderFactory(productsDataService: ProductsDataService
     PageNotFoundComponent,
     HomeComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +67,12 @@ export function productsProviderFactory(productsDataService: ProductsDataService
     ShopService,
     ProductsDataService,
     AuthService,
+    ItemService,
+    AppLoadSErvice,
+    AuthGuard,
    // AuthGuardService
     {
-     provide: APP_INITIALIZER, useFactory: productsProviderFactory, deps: [ProductsDataService], multi: true
+     provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadSErvice], multi: true
     }
   ],
   bootstrap: [AppComponent]

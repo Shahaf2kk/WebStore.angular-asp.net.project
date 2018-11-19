@@ -7,6 +7,7 @@ import {
   faUnlock,
   faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { AuthGuard } from '../auth-guard.service';
 
 
 @Component({
@@ -21,10 +22,15 @@ export class SigninComponent implements OnInit {
 
   errorMsg;
   afterSubmit: boolean;
-  constructor(private authService: AuthService) {}
+  url: string;
+  constructor(private authService: AuthService,
+              private authGuard: AuthGuard) {}
 
   ngOnInit() {
     this.afterSubmit = false;
+    this.authGuard.getLastUrl.subscribe(
+      data => this.url = data
+    );
   }
   onSubmit(form: NgForm) {
     if (form.valid) {
@@ -33,7 +39,7 @@ export class SigninComponent implements OnInit {
       this.authService.signinUser(username, pass)
       .subscribe((data) => {
         const userData = data.body;
-        this.authService.afterSignInOrUp(userData);
+        this.authService.afterSignInOrUp(userData, this.url);
       },
       (error) => {
         this.errorMsg = this.authService.handleError(error);

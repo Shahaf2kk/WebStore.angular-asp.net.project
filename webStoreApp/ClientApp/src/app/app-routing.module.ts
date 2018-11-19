@@ -8,6 +8,8 @@ import { ShopCategoryComponent } from './shop/shop-category/shop-category.compon
 import { HomeComponent } from './core/home/home.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { CartComponent } from './items/cart/cart.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 
 const appRoutes: Routes = [
@@ -18,6 +20,7 @@ const appRoutes: Routes = [
         { path: ':i', component: ShoppingDetailsComponent},
         { path: 'category/:cate', component: ShopCategoryComponent}
     ]},
+    { path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
     // { path: 'user', loadChildren: './'}
     { path: 'signin', component: SigninComponent },
     { path: 'signup', component: SignupComponent },

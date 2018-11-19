@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -7,7 +7,6 @@ import { User } from '../user.model';
 
 @Injectable()
 export class AuthService {
-  private token;
   private baseUrl = 'https://localhost:44327/';
   private headers: HttpHeaders;
   private user: User = new User();
@@ -20,7 +19,7 @@ export class AuthService {
 
   constructor (private http: HttpClient,
      private router: Router) {
-    this.isAuth();
+    this.StartUpIsAuth();
   }
 
   changeIfAuth(isAuth: boolean) {
@@ -45,7 +44,7 @@ export class AuthService {
 
   }
 
-  afterSignInOrUp(data) {
+  afterSignInOrUp(data: string, url: string) {
     this.setToken(data);
     this.getUserNavData().subscribe(
       (userData) => {
@@ -59,7 +58,7 @@ export class AuthService {
         this.authSubject.next({ User: this.user, isAuth: false });
       }
     );
-    this.homeUrl();
+    this.router.navigate([url]);
   }
 
   homeUrl() {
@@ -91,7 +90,7 @@ export class AuthService {
     this.user = new User();
     this.authSubject.next({ User: this.user, isAuth: false });
   }
-  isAuth() {
+  StartUpIsAuth() {
     if (this.getTokenAndSetHeaders()) {
       this.getUserNavData().subscribe(
         (data) => {
@@ -105,6 +104,13 @@ export class AuthService {
       );
     } else {
       this.authSubject.next({ User: this.user, isAuth: false });
+    }
+  }
+  isAuth() {
+    if (this.getTokenAndSetHeaders()) {
+      return true;
+    } else {
+      return false;
     }
   }
 

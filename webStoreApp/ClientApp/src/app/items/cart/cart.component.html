@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="cate">
+    <ul>
+      <li>id</li>
+      <li>name</li>
+      <li>qty</li>
+    </ul>
+  </div>
+  <div
+  class="items"
+  *ngFor="let item of items"
+  >
+    <div class="div-id"> {{ item.id }} </div>
+    <div class="div-name"> {{ item.name }} </div>
+    <div class="div-qty" > {{ item.qty }} </div>
+  </div>
+  <div class="check-out">
+    <button>checl out</button>
+  </div>
+</div>
