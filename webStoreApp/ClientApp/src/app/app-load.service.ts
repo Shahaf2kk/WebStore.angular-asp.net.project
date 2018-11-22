@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ShopService } from './shop/shop.service';
 
 @Injectable()
-export class AppLoadSErvice {
+export class AppLoadService {
     private baseUrl = 'https://localhost:44327/';
 
     constructor(private http: HttpClient,

@@ -56,7 +56,7 @@ export class UserNavComponent implements OnInit {
       const pass = form.controls['pass'].value;
       this.authService.signinUser(username, pass).subscribe((data) => {
         const userData = data.body;
-        this.authService.afterSignInOrUp(userData);
+        this.authService.afterSignInOrUp(userData, '');
       },
       (error) => {
         this.errorMsg = this.authService.handleError(error);

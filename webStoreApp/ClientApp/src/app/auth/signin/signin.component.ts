@@ -29,7 +29,7 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
     this.afterSubmit = false;
     this.authGuard.getLastUrl.subscribe(
-      data => this.url = data
+      stateUrl => this.url = stateUrl
     );
   }
   onSubmit(form: NgForm) {

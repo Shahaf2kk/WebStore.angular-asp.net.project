@@ -1,0 +1,31 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas: 
+    ". cate ." 
+    ". items ."
+     ". btn .";
+}
+.cate {
+    grid-area: cate;
+}
+.cate > ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+.items {
+    grid-area: items;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.check-out {
+    grid-area: btn;
+}

@@ -8,12 +8,17 @@ import { ShopCategoryComponent } from './shop/shop-category/shop-category.compon
 import { HomeComponent } from './core/home/home.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { CartComponent } from './items/cart/cart.component';
+import { CartComponent } from './cart/cart/cart.component';
 import { AuthGuard } from './auth/auth-guard.service';
+import { ShoppingListComponent } from './shopping/shopping-list/shopping-list.component';
+import { ShoppingItemComponent } from './shopping/shopping-item/shopping-item.component';
 
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: 'shopping/:cate/:sub', component: ShoppingListComponent, children: [
+        { path: ':item', component: ShoppingItemComponent }
+    ]},
     { path: 'shop', component: HomeComponent, children: [
         { path: '', redirectTo: 'list', pathMatch: 'full' },
         { path: 'list', component: ShopItemsComponent},

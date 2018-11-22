@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { BehaviorSubject } from 'rxjs';
 import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../user.model';
+import { User } from '../model/user.model';
 
 @Injectable()
 export class AuthService {

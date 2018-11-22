@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { User } from '../../user.model';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: 'app-signup',
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.user = JSON.parse(data.body);
         const userData = this.user.token;
-        this.authService.afterSignInOrUp(userData);
+        this.authService.afterSignInOrUp(userData, '');
       }, (error) => {
         this.errorMsg = this.authService.handleError(error);
         this.afterSubmit = true;

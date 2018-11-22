@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    private lastUrl = new BehaviorSubject<string>('/home');
+    private lastUrl = new BehaviorSubject<string>('/');
     getLastUrl = this.lastUrl.asObservable();
     constructor(private authService: AuthService,
                 private router: Router) { }
