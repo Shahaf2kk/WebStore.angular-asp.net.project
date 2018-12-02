@@ -25,7 +25,7 @@ namespace webStoreApp.Controllers
             string username = User.Identity.Name;
             if (string.IsNullOrEmpty(username))
                 return new BadRequestResult();
-            return DB.GetUserData.getUserSigninData(username);
+            return DB.GetUserData.GetUserSigninData(username);
         }
         [HttpGet("cart")]
         public IActionResult GetCartProduct()

@@ -31,6 +31,7 @@
           <form #f="ngForm" (ngSubmit)="onSubmitNav(f)" class="inputDiv" >
             <div>
               <input 
+              autocomplete="username"
               type="text" 
               class="username"
               placeholder="Enter User Name" 
@@ -41,6 +42,7 @@
             </div>
                <div>
                  <input
+                 autocomplete="current-password"
                  type="password"
                  class="pass"
                  placeholder="Enter Password" 

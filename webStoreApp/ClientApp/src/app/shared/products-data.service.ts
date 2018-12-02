@@ -15,8 +15,7 @@ export class ProductsDataService {
                 private authService: AuthService,
                 private cartService: CartService,
                 private shoppingService: ShoppingService
-                ) {
-    }
+                ) { }
 
     getCartProduct() {
         this.http.get(this.baseUrl + 'data/cart', { headers: this.authService.getHeaders(),
@@ -60,9 +59,33 @@ export class ProductsDataService {
         );
     }
 
-    getProductById(id: number): Observable<any> {
-        return this.http.get(this.baseUrl + 'product/id', { params: {
+    getProductById(id: number) {
+        this.http.get(this.baseUrl + 'product/id', { params: {
             'id': id.toString()
-        }, responseType: 'json', observe: 'response' });
+        }, responseType: 'json', observe: 'response' })
+        .subscribe(
+        (data) => {
+            this.shoppingService.setProduct(data.body);
+        },
+        (error) => {
+            console.log(error);
+        });
+    }
+
+
+    // work! need to add get the user-data again for update user.
+    addCartProduct(id: number, qty: number) {
+        this.http.post(this.baseUrl + 'cart', { }, { headers: this.authService.getHeaders(),
+            params: {
+             'productId': id.toString(),
+             'qty': qty.toString()
+            }, responseType: 'json', observe: 'response' })
+            .subscribe(
+                data => {
+                    console.log(data);
+                    this.authService.addToCart(id, qty);
+                },
+                error => console.log(error)
+            );
     }
 }

@@ -14,8 +14,8 @@ namespace webStoreApp.Model
         public string description { get; set; }
         public decimal price { get; set; }
         public string imagePath { get; set; }
-      
     }
+   
     public class productsCategoryNames
     {
         public string categoryNames { get; set; }

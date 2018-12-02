@@ -12,12 +12,14 @@ import { CartComponent } from './cart/cart/cart.component';
 import { AuthGuard } from './auth/auth-guard.service';
 import { ShoppingListComponent } from './shopping/shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping/shopping-item/shopping-item.component';
+import { ShoppingComponent } from './shopping/shopping.component';
 
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'shopping/:cate/:sub', component: ShoppingListComponent, children: [
-        { path: ':item', component: ShoppingItemComponent }
+    { path: 'shopping', component: ShoppingComponent, children: [
+        { path: 'i/:item', component: ShoppingItemComponent },
+        { path: ':cate/:sub', component: ShoppingListComponent }
     ]},
     { path: 'shop', component: HomeComponent, children: [
         { path: '', redirectTo: 'list', pathMatch: 'full' },

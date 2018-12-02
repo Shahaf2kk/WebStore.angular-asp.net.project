@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductsDataService } from '../../shared/products-data.service';
 import { ShoppingService } from '../shopping.service';
 import { Product } from '../../model/product.model';
@@ -22,17 +22,15 @@ export class ShoppingListComponent implements OnInit {
   ngOnInit() {
     this.activateRoute.params
       .subscribe(
-        (params) => {
+        (params: Params) => {
           this.cate = params['cate'];
           this.subCate = params['sub'];
-          this.callToProducts();
+            this.callToProducts();
         }
       );
   }
 
   callToProducts() {
-    console.log('cate ' + this.cate);
-    console.log('subCate ' + this.subCate);
     if (this.cate === null) {
       this.router.navigate(['/notfound']);
     }

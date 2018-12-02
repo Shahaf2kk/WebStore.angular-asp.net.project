@@ -14,25 +14,14 @@ namespace webStoreApp.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        //[HttpGet]
-        //public IActionResult GetCartProduct()
-        //{
-        //    string userName = User.Identity.Name;
-        //    if (string.IsNullOrEmpty(userName))
-        //        return new NotFoundResult();
-        //    return DB.CartShop.getCartProduct(userName);
-        //}
         [HttpPost]
-        public IActionResult PostCartProduct([FromQuery] int? productId, int? qty)
+        public IActionResult PostCartProduct(int? productId, int? qty)
         {
             string userName = User.Identity.Name;
-            if (string.IsNullOrEmpty(userName))
-                return new NotFoundResult();
             if (productId == null || productId == 0 || qty == null || qty == 0)
                 return new NotFoundResult();
             Cart cart = new Cart { productDetails = new product { id = (int)productId }, qty = (int)qty };
-            return DB.CartShop.setCartProduct(cart , userName);
+            return DB.CartShop.AddOrUpdateCartProduct(userName, (int)productId, (int)qty);
         }
-
     }
 }

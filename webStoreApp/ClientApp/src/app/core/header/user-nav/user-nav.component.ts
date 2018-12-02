@@ -5,7 +5,6 @@ import { faSignInAlt, faBan, faArrowAltCircleRight } from '@fortawesome/free-sol
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-nav',
@@ -28,10 +27,7 @@ export class UserNavComponent implements OnInit {
 
 
   constructor(private router: Router,
-    private authService: AuthService
-    ) {
-      this.afterSubmit = false;
-     }
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.userDetails.subscribe( userData => {
@@ -41,6 +37,7 @@ export class UserNavComponent implements OnInit {
           this.cartProduct = userData.User.listOfCart.length;
         }
       });
+      this.afterSubmit = false;
   }
 
   cancelQuickLogin() {
@@ -48,7 +45,7 @@ export class UserNavComponent implements OnInit {
   }
   signOut() {
     this.authService.delToken();
-    this.authService.homeUrl();
+    this.router.navigate(['/']);
   }
   onSubmitNav(form: NgForm) {
     if (form.valid) {

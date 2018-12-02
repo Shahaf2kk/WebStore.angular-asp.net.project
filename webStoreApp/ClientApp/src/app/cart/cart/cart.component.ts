@@ -9,6 +9,10 @@ import { ProductsDataService } from '../../shared/products-data.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+
+productId: number[];
+productQty: number[];
+
   constructor(private cartService: CartService,
               private productsData: ProductsDataService) { }
 
@@ -21,6 +25,16 @@ ngOnInit() {
 getCartProducts(): CartItem[] {
   return this.cartService.getCartItem();
 }
+addToOrder(productId: number) {
+  const index = this.productId.findIndex(x => x === productId);
+  if (index !== -1) {
+    this.productId.splice(index, 1);
+  } else {
+    this.productId.push(productId);
+  }
+  
+}
+
 
 // need to add force check isAuth if Click on CartView again.
 }

@@ -12,8 +12,8 @@ export class AuthService {
   private user: User = new User();
 
 // ---- object for nav user - if isAuth - start
-  private authSubject = new BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
-  userDetails = this.authSubject.asObservable();
+  private userDetailsSubject = new BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
+  userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
 
@@ -23,7 +23,12 @@ export class AuthService {
   }
 
   changeIfAuth(isAuth: boolean) {
-    this.authSubject.next({ User: this.user, isAuth: isAuth });
+    this.userDetailsSubject.next({ User: this.user, isAuth: isAuth });
+  }
+  addToCart(id: number, qty: number) {
+    const user = this.user;
+    user.listOfCart.push( { productId: id, qty: qty});
+    this.userDetailsSubject.next({ User: user, isAuth: true});
   }
 
   signinUser(usernmae: string, pass: string): Observable<any> {
@@ -50,19 +55,15 @@ export class AuthService {
       (userData) => {
         this.user.userName = userData.body['userName'];
         this.user.listOfCart = userData.body['cartDetails'];
-        this.authSubject.next({ User: this.user, isAuth: true });
+        this.userDetailsSubject.next({ User: this.user, isAuth: true });
       },
       (error) => {
         console.log('error msg ');
         console.log(error);
-        this.authSubject.next({ User: this.user, isAuth: false });
+        this.userDetailsSubject.next({ User: this.user, isAuth: false });
       }
     );
     this.router.navigate([url]);
-  }
-
-  homeUrl() {
-    this.router.navigate(['']);
   }
 
   getUserNavData() {
@@ -75,6 +76,7 @@ export class AuthService {
   this.delToken();
   localStorage.setItem('t', 'Bearer ' + token);
   }
+
   getTokenAndSetHeaders() {
     const t = localStorage.getItem('t');
     if (t !== null) {
@@ -88,7 +90,7 @@ export class AuthService {
   delToken() {
     localStorage.clear();
     this.user = new User();
-    this.authSubject.next({ User: this.user, isAuth: false });
+    this.userDetailsSubject.next({ User: this.user, isAuth: false });
   }
   StartUpIsAuth() {
     if (this.getTokenAndSetHeaders()) {
@@ -96,14 +98,14 @@ export class AuthService {
         (data) => {
           this.user.userName = data.body['userName'];
           this.user.listOfCart = data.body['cartDetails'];
-          this.authSubject.next({ User: this.user, isAuth: true });
+          this.userDetailsSubject.next({ User: this.user, isAuth: true });
         },
         (error) => {
           this.delToken();
         }
       );
     } else {
-      this.authSubject.next({ User: this.user, isAuth: false });
+      this.userDetailsSubject.next({ User: this.user, isAuth: false });
     }
   }
   isAuth() {
@@ -117,6 +119,7 @@ export class AuthService {
   getHeaders() {
     return this.headers;
   }
+
   handleError(errorRes: HttpErrorResponse) {
     if (errorRes.error instanceof ErrorEvent) {
       console.error('client side: ' + errorRes.error.message);

@@ -1,3 +1,10 @@
-<p>
-  shopping-item works!
-</p>
+<div class="container-shopping-item">
+    <div class="item">
+        <div class="name"> {{ product.name }} </div>
+        <div class="description"> {{product.description }} </div>
+        <div class="image">  {{ product.imagePath }} </div>
+        <div class="price"> {{ product.price }} </div>
+        <app-shopping-cart-box
+         [product]="product"></app-shopping-cart-box>
+    </div>
+</div>
