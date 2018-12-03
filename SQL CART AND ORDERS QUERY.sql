@@ -1,14 +1,33 @@
 --select * from cart
 --select * from cartDetails
---delete orderDetails where order_id = 17
---delete orders where order_id = 17
---delete shipDetails where ship_id = 17
-select * from orders
-select * from orderDetails
-select * from shipDetails
+--delete orderDetails where order_id = 39
+--delete orders where order_id = 39
+--delete shipDetails where ship_id = 39
+--i1nsert into orders values(21, 'shahaf', 0 , null)
+--select * from cartDetails
+--UPDATE orders SET payment_date = null WHERE order_id = 40
+select * from cartDetails
+select * from cart
+
+SELECT product.product_id, product.product_category,
+product.product_sub_category, product.product_name, product.product_description,
+product.product_price, product.product_image_path, cartDetails.qty,
+(cartDetails.qty * product.product_price) AS total 
+FROM product INNER JOIN cartDetails ON product.product_id = cartDetails.product_id INNER JOIN cart ON cartDetails.cart_id = cart.cart_id WHERE cart.userName = 'shahaf'
+--select cartDetails.product_id, cartDetails.qty from cartDetails join cart ON cartDetails.cart_id = cart.cart_id WHERE cart.userName = 'shahaf'
+--select * from orders
+--select * from orderDetails
+--select * from shipDetails
+--SELECT orders.order_id FROM orders WHERE (orders.userName = 'shahaf' AND orders.payment_date IS NULL)
+--SELECT orders.order_id FROM orders WHERE orders.userName = 'shahaf' AND orders.payment_date IS NULL
+--{INSERT INTO orderDetails OUTPUT inserted.total_price VALUES 
+--( @orderId, @productId0, @productQty0, (SELECT product.product_price FROM product WHERE product.product_id = @productId0) * @productQty0)
+--,( @orderId, @productId1, @productQty1, (SELECT product.product_price FROM product WHERE product.product_id = @productId1) * @productQty1)}
+--INSERT INTO orderDetails(order_id, product_id, qty, total_price) OUTPUT inserted.total_price VALUES
+-- ( @orderId, @productId0, @productQty0, (SELECT product.product_price FROM product WHERE product.product_id = @productId0) * @productQty0),( @orderId, @productId1, @productQty1, (SELECT product.product_price FROM product WHERE product.product_id = @productId1) * @productQty1)
 --INSERT INTO orderDetails(order_id, product_id, qty, total_price) OUTPUT inserted.total_price VALUES 
---(11,147852778,9,(SELECT product.product_price FROM product WHERE product.product_id = 147852778) * 9),
---(11,147852778,9,(SELECT product.product_price FROM product WHERE product.product_id = 147852778) * 9)
+--(21,147852778,9,(SELECT product.product_price FROM product WHERE product.product_id = 147852778) * 9),
+--(21,147852778,9,(SELECT product.product_price FROM product WHERE product.product_id = 147852778) * 9)
 --UPDATE orders SET total_cost = (SELECT SUM(total_price) FROM orderDetails WHERE orderDetails.order_id = 3) OUTPUT inserted.total_cost WHERE orders.order_id = 3
 --select * from orderDetails
 --select * from orders

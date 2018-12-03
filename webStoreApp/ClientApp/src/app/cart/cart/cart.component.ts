@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { CartItem } from '../../model/cart-item.model';
 import { CartService } from '../cart.service';
 import { ProductsDataService } from '../../shared/products-data.service';
@@ -10,8 +11,7 @@ import { ProductsDataService } from '../../shared/products-data.service';
 })
 export class CartComponent implements OnInit {
 
-productId: number[];
-productQty: number[];
+cartProduct: CartItem[];
 
   constructor(private cartService: CartService,
               private productsData: ProductsDataService) { }
@@ -20,21 +20,10 @@ ngOnInit() {
   this.productsData.getCartProduct();
 }
 
-// ng-for calls this method until its get value that its not undefine;
-// need to check performence between this approach and Rxjs ( Subject / BehaviorSubject / Subscription Etc);
 getCartProducts(): CartItem[] {
-  return this.cartService.getCartItem();
-}
-addToOrder(productId: number) {
-  const index = this.productId.findIndex(x => x === productId);
-  if (index !== -1) {
-    this.productId.splice(index, 1);
-  } else {
-    this.productId.push(productId);
-  }
-  
+  this.cartProduct = this.cartService.getCartItem();
+  return this.cartProduct;
 }
 
 
-// need to add force check isAuth if Click on CartView again.
 }

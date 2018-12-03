@@ -391,14 +391,14 @@ namespace webStoreApp
                     conn.Open();
                     int orderId = GetOrderId(username, conn);
                     if (orderId == 0)
-                        return new BadRequestResult();
+                        return new BadRequestObjectResult("order id fail");
 
                     if (!UpdateOrderPayMent(conn, orderId))
                         return new BadRequestResult();
                 
                     List<int> products = GetProductsIdOrder(conn, orderId);
                     if (products == null)
-                        return new BadRequestResult();
+                        return new BadRequestObjectResult("products int fail");
 
                     return CartShop.DeleteCartProduct(conn, products, username);
                 }
@@ -415,7 +415,7 @@ namespace webStoreApp
                         List<int> products = new List<int>();
                         for (int i = 0; rd.Read(); i++)
                         {
-                            products.Add(rd.GetInt32(i));
+                            products.Add(rd.GetInt32(0));
                         }
                         return products;
                     }
@@ -423,10 +423,10 @@ namespace webStoreApp
             }
             private static bool UpdateOrderPayMent(SqlConnection conn, int orderId)
             {
-                using (SqlCommand cmd = new SqlCommand("UPDATE orders SET orders payment_date = @payMentDate " +
+                using (SqlCommand cmd = new SqlCommand("UPDATE orders SET orders.payment_date = @payment_date " +
                     "WHERE orders.order_id = @orderId", conn))
                 {
-                    cmd.Parameters.AddWithValue("@payMentDate", DateTimeOffset.Now);
+                    cmd.Parameters.AddWithValue("@payment_date", DateTimeOffset.Now);
                     cmd.Parameters.AddWithValue("@orderId", orderId);
 
                     if (cmd.ExecuteNonQuery() == 1)
@@ -454,7 +454,7 @@ namespace webStoreApp
             private static Order SetOrderDetails(int orderId, Order order, SqlConnection con)
             {
                 StringBuilder command = new StringBuilder();
-                command.Append("INSERT INTO orderDetails(order_id, product_id, qty, total_price) OUTPUT inserted.total_price VALUES ");
+                command.Append("INSERT INTO orderDetails OUTPUT inserted.total_price VALUES ");
                 for (int i = 0; i < order.products.Count; i++)
                 {
                     command.Append("( @orderId, " +
@@ -463,27 +463,24 @@ namespace webStoreApp
                                     "(SELECT product.product_price FROM product WHERE product.product_id = @productId" + i + ") * @productQty" + i + "),");
                     if (i == order.products.Count - 1)
                         command.Remove(command.Length - 1, 1);
-
                 }
-
                 using (SqlCommand cmd = new SqlCommand(command.ToString(), con))
                 {
                     cmd.Parameters.AddWithValue("@orderId", orderId);
 
                     for (int i = 0; i < order.products.Count; i++)
                     {
-                        cmd.Parameters.AddWithValue("@productId" + i , order.products[i].id);
-                        cmd.Parameters.AddWithValue("@productQty" + i , order.productsQty[i]);
+                        cmd.Parameters.AddWithValue("@productId" + i, order.products[i].id);
+                        cmd.Parameters.AddWithValue("@productQty" + i, order.productsQty[i]);
                     }
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
-                        for (int i = 0; rd.Read(); i++)
+                        for (int i = 0; rd.Read() ; i++)
                         {
-                            order.products[i].price = (decimal)rd.GetDecimal(i); // fuck!
+                            order.products[i].price = rd.GetDecimal(0);
                         }
-                        return cmd.ExecuteNonQuery() == order.products.Count ? order : null;
                     }
-
+                    return order;
                 }
             }
             private static int InsertOrder(int shipId, string username, SqlConnection con)
@@ -502,12 +499,17 @@ namespace webStoreApp
             }
             private static int GetOrderId(string username, SqlConnection con)
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT orders.order_id FROM orders WHERE orders.userName = @username AND payment_date IS NULL", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT orders.order_id FROM orders" +
+                    " WHERE (orders.userName = @username AND orders.payment_date IS NULL)", con))
                 {
                     cmd.Parameters.AddWithValue("@username", username);
                     using (SqlDataReader rd = cmd.ExecuteReader())
                     {
-                        return rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
+                        if (rd.Read())
+                        {
+                            return rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
+                        }
+                        return 0;
                     }
                 }
             }
@@ -539,7 +541,8 @@ namespace webStoreApp
                     conn.Open();
                     if (!SigninByToken(username, conn))
                         return new NotFoundObjectResult("invalide user name " + username);
-                    using (SqlCommand cmd = new SqlCommand("SELECT product_id, qty FROM cart WHERE userName=@username", conn))
+                    using (SqlCommand cmd = new SqlCommand("SELECT cartDetails.product_id, cartDetails.qty FROM cartDetails " +
+                        "INNER JOIN cart ON cartDetails.cart_id = cart.cart_id WHERE cart.userName = @username", conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
                         using (SqlDataReader rd = cmd.ExecuteReader())
@@ -573,14 +576,12 @@ namespace webStoreApp
                     if (!SigninByToken(user.userName, conn))
                         return new NotFoundResult();
 
-                    using (SqlCommand cmd = new SqlCommand("SELECT product.product_id, product.product_category, " +
-                        "product.product_sub_category, product.product_name, product.product_description," +
-                        " product.product_price, product.product_image_path, cart.qty," +
-                        " (cart.qty * product.product_price) AS total FROM product" +
-                        " INNER JOIN cart ON(product.product_id = cart.product_id) " +
-                        "WHERE cart.userName = @userName", conn))
+                    using (SqlCommand cmd = new SqlCommand("SELECT product.product_id, product.product_category, product.product_sub_category, product.product_name, product.product_description," +
+                        "product.product_price, product.product_image_path, cartDetails.qty, (cartDetails.qty * product.product_price) AS total " +
+                        "FROM product INNER JOIN cartDetails ON product.product_id = cartDetails.product_id " +
+                        "INNER JOIN cart ON cartDetails.cart_id = cart.cart_id WHERE cart.userName = @username", conn))
                     {
-                        cmd.Parameters.AddWithValue("@userName", user.userName);
+                        cmd.Parameters.AddWithValue("@username", user.userName);
                         using (SqlDataReader rd = cmd.ExecuteReader())
                         {
                             List<Cart> productsCart = new List<Cart>();

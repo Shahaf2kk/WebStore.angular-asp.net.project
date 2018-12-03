@@ -1,25 +1,10 @@
-<div class="container">
-  <div class="cate">
-    <ul>
-      <li>id</li>
-      <li>name</li>
-      <li>price</li>
-      <li>qty</li>
-      <li>total</li>
-    </ul>
-  </div>
-  <div class="items">
-      <div class="item"
-      *ngFor="let item of getCartProducts()">
-        <div class="div-id"> {{ item.productDetails.id }} </div>
-        <div class="div-name"> {{ item.productDetails.name }} </div>
-        <div class="div-price"> {{ item.productDetails.price }} </div>
-        <div class="div-qty" > {{ item.qty }} </div>
-        <div class="div-total"> {{ item.totalCost }} </div>
-        <!-- <div class="addToOrder"> <input type="radio" [(ngModel)]="addToOrder(item.productDetails.id)" id="">  </div> -->
-    </div>
-  </div>
-  <div class="check-out">
-    <button>checl out</button>
+<div class="cart-container">
+  <div
+  class="cart-item"
+  *ngFor="let item of getCartProducts()">
+    <div class="name">{{ item.productDetails.name | titlecase }}</div>
+    <div class="qty">QTY: {{ item.qty }}</div>
+    <div class="total">Total: {{ item.totalCost }}</div>
+    <hr>
   </div>
 </div>
