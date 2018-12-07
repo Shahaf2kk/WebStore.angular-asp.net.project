@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { ProductsDataService } from 'src/app/shared/products-data.service';
 
 @Component({
   selector: 'app-cart-nav',
@@ -10,10 +11,10 @@ export class CartNavComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   faCartArrowDown = faCartArrowDown;
 
-  constructor() { }
+  constructor(private productsData: ProductsDataService) { }
 
   ngOnInit() {
-
+    this.productsData.getCartProduct();
   }
 
 }

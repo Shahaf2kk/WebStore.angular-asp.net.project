@@ -18,7 +18,7 @@ export class AuthService {
 
 
   constructor (private http: HttpClient,
-     private router: Router) {
+              private router: Router) {
     this.StartUpIsAuth();
   }
 
@@ -34,9 +34,7 @@ export class AuthService {
   signinUser(usernmae: string, pass: string): Observable<any> {
     return this.http.get(this.baseUrl + 'users/signin',
     { params: { 'username': usernmae, 'pass': pass },
-    responseType: 'text', observe: 'response'}); // .pipe(
-      // catchError(this.handleError)
-      // );
+    responseType: 'text', observe: 'response'});
     }
 
 
@@ -58,9 +56,7 @@ export class AuthService {
         this.userDetailsSubject.next({ User: this.user, isAuth: true });
       },
       (error) => {
-        console.log('error msg ');
-        console.log(error);
-        this.userDetailsSubject.next({ User: this.user, isAuth: false });
+        this.handleError(error);
       }
     );
     this.router.navigate([url]);
@@ -83,10 +79,9 @@ export class AuthService {
       this.headers = new HttpHeaders().set('Authorization', t);
       return true;
     }
+    this.delToken();
     return false;
   }
-
-
   delToken() {
     localStorage.clear();
     this.user = new User();
@@ -101,7 +96,7 @@ export class AuthService {
           this.userDetailsSubject.next({ User: this.user, isAuth: true });
         },
         (error) => {
-          this.delToken();
+          this.handleError(error);
         }
       );
     } else {
@@ -129,11 +124,15 @@ export class AuthService {
       if (errorRes.status === 400) {
         return errorRes.error;
       }
+      if (errorRes.status === 401) {
+        this.delToken();
+        this.router.navigate(['/signin']);
+      }
       if (errorRes.status === 404) {
         return errorRes.error;
       }
     }
-    return throwError('');
+    // return throwError('');
   }
 
   // this.http.post(this.baseUrl + 'users/signup', {},

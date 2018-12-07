@@ -16,12 +16,13 @@ namespace webStoreApp.Controllers
     public class OrderController : ControllerBase
     {
         [HttpPost]
-        public IActionResult SetOrder([FromBody] JObject data)
+        public IActionResult SetOrder([FromBody] JObject _data)
         {
+            var data = _data["order"].ToObject<JObject>();
             Order order = new Order();
             order.shipDetails = data["shipDetails"].ToObject<ShipDetails>();
-            order.SetProductsId(data["productId"].ToObject<int[]>());
-            order.productsQty = data["productQty"].ToObject<int[]>();
+            order.SetProductsId(data["productsId"].ToObject<int[]>());
+            order.productsQty = data["productsQty"].ToObject<int[]>();
 
             if (order.shipDetails == null || order.products == null || order.productsQty == null || order.products.Count != order.productsQty.Length)
                 return new NotFoundResult();

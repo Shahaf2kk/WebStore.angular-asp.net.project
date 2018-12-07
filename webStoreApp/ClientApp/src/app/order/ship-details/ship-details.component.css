@@ -1,0 +1,24 @@
+.ship-details-container {
+    display: grid;
+    grid-template-columns: 1fr 600px 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: ". form .";
+    justify-content: center;
+}
+
+.ship-details-container > form {
+    grid-area: form;    
+    display: flex;
+    flex-direction: column;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+}
+form > div {
+    width: 600px;   
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

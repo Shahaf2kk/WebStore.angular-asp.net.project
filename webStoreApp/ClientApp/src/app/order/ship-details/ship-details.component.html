@@ -1,0 +1,66 @@
+<div class="ship-details-container">
+  <form [formGroup]="shippingForm" (ngSubmit)="onSubmit()">
+    <div class="address">
+      <label for="address">Enter Address</label>
+      <input type="text"
+            formControlName="address">
+    </div>
+    <div class="errorMsg"
+        *ngIf="shippingForm.get('address').invalid && shippingForm.get('address').touched">
+          Address Must Has Minimum 5 Letters 
+    </div>
+    <div class="city">
+      <label for="city">Enter City</label>
+      <input type="text"
+              formControlName="city"
+       >
+    </div>
+      <div class="errorMsg"
+          *ngIf="shippingForm.get('city').invalid && shippingForm.get('city').touched">
+          City Must Has Minimum 3 Letters 
+    </div>
+    <!-- need to add counrty list -->
+    <div class="country">
+      <label for="country">Enter Country</label>
+      <select
+        formControlName="country">
+        <option [value]="country" *ngFor="let country of countries">
+          {{ country }}
+        </option>
+      </select>
+      <!-- <input
+       type="text"
+       formControlName="country"
+       > -->
+    </div>
+    <div
+    class="errorMsg"
+    *ngIf="shippingForm.get('country').invalid && shippingForm.get('country').touched">
+    country Must Has Minimum 3 Letters 
+  </div>
+    <div class="phone">
+      <label for="phone">Enter Phone Number</label>
+      <input
+       type="tel"
+       formControlName="phone"
+       >
+    </div>
+      <div
+      class="errorMsg"
+      *ngIf="shippingForm.get('phone').invalid && shippingForm.get('phone').touched">
+    Phone Number Must Has Minimum 8 Letters 
+    </div>
+
+    <div class="button">
+      <button
+       type="submit"
+       [disabled]="shippingForm.invalid"
+       >Next</button>
+      <button routerLink="/cart">Back</button>
+    </div>
+    </form>
+</div>
+<!-- shipAddress": "jaja",
+"shipCity" : "kakaoaoa",
+"shipCountry": "israel",
+"phone"> -->

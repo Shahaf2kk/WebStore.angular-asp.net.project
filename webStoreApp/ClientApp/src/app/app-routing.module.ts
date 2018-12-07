@@ -13,6 +13,8 @@ import { AuthGuard } from './auth/auth-guard.service';
 import { ShoppingListComponent } from './shopping/shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping/shopping-item/shopping-item.component';
 import { ShoppingComponent } from './shopping/shopping.component';
+import { ShipDetailsComponent } from './order/ship-details/ship-details.component';
+import { OrderDetailsComponent } from './order/order-details/order-details.component';
 
 
 const appRoutes: Routes = [
@@ -28,6 +30,9 @@ const appRoutes: Routes = [
         { path: 'category/:cate', component: ShopCategoryComponent}
     ]},
     { path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
+    { path: 'order', component: ShipDetailsComponent, canActivate: [AuthGuard], children: [
+        { path: 'orderDetails', component: OrderDetailsComponent, canActivate: [AuthGuard]}
+    ]},
     // { path: 'user', loadChildren: './'}
     { path: 'signin', component: SigninComponent },
     { path: 'signup', component: SignupComponent },

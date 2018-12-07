@@ -1,10 +1,54 @@
 <div class="cart-container">
-  <div
-  class="cart-item"
-  *ngFor="let item of getCartProducts()">
-    <div class="name">{{ item.productDetails.name | titlecase }}</div>
-    <div class="qty">QTY: {{ item.qty }}</div>
-    <div class="total">Total: {{ item.totalCost }}</div>
-    <hr>
-  </div>
+    <app-cart-item *ngFor="let item of getCartProduct(); let i = index"
+    [item]="item"
+    [index]="i"
+    ></app-cart-item>
 </div>
+
+
+
+<!-- <div class="cart-container">
+  <div class="cart-items">
+    <div
+      *ngFor="let item of cartProduct; let i = index"
+      class="item">
+
+      <div class="title">{{ item.productDetails.name }} </div>
+      <div class="qty">{{ item.qty }} </div>
+      <div class="price">{{ item.productDetails.price }} </div>
+      <div class="total"> {{item.totalCost}} </div>
+      <div class="input">
+        <input type="checkbox" (click)="addProduct(i)" >
+      </div>    
+     
+    </div>
+  </div>
+</div> -->
+
+
+
+<!-- <div class="cart-container">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div class="products">
+      <div 
+        class="items"
+        *ngFor="let item of cartProduct"
+        > 
+          <div class="itemDetails">
+            <div class="title">
+              {{ item.productDetails.name }}
+            </div>
+            <div class="qty">
+            </div>
+          </div>
+          <input
+           type="checkbox"
+           [name]="item.productDetails.id"
+            ngModel>
+      </div>
+    </div>
+    <div class="button">
+      <button type="submit">submit</button>
+    </div>
+  </form>
+</div> -->

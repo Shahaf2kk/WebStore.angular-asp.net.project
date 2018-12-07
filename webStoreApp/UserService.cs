@@ -13,7 +13,12 @@ namespace webStoreApp
 {
     public class UserService
     {
-        public static string appSetting; //"tfdxdrtg636278534utheiuv776g76g7g67yu9iiuiuytreww34567890iuytfghjkjhgfdfghjiuyt5t6y7u8ioi9o9ikjuyhbgfrdcdswsxsaqq12w23e34r45rt";
+        private static string appSetting; //"tfdxdrtg636278534utheiuv776g76g7g67yu9iiuiuytreww34567890iuytfghjkjhgfdfghjiuyt5t6y7u8ioi9o9ikjuyhbgfrdcdswsxsaqq12w23e34r45rt";
+
+        public static void SetAppSetting(string value)
+        {
+            appSetting = value;
+        }
 
         public static User GetToken(User user)
         {

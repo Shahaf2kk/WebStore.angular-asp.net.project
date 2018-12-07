@@ -29,7 +29,7 @@ namespace webStoreApp
                 configuration.RootPath = "ClientApp/dist";
             });
             DB.con = Configuration.GetConnectionString("_CONN");
-            UserService.appSetting = Configuration.GetValue<string>("AppSetting:Secret");
+            UserService.SetAppSetting(Configuration.GetValue<string>("AppSetting:Secret"));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { CartItem } from '../../model/cart-item.model';
+
 import { CartService } from '../cart.service';
-import { ProductsDataService } from '../../shared/products-data.service';
+
 
 @Component({
   selector: 'app-cart',
@@ -11,19 +10,13 @@ import { ProductsDataService } from '../../shared/products-data.service';
 })
 export class CartComponent implements OnInit {
 
-cartProduct: CartItem[];
 
-  constructor(private cartService: CartService,
-              private productsData: ProductsDataService) { }
+  constructor(private cartService: CartService) { }
 
-ngOnInit() {
-  this.productsData.getCartProduct();
-}
+  ngOnInit() {
+  }
 
-getCartProducts(): CartItem[] {
-  this.cartProduct = this.cartService.getCartItem();
-  return this.cartProduct;
-}
-
-
+  getCartProduct() {
+    return this.cartService.getCartItem();
+  }
 }

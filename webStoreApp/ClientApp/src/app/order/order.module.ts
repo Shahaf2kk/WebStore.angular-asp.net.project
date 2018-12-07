@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CartService } from './cart.service';
+import { OrderService } from './order.service';
 
-import { CartComponent } from './cart/cart.component';
-import { CartItemComponent } from './cart/cart-item/cart-item.component';
+import { ShipDetailsComponent } from './ship-details/ship-details.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
     declarations: [
-        CartComponent,
-        CartItemComponent
+        ShipDetailsComponent,
+        OrderDetailsComponent
     ],
     providers: [
-        CartService
+        OrderService
     ],
     imports: [
         ReactiveFormsModule,
@@ -21,4 +21,5 @@ import { CartItemComponent } from './cart/cart-item/cart-item.component';
         FormsModule
     ]
 })
-export class CartModule { }
+
+export class OrderModule { }

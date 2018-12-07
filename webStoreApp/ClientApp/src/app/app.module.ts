@@ -10,6 +10,7 @@ import { ClickOutsideModule } from 'ng4-click-outside';
 import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
 import { ShoppingModule } from './shopping/shopping.module';
+import { OrderModule } from './order/order.module';
 
 import { ProductsDataService } from './shared/products-data.service';
 import { AppLoadService } from './app-load.service';
@@ -48,7 +49,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     ShopItemsComponent,
     ShopCategoryComponent,
     PageNotFoundComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +61,8 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     AppRoutingModule,
     CartModule,
     AuthModule,
-    ShoppingModule
+    ShoppingModule,
+    OrderModule
   ],
   providers: [
     ShopService,

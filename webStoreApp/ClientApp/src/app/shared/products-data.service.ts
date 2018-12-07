@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
 import { ShoppingService } from '../shopping/shopping.service';
+
 import { Product } from '../model/product.model';
+import { Order } from '../model/order.model';
 
 @Injectable()
 export class ProductsDataService {
@@ -17,6 +18,19 @@ export class ProductsDataService {
                 private shoppingService: ShoppingService
                 ) { }
 
+    postOrder(order: Order) {
+        const body =  JSON.stringify(order);
+        this.http.post(this.baseUrl + 'order', { order },
+         { headers: this.authService.getHeaders()
+            .set('Content-Type', 'application/json') })
+         .subscribe(
+            data => {
+            console.log(data);
+            },
+            error => {
+                this.authService.handleError(error);
+            });
+    }
     getCartProduct() {
         this.http.get(this.baseUrl + 'data/cart', { headers: this.authService.getHeaders(),
         responseType: 'json', observe: 'response'})

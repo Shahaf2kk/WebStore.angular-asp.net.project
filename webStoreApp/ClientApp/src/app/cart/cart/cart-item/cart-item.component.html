@@ -1,0 +1,12 @@
+<div class="cart-item-container">
+  <div class="title">
+    <p> {{ item.productDetails.name | titlecase }} </p>
+  </div>
+  <div class="qty">
+    <p> {{ item.qty }} </p>
+  </div>
+  <div class="addToCart">
+    <input type="checkbox" [(ngModel)]="checkbox" (change)="addToOrder()">
+  </div>
+
+</div>
