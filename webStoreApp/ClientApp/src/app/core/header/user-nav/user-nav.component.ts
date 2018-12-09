@@ -35,6 +35,11 @@ export class UserNavComponent implements OnInit {
         if (this.userAuth) {
           this.userName = userData.User.userName;
           this.cartProduct = userData.User.listOfCart.length;
+          if (!(this.cartProduct === 0) ) {
+            this.authService.hasProduct = true;
+           } else {
+          this.authService.hasProduct = false;
+          }
         }
       });
       this.afterSubmit = false;

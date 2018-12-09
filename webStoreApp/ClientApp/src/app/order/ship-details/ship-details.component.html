@@ -1,4 +1,6 @@
 <div class="ship-details-container">
+  <div class="title"><h1>Set Shipping Address</h1></div>
+  <hr>
   <form [formGroup]="shippingForm" (ngSubmit)="onSubmit()">
     <div class="address">
       <label for="address">Enter Address</label>
@@ -56,11 +58,8 @@
        type="submit"
        [disabled]="shippingForm.invalid"
        >Next</button>
-      <button routerLink="/cart">Back</button>
+
+      <button type="button" (click)="back()" >Back</button>
     </div>
     </form>
 </div>
-<!-- shipAddress": "jaja",
-"shipCity" : "kakaoaoa",
-"shipCountry": "israel",
-"phone"> -->

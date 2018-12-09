@@ -34,6 +34,7 @@ namespace webStoreApp
                     return user;
                 }
             }
+
             public static User SignUp(User user)
             {
                 if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
@@ -66,6 +67,8 @@ namespace webStoreApp
                     return null;
                 return user;
             }
+
+
             private static bool CheckUsername(User user, SqlConnection conn)
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userName=@userName", conn))
@@ -81,6 +84,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             private static bool CheckUserEmail(User user, SqlConnection conn)
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userEmail=@userEmail", conn))
@@ -130,6 +134,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             public static IActionResult GetProductsCate()
             {
                 List<productsCategoryNames> productsNames = new List<productsCategoryNames>();
@@ -168,6 +173,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             public static IActionResult GetProductsByCate(string category)
             {
                 if (string.IsNullOrEmpty(category))
@@ -192,7 +198,7 @@ namespace webStoreApp
                                     name = rd.GetString(3),
                                     description = rd.GetString(4),
                                     price = (decimal)rd.GetDecimal(5),
-                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
+                                    imagePath = rd.IsDBNull(6) ? null : rd.GetString(6)
                                 };
                                 products.Add(product);
                             }
@@ -203,6 +209,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             public static IActionResult GetProductsBySubCat(string category, string subCategory)
             {
                 using (SqlConnection conn = new SqlConnection(con))
@@ -249,26 +256,43 @@ namespace webStoreApp
                     conn.Open();
                     int cartId = GetCartId(conn, username);
                     if (cartId == 0)
-                        return new NotFoundResult();
-
-                    using (SqlCommand cmd = new SqlCommand("IF EXISTS( SELECT cart.cart_id FROM cart WHERE userName = @username )" +
-                        " IF EXISTS(SELECT cartDetails.product_id FROM cartDetails WHERE cartDetails.product_id = @product_id AND cartDetails.cart_id = @cart_id)" +
-                        " UPDATE cartDetails SET qty = (SELECT cartDetails.qty FROM cartDetails WHERE cartDetails.cart_id = @cart_id AND cartDetails.product_id = @product_id) + @qty" +
-                        " ELSE" +
-                        " INSERT INTO cartDetails VALUES(@cart_id, @product_id, @qty) " +
-                        "ELSE BEGIN INSERT INTO cart VALUES( @username ) " +
-                        "INSERT INTO cartDetails values((SELECT cart.cart_id FROM cart WHERE userName = @username), @product_id, @qty)" +
-                        " END", conn))
                     {
-                        cmd.Parameters.AddWithValue("@cart_id", cartId);
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@product_id", productId);
-                        cmd.Parameters.AddWithValue("@qty", qty);
-                        int rowEf = cmd.ExecuteNonQuery();
-                        return new OkObjectResult(rowEf);
+                        cartId = SetCart(username, conn);
+                        if (cartId == -1)
+                            return new BadRequestResult();
                     }
+
+                    int oldQty = GetQty(productId, cartId, conn);
+                    if(oldQty == -1)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("INSERT INTO cartDetails VALUES(@cart_id, @product_id, @qty)", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@cart_id", cartId);
+                            cmd.Parameters.AddWithValue("@product_id", productId);
+                            cmd.Parameters.AddWithValue("@qty", qty);
+                            if (cmd.ExecuteNonQuery() == 1)
+                                return new OkObjectResult(qty);
+                        }
+                    }
+                    else
+                    {
+                        qty += oldQty;
+                        using (SqlCommand cmd = new SqlCommand("UPDATE cartDetails SET qty = @qty " +
+                        "WHERE cartDetails.product_id = @product_id AND cartDetails.cart_id = @cart_id", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@qty", qty);
+                            cmd.Parameters.AddWithValue("@product_id", productId);
+                            cmd.Parameters.AddWithValue("@cart_id", cartId);
+                            if (cmd.ExecuteNonQuery() == 1)
+                                return new OkObjectResult(qty);
+                        }
+                    }
+
+                    return new BadRequestResult();
+
                 }
             }
+
             public static IActionResult DeleteCartProduct(SqlConnection conn, List<int> products, string username)
             {
                 StringBuilder command = new StringBuilder();
@@ -320,6 +344,43 @@ namespace webStoreApp
 
                 return new BadRequestResult();
             }
+
+
+            private static int GetQty(int productId, int cartId, SqlConnection conn)
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT cartDetails.qty FROM cartDetails " +
+                        "WHERE cartDetails.cart_id = @cart_id AND cartDetails.product_id = @product_id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@product_id", productId);
+                    cmd.Parameters.AddWithValue("@cart_id", cartId);
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        if(rd.Read())
+                        {
+                            return rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
+                        }
+                    }
+                }
+                return -1;
+            }
+
+            private static int SetCart(string username, SqlConnection conn)
+            {
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO cart OUTPUT INSERTED.cart_id VALUES( @username )", conn))
+                {
+                    cmd.Parameters.AddWithValue("@username", username);
+
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        if (rd.Read())
+                        {
+                            return rd.IsDBNull(0) ? -1 : rd.GetInt32(0);
+                        }
+                        return -1;
+                    }
+                }
+            }
+
             private static bool DeleteProductsCommand(SqlConnection conn, List<int> products, StringBuilder command, int cartId)
             {
                 using (SqlCommand cmd = new SqlCommand(command.ToString(), conn))
@@ -334,6 +395,7 @@ namespace webStoreApp
                     return cmd.ExecuteNonQuery() > 0;
                 }
             }
+
             private static int GetCartId(SqlConnection conn, string username)
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT cart.cart_id FROM cart WHERE userName = @userName", conn))
@@ -343,7 +405,7 @@ namespace webStoreApp
                     {
                         if (rd.Read())
                         {
-                            return rd.GetInt32(0);
+                            return rd.IsDBNull(0) ? 0 : rd.GetInt32(0);
                         }
                         return 0;
                     }
@@ -381,6 +443,7 @@ namespace webStoreApp
                     return new OkObjectResult(order);
                 }
             }
+
             public static IActionResult PayOrder(string username)
             {
                 if (string.IsNullOrEmpty(username))
@@ -404,6 +467,7 @@ namespace webStoreApp
                 }
             }
 
+
             private static List<int> GetProductsIdOrder(SqlConnection conn, int orderId)
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT orderDetails.product_id FROM orderDetails WHERE order_id = @orderId", conn))
@@ -421,6 +485,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             private static bool UpdateOrderPayMent(SqlConnection conn, int orderId)
             {
                 using (SqlCommand cmd = new SqlCommand("UPDATE orders SET orders.payment_date = @payment_date " +
@@ -434,6 +499,7 @@ namespace webStoreApp
                     return false;
                 }
             }
+
             private static decimal UpdateOrderCost(int orderId, SqlConnection con)
             {
                 using (SqlCommand cmd = new SqlCommand("UPDATE orders SET total_cost = " +
@@ -451,6 +517,7 @@ namespace webStoreApp
                     return 0;
                 }
             }
+
             private static Order SetOrderDetails(int orderId, Order order, SqlConnection con)
             {
                 StringBuilder command = new StringBuilder();
@@ -483,9 +550,15 @@ namespace webStoreApp
                     return order;
                 }
             }
+
             private static int InsertOrder(int shipId, string username, SqlConnection con)
             {
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO orders OUTPUT inserted.order_id VALUES (@shipId, @username, 0, null)", con))
+                using (SqlCommand cmd = new SqlCommand("IF NOT EXISTS (SELECT orders.order_id FROM orders WHERE orders.payment_date IS NULL)" +
+                    " INSERT INTO orders OUTPUT INSERTED.order_id VALUES(@shipId, @username, 0, NULL) ELSE BEGIN " +
+                     "DELETE orderDetails FROM orderDetails INNER JOIN orders ON " +
+                     "orderDetails.order_id = orders.order_id WHERE orders.userName = @username AND orders.payment_date IS NULL " +
+                    "DELETE orders WHERE orders.userName = @username AND orders.payment_date IS NULL " +
+                    "INSERT INTO orders OUTPUT INSERTED.order_id VALUES(@shipId, @username, 0, NULL) END", con))
                 {
                     cmd.Parameters.AddWithValue("@shipId", shipId);
                     cmd.Parameters.AddWithValue("@username", username);
@@ -497,6 +570,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             private static int GetOrderId(string username, SqlConnection con)
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT orders.order_id FROM orders" +
@@ -513,6 +587,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             private static int SetShipAddress(ShipDetails shipDetails, SqlConnection con)
             {
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO shipDetails OUTPUT INSERTED.ship_id VALUES( @shipAddress, @shipCity, @shipCountry, @phone )", con))
@@ -568,6 +643,7 @@ namespace webStoreApp
                     }
                 }
             }
+
             public static IActionResult getUserCartProduct(UserData user)
             {
                 using (SqlConnection conn = new SqlConnection(con))
@@ -611,6 +687,8 @@ namespace webStoreApp
                     }
                 }
             }
+
+
             private static bool SigninByToken(string username, SqlConnection conn)
             {
                 using (SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin " +

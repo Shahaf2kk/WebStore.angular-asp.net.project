@@ -11,7 +11,7 @@ import { CartItem } from 'src/app/model/cart-item.model';
 })
 export class CartItemComponent implements OnInit {
 
-  @Input() item = CartItem;
+  @Input() item: CartItem;
   @Input() index: number;
   checkbox = false;
   constructor(private cartService: CartService) { }
@@ -20,7 +20,6 @@ export class CartItemComponent implements OnInit {
   }
 
   addToOrder() {
-    console.log(this.index);
     this.cartService.addToSelectedProduct(this.index);
   }
 

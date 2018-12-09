@@ -6,7 +6,8 @@ import { CartService } from '../cart/cart.service';
 import { ShoppingService } from '../shopping/shopping.service';
 
 import { Product } from '../model/product.model';
-import { Order } from '../model/order.model';
+import { Order, OrderDetails } from '../model/order.model';
+import { OrderService } from '../order/order.service';
 
 @Injectable()
 export class ProductsDataService {
@@ -15,17 +16,17 @@ export class ProductsDataService {
     constructor(private http: HttpClient,
                 private authService: AuthService,
                 private cartService: CartService,
-                private shoppingService: ShoppingService
+                private shoppingService: ShoppingService,
+                private orderService: OrderService
                 ) { }
 
     postOrder(order: Order) {
-        const body =  JSON.stringify(order);
-        this.http.post(this.baseUrl + 'order', { order },
+        this.http.post<OrderDetails>(this.baseUrl + 'order', { order },
          { headers: this.authService.getHeaders()
-            .set('Content-Type', 'application/json') })
+            .set('Content-Type', 'application/json'), observe: 'response'})
          .subscribe(
             data => {
-            console.log(data);
+            this.orderService.setOrderDetails(data.body);
             },
             error => {
                 this.authService.handleError(error);
@@ -39,7 +40,7 @@ export class ProductsDataService {
                 this.cartService.setItems(data.body);
             },
             (error) => {
-                console.log(error);
+                this.authService.handleError(error);
             }
         );
     }
@@ -89,15 +90,14 @@ export class ProductsDataService {
 
     // work! need to add get the user-data again for update user.
     addCartProduct(id: number, qty: number) {
-        this.http.post(this.baseUrl + 'cart', { }, { headers: this.authService.getHeaders(),
+        this.http.post<number>(this.baseUrl + 'cart', { }, { headers: this.authService.getHeaders(),
             params: {
              'productId': id.toString(),
              'qty': qty.toString()
             }, responseType: 'json', observe: 'response' })
             .subscribe(
                 data => {
-                    console.log(data);
-                    this.authService.addToCart(id, qty);
+                    this.authService.addToCart(id, data.body);
                 },
                 error => console.log(error)
             );

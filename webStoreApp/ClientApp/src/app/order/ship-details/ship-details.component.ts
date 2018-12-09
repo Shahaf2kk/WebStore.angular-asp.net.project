@@ -17,8 +17,7 @@ export class ShipDetailsComponent implements OnInit {
   shippingForm: FormGroup;
   countries = ['asdf', 'casdfity', 'dsr', 'asdfg'];
   constructor(private orderService: OrderService,
-              private dataService: ProductsDataService,
-              private router: Router) { }
+              private dataService: ProductsDataService) { }
 
 
   ngOnInit() {
@@ -28,20 +27,20 @@ export class ShipDetailsComponent implements OnInit {
       'country': new FormControl(null, Validators.required),
       'phone': new FormControl(null, [ Validators.required, Validators.minLength(8)])
     });
-
-    if (!this.orderService.checkIfHasProducts()) {
-      this.router.navigate(['/cart']);
-    }
   }
 
   onSubmit() {
+    if (this.shippingForm.invalid) {
+      return;
+    }
+
     const shipDetails = new ShipDetails();
     shipDetails.shipAddress = this.shippingForm.value['address'];
     shipDetails.shipCity = this.shippingForm.value['city'];
     shipDetails.shipCountry = this.shippingForm.value['country'];
     shipDetails.phone = this.shippingForm.value['phone'];
     this.dataService.postOrder(this.orderService.setOrderShipping(shipDetails));
-    this.router.navigate(['order/orderDetails']);
+    this.shippingForm.reset();
   }
 
 }

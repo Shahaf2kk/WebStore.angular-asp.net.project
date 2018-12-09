@@ -1,16 +1,22 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { CartItem } from '../model/cart-item.model';
+
 import { OrderService } from '../order/order.service';
+
+import { CartItem } from '../model/cart-item.model';
 
 @Injectable()
 export class CartService {
 
     cartItems: CartItem[];
-    cartProductSelected: CartItem[];
+    cartProductSelected: CartItem[] = [];
+
     constructor(private orderService: OrderService,
                 private router: Router) { }
 
+    areSelected(): boolean {
+        return this.cartProductSelected.length === 0 ? false : true;
+    }
 
     getCartItem() {
         return this.cartItems;
@@ -24,15 +30,22 @@ export class CartService {
         if (this.cartProductSelected !== null) {
             this.orderService.setOrderProducts(this.cartProductSelected);
             this.router.navigate(['/order']);
-            return true;
         }
-        return false;
     }
+
     addToSelectedProduct(index: number) {
-        if (this.cartProductSelected === undefined) {
-            console.log('adsfgh');
-            this.cartProductSelected.push(new CartItem())
+        if (this.cartProductSelected === null) {
+            this.cartProductSelected.push(this.cartItems[index]);
+            return;
         }
-        console.log('dasfgh');
+        if (this.cartProductSelected.find( e => e === this.cartItems[index]) === undefined) {
+            this.cartProductSelected.push(this.cartItems[index]);
+            return;
+        }
+        const indexEl = this.cartProductSelected.findIndex( e => e === this.cartItems[index]);
+        if (indexEl !== -1) {
+            this.cartProductSelected.splice(indexEl, 1);
+        }
     }
+
 }

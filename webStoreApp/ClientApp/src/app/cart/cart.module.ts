@@ -16,8 +16,8 @@ import { CartItemComponent } from './cart/cart-item/cart-item.component';
         CartService
     ],
     imports: [
-        ReactiveFormsModule,
         CommonModule,
+        ReactiveFormsModule,
         FormsModule
     ]
 })

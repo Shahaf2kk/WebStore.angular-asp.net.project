@@ -1,18 +1,40 @@
 import { Router } from '@angular/router';
-import { Order } from '../model/order.model';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { AuthService } from '../auth/auth.service';
+
+import { Order, OrderDetails } from '../model/order.model';
 import { CartItem } from '../model/cart-item.model';
 import { ShipDetails } from '../model/ship-details.model';
 
+@Injectable()
 export class OrderService {
 
-    orderDetails = new Order();
+    order = new Order();
+    orderDetails: OrderDetails = new OrderDetails();
+    productDetails: CartItem[];
 
-    constructor() {
-        this.orderDetails.productsId = [];
-        this.orderDetails.productsQty = [];
+    constructor(private router: Router,
+                private httpClient: HttpClient,
+                private authService: AuthService) { }
+
+    setOrderDetails(order: OrderDetails) {
+        this.orderDetails = order;
+        this.orderDetails.products.forEach((e, i) => {
+            if (e.id === this.productDetails[i].productDetails.id) {
+                this.orderDetails.products[i] = this.productDetails[i].productDetails;
+            }
+        });
+        this.router.navigate(['/order/orderDetails']);
     }
+
+    getOrderDetails() {
+        return this.orderDetails;
+    }
+
     checkIfHasProducts(): boolean {
-        if (this.orderDetails.productsId.length === 0) {
+        if (this.order.productsId === undefined) {
             return false;
         }
         return true;
@@ -20,17 +42,36 @@ export class OrderService {
 
 
     setOrderProducts(cartProducts: CartItem[]) {
+        this.productDetails = cartProducts;
+        this.order.productsId = [];
+        this.order.productsQty = [];
         for (let i = 0; i < cartProducts.length; i++) {
-            this.orderDetails.productsId.push(cartProducts[i].productDetails.id);
-            this.orderDetails.productsQty.push(cartProducts[i].qty);
+            this.order.productsId.push(this.productDetails[i].productDetails.id);
+            this.order.productsQty.push(this.productDetails[i].qty);
         }
     }
 
     setOrderShipping(shipDetails: ShipDetails) {
-        this.orderDetails.shipDetails = shipDetails;
+        this.order.shipDetails = shipDetails;
         return this.getOrder();
     }
     getOrder() {
-        return this.orderDetails;
+        return this.order;
+    }
+
+    payOrder() {
+        this.httpClient.get(this.authService.getBaseUrl() + 'order/pay',
+        { headers: this.authService.getHeaders(), observe: 'response' })
+        .subscribe(
+            (data) => {
+                if (data.status === 200) {
+                    this.authService.getUserNavData();
+                    this.authService.updateUserNavData();
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 }

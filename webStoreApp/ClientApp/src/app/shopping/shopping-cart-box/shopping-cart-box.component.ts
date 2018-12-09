@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { ProductsDataService } from 'src/app/shared/products-data.service';
 
 import { Product } from 'src/app/model/product.model';
+import { AuthGuard } from 'src/app/auth/auth-guard.service';
 
 @Component({
   selector: 'app-shopping-cart-box',
@@ -18,14 +19,15 @@ export class ShoppingCartBoxComponent implements OnInit {
   qty: number;
   constructor(private authService: AuthService,
               private router: Router,
-              private productData: ProductsDataService ) { }
+              private productData: ProductsDataService,
+              private authGuard: AuthGuard ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   addToCart(qty: number) {
     if (!this.authService.isAuth()) {
       this.router.navigate(['/signin']);
+      this.authGuard.setUrlReturn('/shopping/i/' + this.product.id.toString());
       return;
     } else {
       this.productData.addCartProduct(this.product.id, qty);

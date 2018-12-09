@@ -5,8 +5,11 @@
   <div class="qty">
     <p> {{ item.qty }} </p>
   </div>
+  <div class="id">
+    <p> {{ item.productDetails.id }} </p>
+  </div>
   <div class="addToCart">
-    <input type="checkbox" [(ngModel)]="checkbox" (change)="addToOrder()">
+    <input type="checkbox" value="false" (change)="addToOrder()">
   </div>
 
 </div>

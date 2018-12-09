@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { throwError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../model/user.model';
 
@@ -10,6 +10,7 @@ export class AuthService {
   private baseUrl = 'https://localhost:44327/';
   private headers: HttpHeaders;
   private user: User = new User();
+  hasProduct: boolean;
 
 // ---- object for nav user - if isAuth - start
   private userDetailsSubject = new BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
@@ -22,12 +23,26 @@ export class AuthService {
     this.StartUpIsAuth();
   }
 
+  getHasProduct() {
+    return this.hasProduct;
+  }
+  getBaseUrl() {
+    return this.baseUrl;
+  }
+
   changeIfAuth(isAuth: boolean) {
     this.userDetailsSubject.next({ User: this.user, isAuth: isAuth });
   }
+
   addToCart(id: number, qty: number) {
     const user = this.user;
-    user.listOfCart.push( { productId: id, qty: qty});
+    const index = user.listOfCart.findIndex(e => e.productId === id);
+    if (index === -1) {
+      user.listOfCart.push( { productId: id, qty: qty});
+    } else {
+      user.listOfCart[index].qty = qty;
+    }
+    console.log(user);
     this.userDetailsSubject.next({ User: user, isAuth: true});
   }
 
@@ -49,6 +64,11 @@ export class AuthService {
 
   afterSignInOrUp(data: string, url: string) {
     this.setToken(data);
+    this.updateUserNavData();
+    this.router.navigate([url]);
+  }
+
+  updateUserNavData() {
     this.getUserNavData().subscribe(
       (userData) => {
         this.user.userName = userData.body['userName'];
@@ -59,7 +79,6 @@ export class AuthService {
         this.handleError(error);
       }
     );
-    this.router.navigate([url]);
   }
 
   getUserNavData() {
@@ -116,12 +135,14 @@ export class AuthService {
   }
 
   handleError(errorRes: HttpErrorResponse) {
+    console.log(errorRes);
     if (errorRes.error instanceof ErrorEvent) {
       console.error('client side: ' + errorRes.error.message);
       console.error('status code ' + errorRes.status);
       this.router.navigate(['']);
     } else {
       if (errorRes.status === 400) {
+        this.router.navigate(['']);
         return errorRes.error;
       }
       if (errorRes.status === 401) {
