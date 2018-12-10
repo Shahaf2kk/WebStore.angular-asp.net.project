@@ -42,7 +42,6 @@ export class AuthService {
     } else {
       user.listOfCart[index].qty = qty;
     }
-    console.log(user);
     this.userDetailsSubject.next({ User: user, isAuth: true});
   }
 

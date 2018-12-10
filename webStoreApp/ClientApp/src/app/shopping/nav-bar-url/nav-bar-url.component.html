@@ -1,0 +1,18 @@
+<div *ngIf="hasCate" class="nav-trl-container">
+
+    <hr>
+    <div class="nav-url">
+      <div class="nav">
+        <a [routerLink]="['/shopping', category, 'e']"> {{ category }} </a>
+        <span 
+        *ngIf="!(subCategory === 'e')"
+        > >> </span>
+        <a 
+        *ngIf="!(subCategory === 'e')"
+        [routerLink]="['/shopping', category, subCategory]"
+        > {{ subCategory }} </a>
+      </div>
+    </div>
+    <hr>
+    
+</div>

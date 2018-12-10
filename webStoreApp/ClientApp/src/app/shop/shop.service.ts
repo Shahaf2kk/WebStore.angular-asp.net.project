@@ -1,20 +1,21 @@
 
-export class ShopService {
-    private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
+// export class ShopService {
 
-    constructor() { }
+//     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
 
-    setCategoryName(cateName: any) {
-        this.productsCategoryNames = cateName;
-    }
+//     constructor() { }
 
-    getCategoryName() {
-        const categoriesNames = [];
-        this.productsCategoryNames.forEach(element => {
-            categoriesNames.push(element.categoryNames);
-        });
-        return categoriesNames;
-    }
+//     setCategoryName(cateName: any) {
+//         this.productsCategoryNames = cateName;
+//     }
+
+//     getCategoryName() {
+//         const categoriesNames = [];
+//         this.productsCategoryNames.forEach(element => {
+//             categoriesNames.push(element.categoryNames);
+//         });
+//         return categoriesNames;
+//     }
 
 
 
@@ -90,4 +91,3 @@ export class ShopService {
 //     //     return null;
 //     // }
 //  }
-}

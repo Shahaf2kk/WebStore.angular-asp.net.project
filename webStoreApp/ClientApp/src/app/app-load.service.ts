@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ShopService } from './shop/shop.service';
+
+import { ShoppingService } from './shopping/shopping.service';
 
 @Injectable()
 export class AppLoadService {
     private baseUrl = 'https://localhost:44327/';
 
     constructor(private http: HttpClient,
-                private shopService: ShopService) { }
+                private shoppingService: ShoppingService) { }
 
 // --- call from APP_INITIALIZER
     getCategoriesNames(): Promise<any> {
@@ -15,7 +16,7 @@ export class AppLoadService {
             this.http.get(this.baseUrl + 'product/names', { responseType: 'json', observe: 'response'})
             .subscribe(
                 data => {
-                    this.shopService.setCategoryName(data.body);
+                    this.shoppingService.setCategoryName(data.body);
                     res(true);
                 },
                 error => {

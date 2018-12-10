@@ -1,4 +1,14 @@
-<div class="background clickOut"></div>
+<hr>
+<div
+ class="item"
+  *ngFor="let item of subCate"
+  [routerLink]="['/shopping', categorySelected, item]"
+  >
+  {{ item }}
+</div>
+<hr>
+
+<!-- <div class="background clickOut"></div>
 <div class="category-details-container clickOut">
   <div class="category-name-title clickOut"><p> {{ categorySelected | titlecase }} </p></div>
   <div class="category-details-item clickOut">
@@ -15,4 +25,4 @@
         </li>
     </ul>
   </div>
-</div>
+</div> -->

@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'src/app/auth/auth.service';
-import { ProductsDataService } from 'src/app/shared/products-data.service';
+import { AuthGuard } from '../../auth/auth-guard.service';
+import { AuthService } from '../../auth/auth.service';
+import { ProductsDataService } from '../../shared/products-data.service';
 
-import { Product } from 'src/app/model/product.model';
-import { AuthGuard } from 'src/app/auth/auth-guard.service';
+import { Product } from '../../model/product.model';
+
 
 @Component({
   selector: 'app-shopping-cart-box',

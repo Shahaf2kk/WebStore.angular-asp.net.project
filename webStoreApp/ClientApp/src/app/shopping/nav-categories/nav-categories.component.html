@@ -1,4 +1,18 @@
-<div class="container">
+
+<div class="category-container">
+  <div class="category-items">
+    <div class="category-item"
+    *ngFor="let item of categories; let i = index">
+      <div class="item" (click)="onCategory(i)"> {{ item }} </div>
+      <app-nav-details *ngIf="categorySelected[i]"
+        [categorySelected]="item"></app-nav-details>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- <div class="container">
   <div class="div-category">
     <ul class="category clickOut">
       <li
@@ -13,4 +27,4 @@
     </ul>
   <app-nav-details class="clickOut" *ngIf="activeSubCateDiv" [categorySelected]="categorySelected"></app-nav-details>
 </div>
-</div>
+</div> -->

@@ -25,7 +25,8 @@ export class ShoppingListComponent implements OnInit {
         (params: Params) => {
           this.cate = params['cate'];
           this.subCate = params['sub'];
-            this.callToProducts();
+          this.callToProducts();
+          this.shoppingService.setCategorySelectedSubject(this.cate, this.subCate);
         }
       );
   }

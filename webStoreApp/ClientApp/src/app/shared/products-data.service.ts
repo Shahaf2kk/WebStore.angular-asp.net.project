@@ -87,8 +87,6 @@ export class ProductsDataService {
         });
     }
 
-
-    // work! need to add get the user-data again for update user.
     addCartProduct(id: number, qty: number) {
         this.http.post<number>(this.baseUrl + 'cart', { }, { headers: this.authService.getHeaders(),
             params: {
@@ -102,4 +100,5 @@ export class ProductsDataService {
                 error => console.log(error)
             );
     }
+
 }

@@ -1,14 +1,42 @@
 import { Product } from '../model/product.model';
-import { BehaviorSubject } from 'rxjs';
+import * as Rx from 'rxjs';
 
 
 export class ShoppingService {
 
     items: Product[];
-    private itemSubject = new BehaviorSubject<Product>(new Product);
+    private itemSubject = new Rx.BehaviorSubject<Product>(new Product);
     changeItem = this.itemSubject.asObservable();
 
+    categoriesSelectedSubject = new Rx.Subject();
+    private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
+
     constructor () { }
+
+    setCategoryName(cateName: any) {
+        this.productsCategoryNames = cateName;
+    }
+
+    setCategorySelectedSubject(cate: string, sub: string) {
+        this.categoriesSelectedSubject.next({cate: cate, sub: sub});
+    }
+    getCategoryName() {
+        const categoriesNames = [];
+        this.productsCategoryNames.forEach(e => {
+            categoriesNames.push(e.categoryNames);
+        });
+        return categoriesNames;
+    }
+
+    getSubCategory(cate: string): string[] {
+        let sub = [];
+     this.productsCategoryNames.forEach( e => {
+         if (e.categoryNames === cate) {
+             sub = e.subCategoryNamesArray;
+         }
+        });
+        return sub;
+    }
 
     setProducts(items: any) {
         this.items = items;

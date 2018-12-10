@@ -25,11 +25,11 @@ export class CartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productsData.getCartProduct();
     this.hasProduct = this.authService.getHasProduct();
+    this.cartService.cartProductSelected = [];
   }
 
 
   ngOnDestroy() {
-    this.cartService.cartProductSelected = [];
   }
 
   getCartProduct() {
