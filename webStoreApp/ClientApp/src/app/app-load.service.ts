@@ -16,7 +16,8 @@ export class AppLoadService {
             this.http.get(this.baseUrl + 'product/names', { responseType: 'json', observe: 'response'})
             .subscribe(
                 data => {
-                    this.shoppingService.setCategoryName(data.body);
+                    this.shoppingService.setCategoryName(data.body['productsCateNames']);
+                    this.shoppingService.setProductsNames(data.body['productsNames']);
                     res(true);
                 },
                 error => {

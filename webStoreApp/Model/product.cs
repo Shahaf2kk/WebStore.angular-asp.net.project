@@ -21,4 +21,15 @@ namespace webStoreApp.Model
         public string categoryNames { get; set; }
         public List<string> subCategoryNamesArray { get; set; }
     }
+    public class productData
+    {
+        public List<productsCategoryNames> productsCateNames { get; set; }
+        public List<productsNames> productsNames { get; set; }
+    }
+    public class productsNames
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+    
 }

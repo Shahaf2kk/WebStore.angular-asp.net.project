@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs';
 import { ShoppingService } from '../shopping.service';
 
 @Component({
@@ -11,12 +13,13 @@ export class NavBarUrlComponent implements OnInit, OnDestroy {
   category = '';
   subCategory = '';
   hasCate: boolean;
+  subscription: Subscription;
 
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
     this.hasCate = true;
-    this.shoppingService.categoriesSelectedSubject
+    this.subscription = this.shoppingService.categoriesSelectedSubject
       .subscribe( (data: {cate: string, sub: string}) => {
         const cate = data.cate;
         const sub = data.sub;
@@ -26,6 +29,7 @@ export class NavBarUrlComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy() {
       this.hasCate = false;
+      this.subscription.unsubscribe();
     }
 
 

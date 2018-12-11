@@ -17,7 +17,10 @@ export class OrderService {
 
     constructor(private router: Router,
                 private httpClient: HttpClient,
-                private authService: AuthService) { }
+                private authService: AuthService) {
+        this.order.productsId = [];
+        this.order.productsQty = [];
+                }
 
     setOrderDetails(order: OrderDetails) {
         this.orderDetails = order;
@@ -34,7 +37,7 @@ export class OrderService {
     }
 
     checkIfHasProducts(): boolean {
-        if (this.order.productsId === undefined) {
+        if (this.order.productsId.length === 0) {
             return false;
         }
         return true;
@@ -42,9 +45,11 @@ export class OrderService {
 
 
     setOrderProducts(cartProducts: CartItem[]) {
+        if (cartProducts === undefined) {
+            this.router.navigate(['']);
+            return;
+        }
         this.productDetails = cartProducts;
-        this.order.productsId = [];
-        this.order.productsQty = [];
         for (let i = 0; i < cartProducts.length; i++) {
             this.order.productsId.push(this.productDetails[i].productDetails.id);
             this.order.productsQty.push(this.productDetails[i].qty);

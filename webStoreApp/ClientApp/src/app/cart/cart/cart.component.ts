@@ -1,18 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { CartService } from '../cart.service';
 import { ProductsDataService } from 'src/app/shared/products-data.service';
 
 import { CartItem } from 'src/app/model/cart-item.model';
-import { AuthService } from 'src/app/auth/auth.service';
 
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit {
 
   cartProduct: CartItem[];
   errorMsg = '';
@@ -28,9 +28,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.cartProductSelected = [];
   }
 
-
-  ngOnDestroy() {
-  }
 
   getCartProduct() {
     this.cartProduct = this.cartService.getCartItem();

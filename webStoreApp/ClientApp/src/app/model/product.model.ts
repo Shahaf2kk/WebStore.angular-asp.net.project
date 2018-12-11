@@ -7,3 +7,7 @@ export class Product {
     public price: number;
     public imagePath: string;
 }
+export class ProductsName {
+    public id: number;
+    public name: string;
+}

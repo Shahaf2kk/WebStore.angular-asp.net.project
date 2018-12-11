@@ -104,6 +104,18 @@ namespace webStoreApp
 
         public static class Products
         {
+            public static IActionResult GetStartUpData()
+            {
+                productData productData = new productData();
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    conn.Open();
+                    productData.productsCateNames = GetProductsCate(conn);
+                    productData.productsNames = GetProductsNames(conn);
+                }
+                return new OkObjectResult(productData);
+
+            }
             public static IActionResult GetProductsById(int id)
             {
                 using (SqlConnection conn = new SqlConnection(con))
@@ -134,13 +146,31 @@ namespace webStoreApp
                     }
                 }
             }
-
-            public static IActionResult GetProductsCate()
+            private static List<productsNames> GetProductsNames(SqlConnection conn)
             {
-                List<productsCategoryNames> productsNames = new List<productsCategoryNames>();
-                using (SqlConnection conn = new SqlConnection(con))
+                List<productsNames> productsNames = new List<productsNames>();
+                using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_name FROM product", conn))
                 {
-                    conn.Open();
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            productsNames _productsNames = new productsNames();
+                            _productsNames.id = rd.IsDBNull(0) ? -1 : rd.GetInt32(0);
+                            _productsNames.name = rd.IsDBNull(1) ? "" : rd.GetString(1);
+                            if (_productsNames.id == -1|| _productsNames.name == "")
+                                continue;
+                            productsNames.Add(_productsNames);
+                        }
+                        return productsNames;
+                    }
+                }
+            }
+
+            private static List<productsCategoryNames> GetProductsCate(SqlConnection conn)
+            {
+                List<productsCategoryNames> categoriesNames = new List<productsCategoryNames>();
+
                     using (SqlCommand cmd = new SqlCommand("SELECT product_category, product_sub_category FROM product", conn))
                     {
                         using (SqlDataReader rd = cmd.ExecuteReader())
@@ -151,27 +181,26 @@ namespace webStoreApp
                                 names.categoryNames = rd.GetString(0);
                                 names.subCategoryNamesArray = new List<string> { rd.GetString(1) };
 
-                                if (productsNames.Count == 0)
+                                if (categoriesNames.Count == 0)
                                 {
-                                    productsNames.Add(names);
+                                    categoriesNames.Add(names);
                                     continue;
                                 }
 
-                                int index = productsNames.FindIndex(x => x.categoryNames == names.categoryNames);
+                                int index = categoriesNames.FindIndex(x => x.categoryNames == names.categoryNames);
                                 if (index != -1)
                                 {
-                                    if (!productsNames[index].subCategoryNamesArray.Exists(x => x == names.subCategoryNamesArray[0]))
+                                    if (!categoriesNames[index].subCategoryNamesArray.Exists(x => x == names.subCategoryNamesArray[0]))
                                     {
-                                        productsNames[index].subCategoryNamesArray.Add(names.subCategoryNamesArray[0]);
+                                        categoriesNames[index].subCategoryNamesArray.Add(names.subCategoryNamesArray[0]);
                                     }
                                     continue;
                                 }
-                                productsNames.Add(names);
+                                categoriesNames.Add(names);
                             }
-                            return new OkObjectResult(productsNames);
+                            return categoriesNames;
                         }
                     }
-                }
             }
 
             public static IActionResult GetProductsByCate(string category)

@@ -32,6 +32,12 @@ export class CartService {
             this.router.navigate(['/order']);
         }
     }
+    setOrderDir() {
+        if (this.cartItems !== null) {
+            this.orderService.setOrderProducts(this.getCartItem());
+            this.router.navigate(['/order']);
+        }
+    }
 
     addToSelectedProduct(index: number) {
         if (this.cartProductSelected === null) {

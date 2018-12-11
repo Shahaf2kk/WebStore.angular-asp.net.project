@@ -1,4 +1,4 @@
-import { Product } from '../model/product.model';
+import { Product, ProductsName } from '../model/product.model';
 import * as Rx from 'rxjs';
 
 
@@ -8,10 +8,20 @@ export class ShoppingService {
     private itemSubject = new Rx.BehaviorSubject<Product>(new Product);
     changeItem = this.itemSubject.asObservable();
 
-    categoriesSelectedSubject = new Rx.Subject();
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
+    private productsNames: ProductsName[];
+    categoriesSelectedSubject = new Rx.Subject();
 
     constructor () { }
+
+    setProductsNames(data: ProductsName[]) {
+        console.log(data);
+        this.productsNames = data;
+    }
+
+    getProductsNames(): ProductsName[] {
+        return this.productsNames;
+    }
 
     setCategoryName(cateName: any) {
         this.productsCategoryNames = cateName;

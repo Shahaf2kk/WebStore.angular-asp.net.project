@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { OrderService } from 'src/app/order/order.service';
+import { ProductsDataService } from 'src/app/shared/products-data.service';
 import { CartService } from 'src/app/cart/cart.service';
 
 import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -15,10 +14,15 @@ export class CartNavComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   faCartArrowDown = faCartArrowDown;
 
-  constructor( ) { }
+  constructor(private dataProduct: ProductsDataService,
+              private cartService: CartService ) { }
 
   ngOnInit() {
   }
 
+  goDirToOrder() {
+    this.dataProduct.getCartProduct();
+    this.cartService.setOrderDir();
+  }
 
 }

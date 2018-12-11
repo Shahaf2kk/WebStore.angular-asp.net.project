@@ -17,7 +17,7 @@ namespace webStoreApp.Controllers
         [HttpGet("names")]
         public IActionResult GetCategoryNames()
         {
-            return DB.Products.GetProductsCate();
+            return DB.Products.GetStartUpData();
         }
 
         [HttpGet("category")]

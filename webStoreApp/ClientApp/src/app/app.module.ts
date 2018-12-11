@@ -17,6 +17,8 @@ import { AppLoadService } from './app-load.service';
 import { ShoppingService } from './shopping/shopping.service';
 import { AuthGuard } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
+import { CartService } from './cart/cart.service';
+import { OrderService } from './order/order.service';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -28,6 +30,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { CartNavComponent } from './core/header/cart-nav/cart-nav.component';
 import { SearchComponent } from './core/header/search/search.component';
 import { UserNavComponent } from './core/header/user-nav/user-nav.component';
+import { SearchPipePipe } from './core/header/search/search-pipe.pipe';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -41,6 +44,8 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     CartNavComponent,
     SearchComponent,
     UserNavComponent,
+    SearchPipePipe
+
 
 
   ],
@@ -64,6 +69,8 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     AppLoadService,
     ShoppingService,
     AuthGuard,
+    CartService,
+    OrderService,
     {
      provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadService], multi: true
     }
