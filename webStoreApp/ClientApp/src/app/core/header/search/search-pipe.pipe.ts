@@ -7,7 +7,6 @@ import { ProductsName } from 'src/app/model/product.model';
 export class SearchPipePipe implements PipeTransform {
 
   transform(items: ProductsName[], searchInput: any): any[] {
-    console.log(items);
     if (!items ) {
       return [];
     }

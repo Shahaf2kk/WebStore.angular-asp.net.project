@@ -9,45 +9,22 @@ import { ShoppingService } from '../shopping.service';
 })
 export class NavCategoriesComponent implements OnInit {
 
-  constructor(private shoppingService: ShoppingService) { }
 
   categories: string[];
-  categorySelected: boolean[] = [false];
+  indexCelected: number;
+
+  constructor(private shoppingService: ShoppingService) { }
+
 
   ngOnInit() {
     this.categories = this.shoppingService.getCategoryName();
   }
 
-  onCategory(index: number) {
-    if (this.categorySelected[index] === true) {
-      this.categorySelected[index] = false;
+  selectSubCate(index: number) {
+    if (index === this.indexCelected) {
+      this.indexCelected = -1;
       return;
     }
-    this.categorySelected = [false];
-    this.categorySelected[index] = true;
+    this.indexCelected = index;
   }
-    // onCategory(index: number) {
-    // }
-  // clickOnCategory(category: string, itemSelected: number) {
-  //     this.categorySelected = category;
-  //     if (this.itemSelected === itemSelected) {
-  //       this.itemSelected = -1;
-  //       this.activeSubCateDiv = !this.activeSubCateDiv;
-  //     } else {
-  //       this.itemSelected = itemSelected;
-  //       this.activeSubCateDiv = true;
-  //     }
-  // }
-  // outSideClick(event: any) {
-  //   const eClass = event.target.getAttribute('class');
-  //   if (eClass === null) {
-  //     this.activeSubCateDiv = false;
-  //     this.itemSelected = -1;
-  //     return;
-  //   }
-  //   if (!eClass.includes('clickOut')) {
-  //     this.activeSubCateDiv = false;
-  //     this.itemSelected = -1;
-  //   }
-  // }
 }

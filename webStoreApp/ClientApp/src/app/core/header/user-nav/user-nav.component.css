@@ -1,4 +1,22 @@
-* {
+div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fill {
+    flex: 1 1 auto;
+}
+div.authTrue {
+    font-size: 16px;
+    font-family: 500;
+    justify-content: space-between;
+}
+/* * {
     font-family: 'Raleway', sans-serif; 
     font-weight: 500;
     font-size: 15px;
@@ -38,7 +56,7 @@ a:hover {
 .active {
     font-weight: 600;
     /* text-decoration: underline; */
-}
+/* }
 @media screen and (max-width: 500px) {
     .container {
         display: grid;
@@ -86,4 +104,4 @@ fa-icon {
 }
 .submit:hover {
     color: rgb(19, 110, 19);
-}
+} */

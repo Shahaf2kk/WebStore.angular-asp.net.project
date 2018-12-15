@@ -31,6 +31,7 @@ import { CartNavComponent } from './core/header/cart-nav/cart-nav.component';
 import { SearchComponent } from './core/header/search/search.component';
 import { UserNavComponent } from './core/header/user-nav/user-nav.component';
 import { SearchPipePipe } from './core/header/search/search-pipe.pipe';
+import { DesignModule } from './design.module';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -45,9 +46,6 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     SearchComponent,
     UserNavComponent,
     SearchPipePipe
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -56,6 +54,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     ClickOutsideModule,
     HttpClientModule,
     HttpModule,
+    DesignModule,
     AppRoutingModule,
     CartModule,
     AuthModule,

@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
-import { ProductsDataService } from '../../../shared/products-data.service';
 import { ShoppingService } from '../../shopping.service';
 
 @Component({
@@ -12,13 +11,13 @@ export class NavDetailsComponent implements OnInit {
   @Input() categorySelected: string;
   subCate: string[] = [];
 
-  constructor(private dataProduct: ProductsDataService,
-              private shoppingService: ShoppingService) { }
+  constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
     this.subCate = this.shoppingService.getSubCategory(this.categorySelected);
   }
 
-  getSubCategoryNames() {
-  }
+  // getSubCategoryNames() {
+  // }
+
 }

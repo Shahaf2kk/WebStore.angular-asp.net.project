@@ -1,26 +1,40 @@
-<div class="container">
-  <ul *ngIf="userAuth">
-    <li>
+<div class="authTrue" *ngIf="userAuth">
+    <span class="fill"></span>
+  <p class="span-hi-user"> Hi {{ userName | titlecase }}</p>
+  <p class="span-cart-products" *ngIf="cartProduct > 0">, {{ cartProduct }} - </p>
+  <app-cart-nav></app-cart-nav>
+  <button mat-button (click)="signOut()"> Log Out </button>
+</div>
+<div class="authFalse" *ngIf="!userAuth">
+  <span class="fill"></span>
+  <button mat-button [routerLink]="['/signup']">Sign Up</button>
+  <button mat-button [routerLink]="['/signin']">Signin</button>
+</div>
+
+
+<!-- <div class="container"> -->
+  <!-- <ul *ngIf="userAuth"> -->
+    <!-- <li>
       <div>
         <p>
           hello {{ userName | titlecase }}
         </p>
         <p> number of product in the cart {{ cartProduct }} </p>
       </div>
-    </li>
-    <li>
+    </li> -->
+    <!-- <li>
       <button (click)="signOut()">
         log out
       </button>
     </li>
-  </ul>
-  <ul *ngIf="!userAuth">
-    <li>
+  </ul> -->
+  <!-- <ul *ngIf="!userAuth"> -->
+    <!-- <li>
       <a routerLinkActive="active" routerLink="/signup"> 
         <fa-icon [icon]="faPlusSquare" size="s"></fa-icon> Register
       </a>
-    </li>
-    <li>
+    </li> -->
+    <!-- <li>
       <a routerLinkActive="active" (click)="openQuickLogin()" >
         <fa-icon [icon]="faSignInAlt" size="s"></fa-icon>
         Login
@@ -72,4 +86,4 @@
       </div>
     </li>
   </ul>
-</div>
+</div> -->

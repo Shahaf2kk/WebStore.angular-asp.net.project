@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from '../app-routing.module';
 
-import { ShoppingService } from './shopping.service';
+import { AppRoutingModule } from '../app-routing.module';
+import { DesignModule } from '../design.module';
 
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
@@ -29,6 +29,7 @@ import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
         BrowserModule,
         CommonModule,
         AppRoutingModule,
+        DesignModule
     ]
 })
 export class ShoppingModule { }

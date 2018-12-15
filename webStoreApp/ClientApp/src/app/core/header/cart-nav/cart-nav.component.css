@@ -1,16 +1,15 @@
-* {
-    font-family: 'Raleway', sans-serif; 
-    font-weight: 400;
-    font-size: 15px;
-}
-
-ul {
+div {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+ul {
     list-style: none;
-    justify-content: space-around;
 }
-ul li {
-    cursor: pointer;
-    padding: 0 10px;
+.fill {
+    flex: 1 1 auto;
 }
-
+.title {
+    font-size: 25px;
+}

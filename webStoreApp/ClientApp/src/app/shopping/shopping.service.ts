@@ -1,7 +1,6 @@
 import { Product, ProductsName } from '../model/product.model';
 import * as Rx from 'rxjs';
 
-
 export class ShoppingService {
 
     items: Product[];
@@ -15,7 +14,6 @@ export class ShoppingService {
     constructor () { }
 
     setProductsNames(data: ProductsName[]) {
-        console.log(data);
         this.productsNames = data;
     }
 

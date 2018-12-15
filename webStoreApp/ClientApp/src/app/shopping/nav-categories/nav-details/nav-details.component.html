@@ -1,4 +1,21 @@
-<hr>
+<div class="sub-cate-details">
+  <button mat-raised-button color="primary"
+    class="category"
+    [routerLink]="['/shopping', categorySelected, 'e']">
+      {{ categorySelected }}
+  </button>
+  <span class="fill"></span>
+  <div class="sub-categories">
+    <button mat-raised-button
+      class="details-items"
+      *ngFor="let item of subCate"
+      [routerLink]="['/shopping', categorySelected, item]">
+        {{ item }} </button>
+  </div>
+  <span class="end"></span>
+</div>
+
+<!-- <hr>
 <div
  class="item"
   *ngFor="let item of subCate"
@@ -6,7 +23,7 @@
   >
   {{ item }}
 </div>
-<hr>
+<hr> -->
 
 <!-- <div class="background clickOut"></div>
 <div class="category-details-container clickOut">
