@@ -43,7 +43,8 @@ export class ShoppingListComponent implements OnInit {
   }
 
   getProduct(): Product[] {
-    return this.shoppingService.getProducts();
+    const el = this.shoppingService.getProducts();
+    return el;
   }
 
 }

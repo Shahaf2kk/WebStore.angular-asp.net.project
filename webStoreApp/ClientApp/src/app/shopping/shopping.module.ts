@@ -5,6 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from '../app-routing.module';
 import { DesignModule } from '../design.module';
 
+import { ImagePipe } from './image.pipe';
+
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
 import { ShoppingComponent } from './shopping.component';
@@ -24,6 +26,8 @@ import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
         NavDetailsComponent,
         HomeShoppingComponent,
         NavBarUrlComponent,
+        ImagePipe
+
     ],
     imports: [
         BrowserModule,

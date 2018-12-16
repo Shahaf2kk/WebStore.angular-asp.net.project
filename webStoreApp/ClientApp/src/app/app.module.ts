@@ -21,7 +21,9 @@ import { CartService } from './cart/cart.service';
 import { OrderService } from './order/order.service';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DesignModule } from './design.module';
 
+import { SearchPipePipe } from './core/header/search/search-pipe.pipe';
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -30,8 +32,6 @@ import { HeaderComponent } from './core/header/header.component';
 import { CartNavComponent } from './core/header/cart-nav/cart-nav.component';
 import { SearchComponent } from './core/header/search/search.component';
 import { UserNavComponent } from './core/header/user-nav/user-nav.component';
-import { SearchPipePipe } from './core/header/search/search-pipe.pipe';
-import { DesignModule } from './design.module';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -45,7 +45,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     CartNavComponent,
     SearchComponent,
     UserNavComponent,
-    SearchPipePipe
+    SearchPipePipe,
   ],
   imports: [
     BrowserModule,
