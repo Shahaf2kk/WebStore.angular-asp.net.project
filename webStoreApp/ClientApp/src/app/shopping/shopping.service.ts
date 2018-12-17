@@ -4,6 +4,7 @@ import * as Rx from 'rxjs';
 export class ShoppingService {
 
     items: Product[];
+    // productObservable: Rx.Observable<any>;
     private itemSubject = new Rx.BehaviorSubject<Product>(new Product);
     changeItem = this.itemSubject.asObservable();
 
@@ -16,6 +17,12 @@ export class ShoppingService {
     setProductsNames(data: ProductsName[]) {
         this.productsNames = data;
     }
+    // setProductsObservable(obs: Rx.Observable<any>) {
+    //     this.productObservable = obs;
+    // }
+    // getProductsObservable(): Rx.Observable<any> {
+    //     return this.productObservable;
+    // }
 
     getProductsNames(): ProductsName[] {
         return this.productsNames;

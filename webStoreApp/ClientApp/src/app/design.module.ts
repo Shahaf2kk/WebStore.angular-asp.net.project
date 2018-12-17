@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { MatCardModule } from '@angular/material/card';
         MatListModule,
         MatButtonModule,
         MatExpansionModule,
-        MatCardModule
+        MatCardModule,
+        MatInputModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -22,7 +24,8 @@ import { MatCardModule } from '@angular/material/card';
         MatListModule,
         MatButtonModule,
         MatExpansionModule,
-        MatCardModule
+        MatCardModule,
+        MatInputModule
     ]
 })
 

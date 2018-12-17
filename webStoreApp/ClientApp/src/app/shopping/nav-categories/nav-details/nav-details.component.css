@@ -1,5 +1,5 @@
 .sub-cate-details {
-    height: 100px;
+    height: auto;
     padding: 0 10px;
     display: flex;
     flex-wrap: wrap;
@@ -22,7 +22,11 @@ button {
 .end {
     visibility: hidden;
 }
-
+.active {
+    transition: 0.8s;
+    color: #ffffff;
+    background-color: #e7b6b3;
+}
 
 @media screen and (min-width: 1200px) {
     .end {

@@ -15,6 +15,7 @@ import { NavCategoriesComponent } from './nav-categories/nav-categories.componen
 import { NavDetailsComponent } from './nav-categories/nav-details/nav-details.component';
 import { HomeShoppingComponent } from './home-shopping/home-shopping.component';
 import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
+import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
         NavDetailsComponent,
         HomeShoppingComponent,
         NavBarUrlComponent,
-        ImagePipe
+        PhotoGalleryComponent,
+        ImagePipe,
 
     ],
     imports: [

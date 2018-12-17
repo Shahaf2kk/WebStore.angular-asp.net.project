@@ -26,13 +26,13 @@ export class ShoppingItemComponent implements OnInit {
           this.id = +params['item'];
           this.getProduct();
         }
-      );
-
+        );
     this.shoppingService.changeItem.subscribe(
-      data => {
+    data => {
       this.product = data;
-      }
-  );
+    }
+
+    );
   }
 
     getProduct() {

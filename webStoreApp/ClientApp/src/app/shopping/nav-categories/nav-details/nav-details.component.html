@@ -1,5 +1,5 @@
 <div class="sub-cate-details">
-  <button mat-raised-button color="primary"
+  <button mat-raised-button color="warn"
     class="category"
     [routerLink]="['/shopping', categorySelected, 'e']">
       {{ categorySelected }}
@@ -8,7 +8,8 @@
   <div class="sub-categories">
     <button mat-raised-button
       class="details-items"
-      *ngFor="let item of subCate"
+      *ngFor="let item of subCate; let i = index"
+      routerLinkActive="active"
       [routerLink]="['/shopping', categorySelected, item]">
         {{ item }} </button>
   </div>

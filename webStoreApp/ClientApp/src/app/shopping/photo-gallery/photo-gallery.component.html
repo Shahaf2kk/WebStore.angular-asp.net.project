@@ -1,0 +1,14 @@
+<div class="image-container">
+  <div class="content">
+    <div class="images"
+      *ngFor="let image of images; let i = index">
+        <img *ngIf="i === 0"
+         [src]="image">
+    </div>
+    <div
+      *ngIf="!hasOneImage"
+      class="button">
+        <button mat-button (click)="next()">Next</button>
+        <button mat-button (click)="back()">Back</button>
+    </div>
+</div>

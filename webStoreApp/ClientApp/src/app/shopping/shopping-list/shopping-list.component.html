@@ -1,13 +1,15 @@
 <div class="container">
-  <div class="shopping-item" *ngFor="let item of getProduct()">  
+  <div class="shopping-item" *ngFor="let item of getProduct() ">  
     <!-- add async? -->
     <mat-card>
         <mat-card-header>
           <mat-card-title> {{ item.name | titlecase }}</mat-card-title>
         </mat-card-header>
+        <mat-card-content class="image"> 
         <img mat-card-md-image
         [routerLink]="['/shopping/i', item.id]"
          [src]="item.imagePath | stringSplit" [alt]="item.name">
+        </mat-card-content>
         <mat-card-content>
           <p>
           add pipe

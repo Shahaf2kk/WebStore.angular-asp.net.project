@@ -2,7 +2,7 @@
   <div class="catetories">
     <div class="category"
       *ngFor="let item of categories; let i = index">
-        <button mat-raised-button (click)="selectSubCate(i)"> {{ item }}</button>
+        <button mat-raised-button [ngClass]="indexCelected === i ? 'active' : ''" (click)="selectSubCate(i)"> {{ item }}</button>
     </div>
   </div>
   <div class="sub-categories">
