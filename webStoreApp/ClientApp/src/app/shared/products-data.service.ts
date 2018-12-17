@@ -46,6 +46,7 @@ export class ProductsDataService {
     }
 
     getProductByCategory(cate: string) {
+        this.shoppingService.hasLoading.next(false);
         this.http.get<Product[]>(this.baseUrl + 'product/category', { params: {
             'category': cate
         }, responseType: 'json', observe: 'response'})
@@ -60,6 +61,7 @@ export class ProductsDataService {
     }
 
     getProductBySubCategory(cate: string, subCate: string) {
+        this.shoppingService.hasLoading.next(false);
         this.http.get(this.baseUrl + 'product/category', { params: {
             'category': cate,
             'subCategory': subCate
@@ -75,6 +77,7 @@ export class ProductsDataService {
     }
 
     getProductById(id: number) {
+        this.shoppingService.hasLoading.next(false);
         this.http.get(this.baseUrl + 'product/id', { params: {
             'id': id.toString()
         }, responseType: 'json', observe: 'response' })

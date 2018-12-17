@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingService } from './shopping.service';
+
+import { ShoppingService } from '../shopping/shopping.service';
 
 @Component({
-  selector: 'app-shopping',
-  templateUrl: './shopping.component.html',
-  styleUrls: ['./shopping.component.css']
+  selector: 'app-loading-progress',
+  templateUrl: './loading-progress.component.html',
+  styleUrls: ['./loading-progress.component.css']
 })
-export class ShoppingComponent implements OnInit {
+export class LoadingProgressComponent implements OnInit {
 
   constructor(private shoppingService: ShoppingService) { }
 

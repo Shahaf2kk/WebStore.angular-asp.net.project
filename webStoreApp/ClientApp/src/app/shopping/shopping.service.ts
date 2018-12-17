@@ -10,6 +10,8 @@ export class ShoppingService {
 
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
     private productsNames: ProductsName[];
+
+    hasLoading = new Rx.Subject();
     categoriesSelectedSubject = new Rx.Subject();
 
     constructor () { }
@@ -58,6 +60,7 @@ export class ShoppingService {
     }
 
     getProducts(): Product[] {
+        this.hasLoading.next(true);
         return this.items;
     }
 
@@ -66,6 +69,7 @@ export class ShoppingService {
     }
 
     getProductByResProducts(id: number) {
+
         if (this.items !== undefined) {
             const product = this.items.find(x => x.id === id);
             this.itemSubject.next(product);

@@ -7,8 +7,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
 
 @NgModule({
+    declarations: [
+        LoadingProgressComponent
+    ],
     imports: [
         BrowserAnimationsModule,
         MatToolbarModule,
@@ -16,7 +21,8 @@ import { MatInputModule } from '@angular/material/input';
         MatButtonModule,
         MatExpansionModule,
         MatCardModule,
-        MatInputModule
+        MatInputModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -25,7 +31,9 @@ import { MatInputModule } from '@angular/material/input';
         MatButtonModule,
         MatExpansionModule,
         MatCardModule,
-        MatInputModule
+        MatInputModule,
+        LoadingProgressComponent,
+        MatProgressSpinnerModule
     ]
 })
 

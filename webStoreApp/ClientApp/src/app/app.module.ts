@@ -45,7 +45,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     CartNavComponent,
     SearchComponent,
     UserNavComponent,
-    SearchPipePipe,
+    SearchPipePipe
   ],
   imports: [
     BrowserModule,
