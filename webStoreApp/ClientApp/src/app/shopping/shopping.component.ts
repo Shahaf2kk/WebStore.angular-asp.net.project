@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { ShoppingService } from './shopping.service';
+
 
 @Component({
   selector: 'app-shopping',
   templateUrl: './shopping.component.html',
   styleUrls: ['./shopping.component.css']
 })
-export class ShoppingComponent implements OnInit {
+export class ShoppingComponent implements OnInit, OnDestroy {
 
   constructor(private shoppingService: ShoppingService) { }
 
@@ -17,6 +19,10 @@ export class ShoppingComponent implements OnInit {
       .subscribe((data: boolean) => {
         this.hasLoading = data;
       });
+  }
+
+  ngOnDestroy() {
+    this.shoppingService.hasLoading.unsubscribe();
   }
 
 }

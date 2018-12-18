@@ -12,13 +12,14 @@
         </mat-card-content>
         <mat-card-content>
           <p>
-          add pipe
+          {{ item.description | slice:0:100 }}...
           </p>
-          <span class="price"> Price {{ item.price }}$ </span>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button [routerLink]="['/shopping/i', item.id]">Read More</button>
-        </mat-card-actions>
+        <div class="mat-card-bottom">
+          <button mat-button
+           [routerLink]="['/shopping/i', item.id]">Read More</button>
+          <span class="price"> Price: {{ item.price }}$ </span>
+        </div>
       </mat-card>
   </div>
 </div>

@@ -34,6 +34,7 @@ export class ShoppingService {
         this.productsCategoryNames = cateName;
     }
 
+    // use by nav-bar-url -- not use.
     setCategorySelectedSubject(cate: string, sub: string) {
         this.categoriesSelectedSubject.next({cate: cate, sub: sub});
     }
