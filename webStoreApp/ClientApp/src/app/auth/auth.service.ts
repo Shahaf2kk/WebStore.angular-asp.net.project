@@ -134,19 +134,20 @@ export class AuthService {
   }
 
   handleError(errorRes: HttpErrorResponse) {
-    console.log(errorRes);
+    console.error(errorRes);
     if (errorRes.error instanceof ErrorEvent) {
       console.error('client side: ' + errorRes.error.message);
       console.error('status code ' + errorRes.status);
       this.router.navigate(['']);
     } else {
       if (errorRes.status === 400) {
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
         return errorRes.error;
       }
       if (errorRes.status === 401) {
         this.delToken();
         this.router.navigate(['/signin']);
+        return errorRes.statusText;
       }
       if (errorRes.status === 404) {
         return errorRes.error;

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+
 import { AuthService } from '../auth.service';
+import { AuthGuard } from '../auth-guard.service';
 
 import {
   faUser,
   faUnlock,
   faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { AuthGuard } from '../auth-guard.service';
-
 
 @Component({
   selector: 'app-signin',
@@ -23,19 +23,31 @@ export class SigninComponent implements OnInit {
   errorMsg;
   afterSubmit: boolean;
   url: string;
+  signInForm: FormGroup;
+  username = new FormControl('', [Validators.required, Validators.minLength(5)]);
+  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+
   constructor(private authService: AuthService,
               private authGuard: AuthGuard) {}
 
   ngOnInit() {
-    this.afterSubmit = false;
+    this.signInForm = new FormGroup({
+      'username': this.username,
+      'password': this.password
+    });
+    // this.signInForm.addControl('username', this.username);
+    // this.signInForm.addControl('password', this.username);
+
     this.authGuard.getLastUrl.subscribe(
       stateUrl => this.url = stateUrl
-    );
+      );
+    this.afterSubmit = false;
+
   }
-  onSubmit(form: NgForm) {
-    if (form.valid) {
-      const username = form.controls['username'].value;
-      const pass = form.controls['pass'].value;
+  onSubmit() {
+    if (this.signInForm.valid) {
+      const username = this.signInForm.value['username'];
+      const pass = this.signInForm.value['password'];
       this.authService.signinUser(username, pass)
       .subscribe((data) => {
         const userData = data.body;
@@ -45,7 +57,10 @@ export class SigninComponent implements OnInit {
         this.errorMsg = this.authService.handleError(error);
         this.afterSubmit = true;
       });
-      form.reset();
     }
+    this.signInForm.reset();
+    setTimeout(() => {
+      this.afterSubmit = false;
+    }, 10000);
   }
 }

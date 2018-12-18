@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+import { DesignModule } from '../design.module';
 
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
-
 
 @NgModule({
     declarations: [
@@ -13,7 +15,9 @@ import { SignupComponent } from './signup/signup.component';
     ],
     imports: [
         BrowserModule,
-        FormsModule
+        ReactiveFormsModule,
+        FormsModule,
+        DesignModule
     ]
 })
 export class AuthModule { }

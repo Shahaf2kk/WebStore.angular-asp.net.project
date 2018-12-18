@@ -8,7 +8,8 @@
             formControlName="address">
     </div>
     <div class="errorMsg"
-        *ngIf="shippingForm.get('address').invalid && shippingForm.get('address').touched">
+        *ngIf="shippingForm.get('address').invalid 
+                  && shippingForm.get('address').touched">
           Address Must Has Minimum 5 Letters 
     </div>
     <div class="city">

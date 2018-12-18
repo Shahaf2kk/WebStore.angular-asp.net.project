@@ -1,33 +1,42 @@
 <div class="container">
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form">
-    <div class="div-username">
-      <input type="text" class="input-username"
-      placeholder="Enter Username"
-      ngModel
-      name="username"
-      required
-      autocomplete="username"
-      >
-    </div>
-    <div class="div-pass">
-      <input type="password" class="input-pass"
-      placeholder="Enter Password"
-      ngModel
-      name="pass"
-      required
-      autocomplete="current-password"
-      >
-    </div>
+  <div class="title"> <h1>Login</h1> </div>
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()"
+    class="form">
+    <mat-form-field class="div-username">
+      <input matInput type="text" class="input-username"
+        placeholder="Enter Username"
+        formControlName="username"
+        autocomplete="username"
+        >
+      <mat-error *ngIf="signInForm.get('username').invalid
+           && signInForm.get('username').touched"> 
+           Please enter a username for more than 5 characters </mat-error>
+    </mat-form-field>
+    <mat-form-field class="div-pass">
+      <input matInput type="password" class="input-pass"
+        placeholder="Enter Password"
+        formControlName="password"
+        autocomplete="current-password">
+      <mat-error *ngIf="signInForm.get('password').invalid 
+            && signInForm.get('password').touched  
+            && signInForm.get('username').touched"> 
+            Please enter a password for more than 6 characters </mat-error>
+    </mat-form-field>
     <div class="div-btn">
-      <button
+      <button mat-button
        type="submit"
         class="btn-login"
-       [disabled]="!f.valid"
+        [disabled]="signInForm.invalid"
        >Login</button>
-      <button routerLink="/signup" type="button" class="btn-register">Register</button>
+      <button mat-button routerLink="/signup" type="button" class="btn-register">Register</button>
     </div>
-    <div *ngIf="afterSubmit" class="div-error-msg">
-      <span> {{ errorMsg }} </span>
-    </div>
+    <mat-error *ngIf="afterSubmit">
+      {{ errorMsg }}
+    </mat-error>
+    <!-- <mat-error *ngIf="signInForm.invalid
+         && afterSubmit && signInForm.get('password').touched && signInForm.get('username').touched" class="div-error-msg"
+         >
+       {{ errorMsg | titlecase }} 
+    </mat-error> -->
   </form>
 </div>

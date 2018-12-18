@@ -1,41 +1,43 @@
 <div class="container">
   <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="form">
-    <div class="div-username">
-      <input type="text" class="input-username"
+    <mat-form-field class="div-username">
+      <input matInput type="text" class="input-username"
       placeholder="Enter Username"
       ngModel
       name="username"
       required
       >
-    </div>
-    <div class="div-pass">
-      <input type="password" class="input-pass"
+    </mat-form-field>
+    <mat-form-field class="div-pass">
+      <input matInput type="password" class="input-pass"
       placeholder="Enter Password"
       ngModel
       name="pass"
       required
       >
-    </div>
-    <div class="div-email">
-      <input type="email"
+    </mat-form-field>
+    <mat-form-field class="div-email">
+      <input matInput type="email"
       class="input-email"
       placeholder="Enter Email"
       ngModel
       name="email"
       email
       required
+      minlength="4"
       >
-    </div>
+      <mat-error *ngIf=""></mat-error>
+    </mat-form-field>
     <div class="div-btn">
-      <button type="submit" class="btn-register"
+      <button mat-button type="submit" class="btn-register"
       [disabled]="!f.valid"      
       >Register</button>
-      <button type="button" class="btn-login"
+      <button mat-button type="button" class="btn-login"
        routerLink="/signin"
        >Go To Login</button>
     </div>
-    <div *ngIf="afterSubmit" class="div-error-msg">
-      <span> {{ errorMsg }} </span>
-    </div>
+    <mat-error *ngIf="afterSubmit" class="div-error-msg">
+       {{ errorMsg }} 
+    </mat-error>
   </form>
 </div>
