@@ -1,15 +1,24 @@
-<div>
+<div class="search-container"> 
     <input
-        type="text"
-        placeholder="Search"
-        [(ngModel)]="searchInput"
-    >
-    <!-- <span *ngFor="let item of getProductsNames() | searchInput: searchInput"> {{ item }}  </span> -->
-    <fa-icon [icon]="faSearch"></fa-icon>
-<div>
-    <div 
-        *ngFor="let item of productsName | searchProduct: searchInput; let i = index"
-        [routerLink]="['/shopping/i/', item.id]">
-            <div *ngIf="(i < 5)"> {{ item.name }} </div>
+        matInput 
+        type="text" placeholder="Search" [(ngModel)]="searchInput" >
+    <div class="wholeResDiv">
+        <div
+            class="resDiv"
+            *ngFor="let item of productsName | searchProduct: searchInput; let i = index">
+                <mat-option class="searchRes"
+                    [routerLink]="['/shopping/i/', item.id]"
+                    *ngIf="i < 8">
+                        {{ item.name | titlecase }}
+                </mat-option>
+        </div>
     </div>
 </div>
+<!-- [value]="item" -->
+    <!-- <div *ngIf="(i < 5)"> {{ item.name }} </div> -->
+
+<!-- <div>
+</div> -->
+    <!-- <fa-icon [icon]="faSearch"></fa-icon> -->
+<!-- <div>
+</div> -->

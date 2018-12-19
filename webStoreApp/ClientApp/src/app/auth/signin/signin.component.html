@@ -28,7 +28,9 @@
         class="btn-login"
         [disabled]="signInForm.invalid"
        >Login</button>
-      <button mat-button routerLink="/signup" type="button" class="btn-register">Register</button>
+      <button mat-button 
+      [routerLink]="['/signup']"
+      type="button" class="btn-register">Register</button>
     </div>
     <mat-error *ngIf="afterSubmit">
       {{ errorMsg }}

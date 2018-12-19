@@ -1,4 +1,23 @@
-div {
+.search-container {
+    display: flex;
+    flex-direction: column;
+}
+.searchRes {
+    display: flex;
+    flex-direction: column;
+}
+input {
+    height: 24px;
+}
+.wholeResDiv {
+    position: absolute;
+}
+.resDiv {
+    top: 43px;
+}
+.mat-option {
+}
+/* div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,8 +38,6 @@ input {
 div input:focus + fa-icon {
     color: #333;
     border-color: #333;
-    /* color: dodgerblue; */
-    /* border-color: rgb(146, 199, 251); */
 }
 fa-icon {
     position: absolute;
@@ -32,8 +49,5 @@ fa-icon {
     transition: .3s;
 }
 input:focus {
-    /* border-color: #333; */
     border: 2px solid dodgerblue;
-    /* border-color: dodgerblue; */
-    /* box-shadow: 0 0 0 #333; */
-} 
+}  */

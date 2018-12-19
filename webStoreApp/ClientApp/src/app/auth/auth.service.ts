@@ -134,14 +134,12 @@ export class AuthService {
   }
 
   handleError(errorRes: HttpErrorResponse) {
-    console.error(errorRes);
     if (errorRes.error instanceof ErrorEvent) {
       console.error('client side: ' + errorRes.error.message);
       console.error('status code ' + errorRes.status);
       this.router.navigate(['']);
     } else {
       if (errorRes.status === 400) {
-        // this.router.navigate(['']);
         return errorRes.error;
       }
       if (errorRes.status === 401) {

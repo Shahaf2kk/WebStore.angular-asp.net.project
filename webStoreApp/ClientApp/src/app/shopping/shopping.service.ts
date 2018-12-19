@@ -14,18 +14,13 @@ export class ShoppingService {
     hasLoading = new Rx.Subject();
     categoriesSelectedSubject = new Rx.Subject();
 
-    constructor () { }
+    constructor () {
+        this.hasLoading.next(true);
+     }
 
     setProductsNames(data: ProductsName[]) {
         this.productsNames = data;
     }
-    // setProductsObservable(obs: Rx.Observable<any>) {
-    //     this.productObservable = obs;
-    // }
-    // getProductsObservable(): Rx.Observable<any> {
-    //     return this.productObservable;
-    // }
-
     getProductsNames(): ProductsName[] {
         return this.productsNames;
     }

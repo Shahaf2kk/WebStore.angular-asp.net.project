@@ -12,13 +12,13 @@ export class ShoppingComponent implements OnInit, OnDestroy {
 
   constructor(private shoppingService: ShoppingService) { }
 
-  hasLoading = false;
+  hasLoading: boolean;
 
   ngOnInit() {
     this.shoppingService.hasLoading
-      .subscribe((data: boolean) => {
-        this.hasLoading = data;
-      });
+    .subscribe((data: boolean) => {
+      this.hasLoading = data;
+    });
   }
 
   ngOnDestroy() {

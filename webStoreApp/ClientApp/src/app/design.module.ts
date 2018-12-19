@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatCardModule,
         MatInputModule,
         MatFormFieldModule,
+        MatAutocompleteModule,
         MatProgressSpinnerModule
     ],
     exports: [
@@ -36,6 +38,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatInputModule,
         LoadingProgressComponent,
         MatFormFieldModule,
+        MatAutocompleteModule,
         MatProgressSpinnerModule
     ]
 })

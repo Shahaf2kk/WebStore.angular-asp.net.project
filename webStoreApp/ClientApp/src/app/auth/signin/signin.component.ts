@@ -35,8 +35,6 @@ export class SigninComponent implements OnInit {
       'username': this.username,
       'password': this.password
     });
-    // this.signInForm.addControl('username', this.username);
-    // this.signInForm.addControl('password', this.username);
 
     this.authGuard.getLastUrl.subscribe(
       stateUrl => this.url = stateUrl

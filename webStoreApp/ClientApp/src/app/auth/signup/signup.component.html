@@ -1,43 +1,45 @@
 <div class="container">
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm" class="form">
+  <div class="title"><h1>Register</h1></div>
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="form">
     <mat-form-field class="div-username">
       <input matInput type="text" class="input-username"
-      placeholder="Enter Username"
-      ngModel
-      name="username"
-      required
+        placeholder="Enter Username"
+        formControlName="username"
       >
+      <mat-error *ngIf="signUpForm.get('username').invalid 
+          && signUpForm.get('username').touched">
+        Please enter a username for more than 5 characters
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="div-pass">
       <input matInput type="password" class="input-pass"
-      placeholder="Enter Password"
-      ngModel
-      name="pass"
-      required
-      >
+        placeholder="Enter Password"
+        formControlName="password">
+      <mat-error *ngIf="signUpForm.get('password').invalid 
+            && signUpForm.get('password').touched">
+        Please enter a password for more than 6 characters
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="div-email">
       <input matInput type="email"
-      class="input-email"
-      placeholder="Enter Email"
-      ngModel
-      name="email"
-      email
-      required
-      minlength="4"
-      >
-      <mat-error *ngIf=""></mat-error>
+        class="input-email"
+        placeholder="Enter Email"
+        formControlName="email">
+      <mat-error *ngIf="signUpForm.get('email').invalid 
+          && signUpForm.get('email').touched">
+        Please enter valid email
+      </mat-error>
     </mat-form-field>
     <div class="div-btn">
       <button mat-button type="submit" class="btn-register"
-      [disabled]="!f.valid"      
+      [disabled]="!signUpForm.valid"      
       >Register</button>
       <button mat-button type="button" class="btn-login"
-       routerLink="/signin"
+       [routerLink]="['/signin']"
        >Go To Login</button>
     </div>
     <mat-error *ngIf="afterSubmit" class="div-error-msg">
-       {{ errorMsg }} 
+       {{ errorMsg | titlecase }} 
     </mat-error>
   </form>
 </div>
