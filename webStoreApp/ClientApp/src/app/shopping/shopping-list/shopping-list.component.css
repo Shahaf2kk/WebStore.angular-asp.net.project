@@ -37,3 +37,9 @@ button {
 .price {
     padding-right: 16px;
 }
+.mat-paginator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

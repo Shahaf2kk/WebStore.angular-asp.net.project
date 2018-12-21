@@ -1,21 +1,20 @@
 import { Product, ProductsName } from '../model/product.model';
 import * as Rx from 'rxjs';
+import { LoadingService } from '../loading-progress/loading.service';
+
 
 export class ShoppingService {
 
     items: Product[];
-    // productObservable: Rx.Observable<any>;
     private itemSubject = new Rx.BehaviorSubject<Product>(new Product);
     changeItem = this.itemSubject.asObservable();
 
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
     private productsNames: ProductsName[];
 
-    hasLoading = new Rx.Subject();
     categoriesSelectedSubject = new Rx.Subject();
 
-    constructor () {
-        this.hasLoading.next(true);
+    constructor ( ) {
      }
 
     setProductsNames(data: ProductsName[]) {
@@ -56,7 +55,6 @@ export class ShoppingService {
     }
 
     getProducts(): Product[] {
-        this.hasLoading.next(true);
         return this.items;
     }
 
@@ -65,7 +63,6 @@ export class ShoppingService {
     }
 
     getProductByResProducts(id: number) {
-
         if (this.items !== undefined) {
             const product = this.items.find(x => x.id === id);
             this.itemSubject.next(product);

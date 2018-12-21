@@ -2,12 +2,7 @@
     <app-nav-categories></app-nav-categories>
     <!-- <app-nav-bar-url></app-nav-bar-url> -->
     <div class="loading">
-            <!-- <app-loading-progress></app-loading-progress> -->
-        <div
-        *ngIf="!hasLoading"
-         class="isloading">
-            <mat-spinner></mat-spinner>
-        </div>
+        <app-loading-progress></app-loading-progress>
         <router-outlet class="router"></router-outlet>
     </div>
 </div>

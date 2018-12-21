@@ -8,6 +8,7 @@ import { ShoppingService } from '../shopping/shopping.service';
 import { Product } from '../model/product.model';
 import { Order, OrderDetails } from '../model/order.model';
 import { OrderService } from '../order/order.service';
+import { LoadingService } from '../loading-progress/loading.service';
 
 @Injectable()
 export class ProductsDataService {
@@ -17,8 +18,8 @@ export class ProductsDataService {
                 private authService: AuthService,
                 private cartService: CartService,
                 private shoppingService: ShoppingService,
-                private orderService: OrderService
-                ) { }
+                private orderService: OrderService,
+                private loadingService: LoadingService) { }
 
     postOrder(order: Order) {
         this.http.post<OrderDetails>(this.baseUrl + 'order', { order },
@@ -46,22 +47,25 @@ export class ProductsDataService {
     }
 
     getProductByCategory(cate: string) {
-        this.shoppingService.hasLoading.next(false);
+        this.loadingService.setLoading(false);
         this.http.get<Product[]>(this.baseUrl + 'product/category', { params: {
             'category': cate
         }, responseType: 'json', observe: 'response'})
         .subscribe(
             (data) => {
                 this.shoppingService.setProducts(data.body);
+                this.loadingService.setLoading(true);
             },
             (error) => {
                 console.log(error);
+                this.loadingService.setLoading(true);
+
             }
         );
     }
 
     getProductBySubCategory(cate: string, subCate: string) {
-        this.shoppingService.hasLoading.next(false);
+        this.loadingService.setLoading(false);
         this.http.get(this.baseUrl + 'product/category', { params: {
             'category': cate,
             'subCategory': subCate
@@ -69,24 +73,28 @@ export class ProductsDataService {
         .subscribe(
             (data) => {
                 this.shoppingService.setProducts(data.body);
+                this.loadingService.setLoading(true);
             },
             (error) => {
                 console.log(error);
+                this.loadingService.setLoading(true);
             }
         );
     }
 
     getProductById(id: number) {
-        this.shoppingService.hasLoading.next(false);
+        this.loadingService.setLoading(false);
         this.http.get(this.baseUrl + 'product/id', { params: {
             'id': id.toString()
         }, responseType: 'json', observe: 'response' })
         .subscribe(
         (data) => {
             this.shoppingService.setProduct(data.body);
+            this.loadingService.setLoading(true);
         },
         (error) => {
             console.log(error);
+            this.loadingService.setLoading(true);
         });
     }
 

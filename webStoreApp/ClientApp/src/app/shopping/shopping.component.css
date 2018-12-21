@@ -10,12 +10,7 @@ app-nav-categories {
 app-nav-bar-url {
     width: 100%;
 }
-.isloading {
-    right: 0;
-    padding-top: 15%;
-    position: absolute;
-    width: 100%;
+.loading {
     height: 100%;
-    background-color: #ffffff;
-    opacity: 0.7;
 }
+

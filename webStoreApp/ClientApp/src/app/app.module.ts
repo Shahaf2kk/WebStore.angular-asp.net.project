@@ -32,6 +32,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { CartNavComponent } from './core/header/cart-nav/cart-nav.component';
 import { SearchComponent } from './core/header/search/search.component';
 import { UserNavComponent } from './core/header/user-nav/user-nav.component';
+import { LoadingService } from './loading-progress/loading.service';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -70,6 +71,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     AuthGuard,
     CartService,
     OrderService,
+    LoadingService,
     {
      provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadService], multi: true
     }

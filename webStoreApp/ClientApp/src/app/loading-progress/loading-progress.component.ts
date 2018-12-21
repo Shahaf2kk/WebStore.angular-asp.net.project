@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { ShoppingService } from '../shopping/shopping.service';
+import { LoadingService } from './loading.service';
 
 @Component({
   selector: 'app-loading-progress',
   templateUrl: './loading-progress.component.html',
   styleUrls: ['./loading-progress.component.css']
 })
-export class LoadingProgressComponent implements OnInit {
+export class LoadingProgressComponent implements OnInit,
+OnDestroy {
 
-  constructor(private shoppingService: ShoppingService) { }
+  constructor(private loadingService: LoadingService) { }
 
-  hasLoading = false;
+  hasLoading: boolean;
 
   ngOnInit() {
-    this.shoppingService.hasLoading
-      .subscribe((data: boolean) => {
+    this.hasLoading = false;
+    this.loadingService.getLoadingSubject
+      .subscribe( (data: boolean) => {
         this.hasLoading = data;
       });
   }
-
+  ngOnDestroy () {
+    this.loadingService.unsubscribe();
+  }
 }

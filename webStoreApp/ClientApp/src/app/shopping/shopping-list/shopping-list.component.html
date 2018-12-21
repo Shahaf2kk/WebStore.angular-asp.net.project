@@ -1,14 +1,14 @@
 <div class="container">
-  <div class="shopping-item" *ngFor="let item of getProduct() ">
-    <!-- add async? -->
+  <div class="shopping-item"
+   *ngFor="let item of getProducts() | slice: sliceFrom(pageEvent) : sliceTo(pageEvent) ">
     <mat-card>
         <mat-card-header>
           <mat-card-title> {{ item.name | titlecase }}</mat-card-title>
         </mat-card-header>
         <mat-card-content class="image"> 
-        <img mat-card-md-image
+        <!-- <img mat-card-md-image
         [routerLink]="['/shopping/i', item.id]"
-         [src]="item.imagePath | stringSplit" [alt]="item.name">
+         [src]="item.imagePath | stringSplit" [alt]="item.name"> -->
         </mat-card-content>
         <mat-card-content>
           <p>
@@ -24,6 +24,13 @@
   </div>
 </div>
 
+<mat-paginator 
+[pageSize]="pageSize"
+[length]="length"
+(page)="pageEvent = $event">
+</mat-paginator>
+
+<!-- [pageSizeOptions]="pageSizeOptions" --> 
 <!-- <div class="container">
   <div class="shopping-list">
 <div class="shopping-item" *ngFor="let item of getProduct()"> 

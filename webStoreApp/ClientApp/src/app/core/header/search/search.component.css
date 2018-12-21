@@ -9,14 +9,15 @@
 input {
     height: 24px;
 }
-.wholeResDiv {
+/* .wholeResDiv {
+    
     position: absolute;
 }
 .resDiv {
-    top: 43px;
+    top: 4  3px;
 }
 .mat-option {
-}
+} */
 /* div {
     display: flex;
     justify-content: center;
