@@ -8,6 +8,8 @@
     padding: 2px 0 0 5px;
     height: auto;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
-.logo {
+app-search {
+    flex: 2;
 }

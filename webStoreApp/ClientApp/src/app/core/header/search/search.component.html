@@ -1,24 +1,17 @@
 <div class="search-container"> 
-    <input
-        matInput 
-        type="search" placeholder="Search" [(ngModel)]="searchInput" >
-    <div class="wholeResDiv">
-        <div
-            class="resDiv"
-            *ngFor="let item of productsName | searchProduct: searchInput; let i = index">
-                <mat-option class="searchRes"
-                    [routerLink]="['/shopping/i/', item.id]"
-                    *ngIf="i < 8">
-                        {{ item.name | titlecase }}
-                </mat-option>
-        </div>
-    </div>
+        <mat-form-field class="form-input">
+            <input
+            [(ngModel)]="searchInput"
+            matInput
+            type="search"
+            [matAutocomplete]="auto">
+            <mat-placeholder class="placeholder">Search</mat-placeholder>
+            
+        </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option 
+        *ngFor="let item of productsName | searchProduct: searchInput; let i = index"
+        [routerLink]="['/shopping/i/', item.id]">
+            {{ item.name | titlecase }} </mat-option>
+        </mat-autocomplete>
 </div>
-<!-- [value]="item" -->
-    <!-- <div *ngIf="(i < 5)"> {{ item.name }} </div> -->
-
-<!-- <div>
-</div> -->
-    <!-- <fa-icon [icon]="faSearch"></fa-icon> -->
-<!-- <div>
-</div> -->

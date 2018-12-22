@@ -1,14 +1,19 @@
-.search-container {
-    display: flex;
-    flex-direction: column;
+.form-input {
+    margin-top: 3px;
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
 }
-.searchRes {
-    display: flex;
-    flex-direction: column;
+.placeholder {
+    font-size: 17px;
 }
-input {
-    height: 24px;
-}
+
+
+
+
+
+
+
 /* .wholeResDiv {
     
     position: absolute;

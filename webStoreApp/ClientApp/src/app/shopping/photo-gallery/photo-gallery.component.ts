@@ -19,9 +19,9 @@ export class PhotoGalleryComponent implements OnInit, OnChanges {
 
 
   convertStringToArray(array: string) {
-    if (array === undefined || array === null) {
-      return;
-    }
+      if (array === undefined || array === '' || array === null) {
+        return;
+      }
       const el = array.split(',');
       for (let i = 0; i < el.length; i++) {
         const ele = el[i].split(' ');
@@ -32,6 +32,8 @@ export class PhotoGalleryComponent implements OnInit, OnChanges {
       this.images = el;
       if (this.images.length === 1) {
         this.hasOneImage = true;
+      } else {
+        this.hasOneImage = false;
       }
     }
 

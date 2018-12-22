@@ -1,7 +1,5 @@
 import { Product, ProductsName } from '../model/product.model';
 import * as Rx from 'rxjs';
-import { LoadingService } from '../loading-progress/loading.service';
-
 
 export class ShoppingService {
 
@@ -65,8 +63,11 @@ export class ShoppingService {
     getProductByResProducts(id: number) {
         if (this.items !== undefined) {
             const product = this.items.find(x => x.id === id);
-            this.itemSubject.next(product);
-            return true;
+            if (product !== undefined) {
+                console.log('call from local');
+                this.itemSubject.next(product);
+                return true;
+            }
         }
         return false;
     }

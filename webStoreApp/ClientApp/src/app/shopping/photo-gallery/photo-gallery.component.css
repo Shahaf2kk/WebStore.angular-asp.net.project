@@ -16,7 +16,7 @@
 }
 img {
     width: 100%;
-    height: auto;
+    max-height: 500px;
 }
 .button {
     height: 35px;
@@ -30,4 +30,8 @@ img {
 }
 button {
     width: 50%;
+} 
+app-loading-progress {
+    height: 100px;
+    width: 100px;
 }

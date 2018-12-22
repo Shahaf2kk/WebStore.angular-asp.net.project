@@ -83,6 +83,8 @@ export class ProductsDataService {
     }
 
     getProductById(id: number) {
+        console.log('call from sql');
+
         this.loadingService.setLoading(false);
         this.http.get(this.baseUrl + 'product/id', { params: {
             'id': id.toString()

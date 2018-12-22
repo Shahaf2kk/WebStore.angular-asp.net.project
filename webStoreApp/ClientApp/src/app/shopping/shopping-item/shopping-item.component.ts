@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ProductsDataService } from '../../shared/products-data.service';
 import { Product } from '../../model/product.model';
 import { ShoppingService } from '../shopping.service';
+import { LoadingService } from 'src/app/loading-progress/loading.service';
 
 @Component({
   selector: 'app-shopping-item',
@@ -17,7 +18,8 @@ export class ShoppingItemComponent implements OnInit {
   product: Product;
   constructor(private activeRouter: ActivatedRoute,
               private productsData: ProductsDataService,
-              private shoppingService: ShoppingService) { }
+              private shoppingService: ShoppingService,
+              private loadingService: LoadingService) { }
 
   ngOnInit() {
     this.activeRouter.params
@@ -25,14 +27,12 @@ export class ShoppingItemComponent implements OnInit {
         (params: Params) => {
           this.id = +params['item'];
           this.getProduct();
+        });
+    this.shoppingService.changeItem
+      .subscribe((data) => {
+        this.product = data;
         }
-        );
-    this.shoppingService.changeItem.subscribe(
-    data => {
-      this.product = data;
-    }
-
-    );
+      );
   }
 
     getProduct() {
@@ -40,4 +40,5 @@ export class ShoppingItemComponent implements OnInit {
          this.productsData.getProductById(this.id);
       }
     }
+
   }
