@@ -12,6 +12,7 @@ import { LoadingProgressComponent } from './loading-progress/loading-progress.co
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatFormFieldModule,
         MatAutocompleteModule,
         MatProgressSpinnerModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSelectModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -42,7 +44,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatFormFieldModule,
         MatAutocompleteModule,
         MatProgressSpinnerModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSelectModule
     ]
 })
 

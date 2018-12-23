@@ -4,20 +4,28 @@ import * as Rx from 'rxjs';
 export class ShoppingService {
 
     items: Product[];
-    private itemSubject = new Rx.BehaviorSubject<Product>(new Product);
-    changeItem = this.itemSubject.asObservable();
+    private itemSubject: Rx.BehaviorSubject<Product>;
+    changeItem: Rx.Observable<Product>;
 
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
     private productsNames: ProductsName[];
 
-    categoriesSelectedSubject = new Rx.Subject();
 
-    constructor ( ) {
-     }
+    constructor ( ) { }
+
+    unsubscribeitemSubject() {
+        this.itemSubject.unsubscribe();
+    }
+
+    onInitSubject() {
+        this.itemSubject = new Rx.BehaviorSubject<Product>(new Product);
+        this.changeItem = this.itemSubject.asObservable();
+    }
 
     setProductsNames(data: ProductsName[]) {
         this.productsNames = data;
     }
+
     getProductsNames(): ProductsName[] {
         return this.productsNames;
     }
@@ -26,10 +34,6 @@ export class ShoppingService {
         this.productsCategoryNames = cateName;
     }
 
-    // use by nav-bar-url -- not use.
-    setCategorySelectedSubject(cate: string, sub: string) {
-        this.categoriesSelectedSubject.next({cate: cate, sub: sub});
-    }
     getCategoryName() {
         const categoriesNames = [];
         this.productsCategoryNames.forEach(e => {
@@ -57,6 +61,7 @@ export class ShoppingService {
     }
 
     setProduct(item: any) {
+        console.log('setproduct be next to itemSubject');
         this.itemSubject.next(item);
     }
 
@@ -71,7 +76,4 @@ export class ShoppingService {
         }
         return false;
     }
-
 }
-
-

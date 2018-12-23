@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { ProductsDataService } from '../../shared/products-data.service';
@@ -11,7 +11,7 @@ import { LoadingService } from 'src/app/loading-progress/loading.service';
   templateUrl: './shopping-item.component.html',
   styleUrls: ['./shopping-item.component.css']
 })
-export class ShoppingItemComponent implements OnInit {
+export class ShoppingItemComponent implements OnInit, OnDestroy {
 
 
   id: number;
@@ -22,17 +22,17 @@ export class ShoppingItemComponent implements OnInit {
               private loadingService: LoadingService) { }
 
   ngOnInit() {
+    this.shoppingService.onInitSubject();
     this.activeRouter.params
       .subscribe(
         (params: Params) => {
           this.id = +params['item'];
           this.getProduct();
-        });
+      });
     this.shoppingService.changeItem
       .subscribe((data) => {
         this.product = data;
-        }
-      );
+      });
   }
 
     getProduct() {
@@ -41,4 +41,7 @@ export class ShoppingItemComponent implements OnInit {
       }
     }
 
+    ngOnDestroy() {
+      this.shoppingService.unsubscribeitemSubject();
+    }
   }

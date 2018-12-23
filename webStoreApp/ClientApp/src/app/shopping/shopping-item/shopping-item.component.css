@@ -1,47 +1,55 @@
-.content {
-    margin: 10px 0;
+.container-shopping-item {
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.des-details {
-    align-self: stretch;
-    width: 60%;
+.item {
+    display: flex;
+    flex-direction: column;
 }
-.name {
-    padding-top: 8px;
+.title {
+    padding: 5px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+}
+.content {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+.des-details {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 .image {
-    width: 40%;
-    max-width: 400px;
-    align-self: flex-start;
-    grid-area: image;
+    flex-basis: 2;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .des {
-    margin: 0 10px;
     padding: 8px;
-    grid-area: des;
 }
 .details {
-    margin: 0 10px;
+    align-self: flex-end;
+    min-width: 300px;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
 }
 .price {
-    height: 37px;
-    width: 50%;
-    margin: 10px 0;
+    padding: 0 5px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-app-shopping-cart-box {
-    width: 50%;
 }
 .box {
     border-radius: 4px;
@@ -49,7 +57,6 @@ app-shopping-cart-box {
     0 2px 2px 0 rgba(0,0,0,.14),
      0 1px 5px 0 rgba(0,0,0,.12);
 }
-
 @media screen and (max-width: 900px) {
     .content {
         flex-wrap: wrap;
@@ -57,9 +64,15 @@ app-shopping-cart-box {
 }
 @media screen and (max-width: 900px) {
     .des-details {
-        transition: 0.3s;
-        margin: 10px 0;
-        width: 100%;
+        margin-top: 5px;
+        justify-content: center;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 900px) {
+    .details {
+        margin-top: 5px;
+        align-self: stretch;
     }
 }
 @media screen and (max-width: 900px) {
@@ -69,6 +82,15 @@ app-shopping-cart-box {
         min-width: 200px;
     }
 }
+/* 
+@media screen and (max-width: 900px) {
+    .des-details {
+        transition: 0.3s;
+        margin: 10px 0;
+        width: 100%;
+    }
+}
+} */
 
 /* @media screen and (max-width: 900px) {
     .des-details {

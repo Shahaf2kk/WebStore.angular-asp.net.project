@@ -1,21 +1,23 @@
-<mat-card class="container-shopping-item">
-    <mat-card-header class="box">
-        <mat-card-title class="name"> {{ product.name }} </mat-card-title>
-    </mat-card-header>
-    <div class="content">
-        <div class="image">
-            <app-photo-gallery [inputImages]="product.imagePath"></app-photo-gallery>
+<div class="container-shopping-item">
+    <div class="item">
+        <div class="box header">
+           <h1 class="title">  {{ product.name }} </h1>
         </div>
-        <div class="des-details">
-            <div class="des box">
-                <div class="description"> {{product.description }}. </div>
+        <div class="content">
+            <div class="image">
+                <app-photo-gallery [inputImages]="product.imagePath"></app-photo-gallery>
             </div>
-            <div class="details">
-                <div class="price box">
-                        Price: {{ product.price }}$
+            <div class="des-details">
+                <div class="des box">
+                    <div class="description"> {{product.description }}. </div>
                 </div>
-                <app-shopping-cart-box class="box" [product]="product"></app-shopping-cart-box>
+                <div class="details">
+                    <div class="price box">
+                            Price: {{ product.price }}$
+                    </div>
+                    <app-shopping-cart-box class="box" [product]="product"></app-shopping-cart-box>
+                </div>
             </div>
         </div>
     </div>
-</mat-card>
+</div>

@@ -17,11 +17,20 @@ export class AuthService {
   userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
+cartItem: [{ productId: Number, qty: number }];
 
   constructor (private http: HttpClient,
               private router: Router) {
     this.StartUpIsAuth();
   }
+
+
+  // ---------------------------
+  // getCartItem() {
+  //   console.log(this.user);
+  //   return this.user;
+  // }
+  // ---------------------------
 
   getHasProduct() {
     return this.hasProduct;
@@ -151,7 +160,6 @@ export class AuthService {
         return errorRes.error;
       }
     }
-    // return throwError('');
   }
 
   // this.http.post(this.baseUrl + 'users/signup', {},

@@ -65,17 +65,8 @@ export class UserNavComponent implements OnInit {
         this.afterSubmit = true;
       });
       form.reset();
-     // this.isAuth = true;
-    }
+     }
   }
-  // onPassEnter(event: any) {
-  //   if (this.username === '') {
-  //     console.log('user name empty');
-  //     return;
-  //   }
-  //   if (event.key === 'Enter') {
-  //   }
-  // }
   openQuickLogin() {
     if (this.quickLogin === true) {
       this.quickLogin = false;

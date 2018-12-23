@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductsDataService } from '../../shared/products-data.service';
 import { ShoppingService } from '../shopping.service';
@@ -37,7 +37,6 @@ export class ShoppingListComponent implements OnInit {
           this.cate = params['cate'];
           this.subCate = params['sub'];
           this.callToProducts();
-          this.shoppingService.setCategorySelectedSubject(this.cate, this.subCate);
           this.setProducts();
         }
       );
@@ -67,7 +66,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   setProducts() {
-
     this.paginator.firstPage();
     const data = this.shoppingService.getProducts();
     if (data === undefined) {
@@ -83,8 +81,5 @@ export class ShoppingListComponent implements OnInit {
   getProducts() {
     return this.listOfProducts;
   }
-
-
-
 
 }

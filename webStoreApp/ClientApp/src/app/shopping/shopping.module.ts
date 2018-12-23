@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { DesignModule } from '../design.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ImagePipe } from './image.pipe';
 
@@ -33,6 +34,8 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
     ],
     imports: [
         BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
         CommonModule,
         AppRoutingModule,
         DesignModule

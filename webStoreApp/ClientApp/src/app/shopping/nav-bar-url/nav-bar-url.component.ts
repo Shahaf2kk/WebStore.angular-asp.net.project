@@ -18,14 +18,14 @@ export class NavBarUrlComponent implements OnInit, OnDestroy {
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    this.hasCate = true;
-    this.subscription = this.shoppingService.categoriesSelectedSubject
-      .subscribe( (data: {cate: string, sub: string}) => {
-        const cate = data.cate;
-        const sub = data.sub;
-          this.category = cate;
-          this.subCategory = sub;
-        });
+    // this.hasCate = true;
+    // this.subscription = this.shoppingService.categoriesSelectedSubject
+    //   .subscribe( (data: {cate: string, sub: string}) => {
+    //     const cate = data.cate;
+    //     const sub = data.sub;
+    //       this.category = cate;
+    //       this.subCategory = sub;
+    //     });
     }
     ngOnDestroy() {
       this.hasCate = false;
