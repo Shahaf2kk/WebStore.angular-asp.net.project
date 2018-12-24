@@ -20,8 +20,6 @@ export class UserNavComponent implements OnInit {
 
   quickLogin = false;
   userAuth: boolean;
-  userName: string;
-  cartProduct: number;
   errorMsg: string;
   afterSubmit: boolean;
 
@@ -30,18 +28,21 @@ export class UserNavComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.userDetails.subscribe( userData => {
+        this.authService.userDetails
+          .subscribe( userData => {
         this.userAuth = userData.isAuth;
-        if (this.userAuth) {
-          this.userName = userData.User.userName;
-          this.cartProduct = userData.User.listOfCart.length;
-          if (!(this.cartProduct === 0) ) {
-            this.authService.hasProduct = true;
-           } else {
-          this.authService.hasProduct = false;
-          }
-        }
       });
+    // this.authService.userDetails.subscribe( userData => {
+    //     this.userAuth = userData.isAuth;
+    //     if (this.userAuth) {
+    //       this.userName = userData.User.userName;
+    //       if (!(this.cartProduct === 0) ) {
+    //         this.authService.hasProduct = true;
+    //        } else {
+    //       this.authService.hasProduct = false;
+    //       }
+    //     }
+    //   });
       this.afterSubmit = false;
   }
 
@@ -52,6 +53,7 @@ export class UserNavComponent implements OnInit {
     this.authService.delToken();
     this.router.navigate(['/']);
   }
+  // need to add --------------
   onSubmitNav(form: NgForm) {
     if (form.valid) {
       const username = form.controls['username'].value;
@@ -76,3 +78,5 @@ export class UserNavComponent implements OnInit {
     }
   }
 }
+  // ------------------------
+

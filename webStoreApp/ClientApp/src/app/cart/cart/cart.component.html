@@ -1,6 +1,8 @@
 <div class="cart-container">
 
-  <div *ngIf="hasProduct" class="has-product">
+  <div
+  *ngIf="hasProduct"
+   class="has-product">
     <app-cart-item *ngFor="let item of getCartProduct(); let i = index"
     [item]="item"
     [index]="i"

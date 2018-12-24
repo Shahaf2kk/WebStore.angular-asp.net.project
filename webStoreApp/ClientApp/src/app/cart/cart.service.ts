@@ -4,12 +4,15 @@ import { Injectable } from '@angular/core';
 import { OrderService } from '../order/order.service';
 
 import { CartItem } from '../model/cart-item.model';
+import * as Rx from 'rxjs';
 
 @Injectable()
 export class CartService {
 
     cartItems: CartItem[];
     cartProductSelected: CartItem[] = [];
+
+    hasProductInCart: Rx.Subject<{}>;
 
     constructor(private orderService: OrderService,
                 private router: Router) { }
@@ -22,15 +25,23 @@ export class CartService {
         return this.cartItems;
     }
 
-    setItems(items: any) {
-        this.cartItems = items;
+    onInitSubject() {
+        this.hasProductInCart = new Rx.Subject();
     }
 
-    setOrder() {
-        if (this.cartProductSelected !== null) {
-            this.orderService.setOrderProducts(this.cartProductSelected);
-            this.router.navigate(['/order']);
+    setCartItem(items: any) {
+        this.cartItems = items;
+        if (this.cartItems.length > 0 ) {
+            this.hasProductInCart.next(true);
+        } else {
+            this.hasProductInCart.next(false);
         }
+    }
+    setOrder() {
+    if (this.cartProductSelected !== null) {
+        this.orderService.setOrderProducts(this.cartProductSelected);
+        this.router.navigate(['/order']);
+    }
     }
     setOrderDir() {
         if (this.cartItems !== null) {

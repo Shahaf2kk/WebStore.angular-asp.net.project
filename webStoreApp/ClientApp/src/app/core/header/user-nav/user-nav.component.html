@@ -1,7 +1,5 @@
 <div class="authTrue" *ngIf="userAuth">
     <span class="fill"></span>
-  <p class="span-hi-user"> Hi {{ userName | titlecase }}</p>
-  <p class="span-cart-products" *ngIf="cartProduct > 0">, {{ cartProduct }} - </p>
   <app-cart-nav></app-cart-nav>
   <button mat-button (click)="signOut()"> Log Out </button>
 </div>

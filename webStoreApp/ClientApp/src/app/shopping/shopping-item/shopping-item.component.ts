@@ -18,8 +18,7 @@ export class ShoppingItemComponent implements OnInit, OnDestroy {
   product: Product;
   constructor(private activeRouter: ActivatedRoute,
               private productsData: ProductsDataService,
-              private shoppingService: ShoppingService,
-              private loadingService: LoadingService) { }
+              private shoppingService: ShoppingService) { }
 
   ngOnInit() {
     this.shoppingService.onInitSubject();

@@ -1,5 +1,5 @@
   <span class="fill"></span>
   <div class="cartEl">
-      <button mat-button routerLink="/cart" >View Cart  <fa-icon [icon]="faShoppingCart"></fa-icon> </button>
+      <button mat-button [matBadge]="productNumber" [matBadgeHidden]="productNumber === 0" routerLink="/cart" >View Cart  <fa-icon [icon]="faShoppingCart"></fa-icon> </button>
       <button mat-button (click)="goDirToOrder()">Checkout  <fa-icon [icon]="faCartArrowDown"></fa-icon> </button>
   </div>

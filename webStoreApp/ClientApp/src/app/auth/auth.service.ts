@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../model/user.model';
+import { CartItem } from '../model/cart-item.model';
+import { Product } from '../model/product.model';
+import * as Rx from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -13,28 +14,27 @@ export class AuthService {
   hasProduct: boolean;
 
 // ---- object for nav user - if isAuth - start
-  private userDetailsSubject = new BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
+  private userDetailsSubject = new Rx.BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
   userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
-cartItem: [{ productId: Number, qty: number }];
-
   constructor (private http: HttpClient,
-              private router: Router) {
+                private router: Router) {
     this.StartUpIsAuth();
   }
 
-
-  // ---------------------------
-  // getCartItem() {
-  //   console.log(this.user);
-  //   return this.user;
+  // onInitBehavior() {
+  //   this.userDetailsSubject = new Rx.BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
+  //   this.userDetails = this.userDetailsSubject.asObservable();
   // }
-  // ---------------------------
+  // onDestroyBehavior() {
+  //   this.userDetailsSubject.unsubscribe();
+  // }
 
-  getHasProduct() {
-    return this.hasProduct;
-  }
+
+  // getHasProduct() {
+  //   return this.hasProduct;
+  // }
   getBaseUrl() {
     return this.baseUrl;
   }
@@ -44,24 +44,32 @@ cartItem: [{ productId: Number, qty: number }];
   }
 
   addToCart(id: number, qty: number) {
-    const user = this.user;
-    const index = user.listOfCart.findIndex(e => e.productId === id);
-    if (index === -1) {
-      user.listOfCart.push( { productId: id, qty: qty});
-    } else {
-      user.listOfCart[index].qty = qty;
+    for (let i = 0; i < this.user.listOfCart.length; i++) {
+      const el = this.user.listOfCart[i];
+      if (el.productDetails.id === id) {
+        this.user.listOfCart[i].qty = qty;
+        this.userDetailsSubject.next({ User: this.user, isAuth: true});
+        return;
+      }
     }
-    this.userDetailsSubject.next({ User: user, isAuth: true});
+    const list = this.user.listOfCart;
+    const cart = new CartItem();
+    cart.qty = qty;
+    cart.productDetails = new Product();
+    cart.productDetails.id = id;
+    list.push(cart);
+    this.user.listOfCart = list;
+    this.userDetailsSubject.next({ User: this.user, isAuth: true});
   }
 
-  signinUser(usernmae: string, pass: string): Observable<any> {
+  signinUser(usernmae: string, pass: string): Rx.Observable<any> {
     return this.http.get(this.baseUrl + 'users/signin',
     { params: { 'username': usernmae, 'pass': pass },
     responseType: 'text', observe: 'response'});
     }
 
 
-  signupUser(user: User): Observable<any> {
+  signupUser(user: User): Rx.Observable<any> {
     return this.http.post(this.baseUrl + 'users/signup', {}, { params: {
       'username': user.userName,
       'pass': user.pass,
@@ -130,6 +138,17 @@ cartItem: [{ productId: Number, qty: number }];
       this.userDetailsSubject.next({ User: this.user, isAuth: false });
     }
   }
+
+  insertCartDetailsData(data) {
+    // let list: [{ productId: number, qty: number }];
+    // for (let i = 0; i < data.length; i++) {
+    //   const id = data[i]['productDetails']['id'];
+    //   const qty = data[i]['qty'];
+    //   list.push({ productId: id, qty: qty });
+    // }
+    // this.user.listOfCart = list;
+  }
+
   isAuth() {
     if (this.getTokenAndSetHeaders()) {
       return true;

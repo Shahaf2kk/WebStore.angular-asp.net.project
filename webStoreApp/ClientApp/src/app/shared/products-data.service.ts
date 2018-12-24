@@ -19,7 +19,8 @@ export class ProductsDataService {
                 private cartService: CartService,
                 private shoppingService: ShoppingService,
                 private orderService: OrderService,
-                private loadingService: LoadingService) { }
+                private loadingService: LoadingService) {
+                 }
 
     postOrder(order: Order) {
         this.http.post<OrderDetails>(this.baseUrl + 'order', { order },
@@ -38,7 +39,7 @@ export class ProductsDataService {
         responseType: 'json', observe: 'response'})
         .subscribe(
             (data) => {
-                this.cartService.setItems(data.body);
+                this.cartService.setCartItem(data.body);
             },
             (error) => {
                 this.authService.handleError(error);

@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [
@@ -30,7 +32,9 @@ import { MatSelectModule } from '@angular/material/select';
         MatAutocompleteModule,
         MatProgressSpinnerModule,
         MatPaginatorModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSnackBarModule,
+        MatBadgeModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -45,7 +49,9 @@ import { MatSelectModule } from '@angular/material/select';
         MatAutocompleteModule,
         MatProgressSpinnerModule,
         MatPaginatorModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSnackBarModule,
+        MatBadgeModule
     ]
 })
 

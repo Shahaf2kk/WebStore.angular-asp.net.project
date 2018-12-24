@@ -1,12 +1,13 @@
 export class Product {
-    public id: number;
-    public category: string;
-    public subCategory: string;
-    public name: string;
-    public description: string;
-    public price: number;
-    public imagePath: string;
+    id: number = null;
+    category: string = null;
+    subCategory: string = null;
+    name: string = null;
+    description: string = null;
+    price: number = null;
+    imagePath: string = null;
 }
+
 export class ProductsName {
     public id: number;
     public name: string;
