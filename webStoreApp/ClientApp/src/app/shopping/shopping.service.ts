@@ -61,7 +61,6 @@ export class ShoppingService {
     }
 
     setProduct(item: any) {
-        console.log('setproduct be next to itemSubject');
         this.itemSubject.next(item);
     }
 

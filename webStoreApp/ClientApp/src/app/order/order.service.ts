@@ -11,16 +11,14 @@ import { ShipDetails } from '../model/ship-details.model';
 @Injectable()
 export class OrderService {
 
-    order = new Order();
+    order: Order;
     orderDetails: OrderDetails = new OrderDetails();
     productDetails: CartItem[];
+    private canEntry = false;
 
     constructor(private router: Router,
                 private httpClient: HttpClient,
-                private authService: AuthService) {
-        this.order.productsId = [];
-        this.order.productsQty = [];
-                }
+                private authService: AuthService) { }
 
     setOrderDetails(order: OrderDetails) {
         this.orderDetails = order;
@@ -36,19 +34,18 @@ export class OrderService {
         return this.orderDetails;
     }
 
-    checkIfHasProducts(): boolean {
-        if (this.order.productsId.length === 0) {
-            return false;
-        }
-        return true;
+    checkIfHasProducts() {
+        return this.canEntry;
     }
-
 
     setOrderProducts(cartProducts: CartItem[]) {
         if (cartProducts === undefined) {
+            this.canEntry = false;
             this.router.navigate(['']);
             return;
         }
+        this.order = new Order();
+        this.canEntry = true;
         this.productDetails = cartProducts;
         for (let i = 0; i < cartProducts.length; i++) {
             this.order.productsId.push(this.productDetails[i].productDetails.id);
@@ -60,14 +57,15 @@ export class OrderService {
         this.order.shipDetails = shipDetails;
         return this.getOrder();
     }
+
     getOrder() {
         return this.order;
     }
 
     payOrder() {
-        this.httpClient.get(this.authService.getBaseUrl() + 'order/pay',
-        { headers: this.authService.getHeaders(), observe: 'response' })
-        .subscribe(
+        this.httpClient.get(this.authService.getBaseUrl() + 'order/pay', {
+             headers: this.authService.getHeaders(),
+                observe: 'response' }).subscribe(
             (data) => {
                 if (data.status === 200) {
                     this.authService.getUserNavData();

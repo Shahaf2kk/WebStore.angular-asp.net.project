@@ -1,66 +1,56 @@
 <div class="ship-details-container">
   <div class="title"><h1>Set Shipping Address</h1></div>
-  <hr>
-  <form [formGroup]="shippingForm" (ngSubmit)="onSubmit()">
-    <div class="address">
-      <label for="address">Enter Address</label>
-      <input type="text"
+  <form [formGroup]="shippingForm" (ngSubmit)="onSubmit()" class="form">
+
+    <mat-form-field class="address">
+      <input matInput type="text"
+            placeholder="Enter Address"
             formControlName="address">
-    </div>
-    <div class="errorMsg"
-        *ngIf="shippingForm.get('address').invalid 
-                  && shippingForm.get('address').touched">
-          Address Must Has Minimum 5 Letters 
-    </div>
-    <div class="city">
-      <label for="city">Enter City</label>
-      <input type="text"
-              formControlName="city"
-       >
-    </div>
-      <div class="errorMsg"
-          *ngIf="shippingForm.get('city').invalid && shippingForm.get('city').touched">
+      <mat-error class="errorMsg"
+          *ngIf="shippingForm.get('address').invalid 
+                    && shippingForm.get('address').touched">
+            Address Must Has Minimum 5 Letters 
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="city">
+      <input matInput type="text"
+            placeholder="Enter City"
+            formControlName="city">
+      <mat-error class="errorMsg" *ngIf="shippingForm.get('city').invalid
+        && shippingForm.get('city').touched">
           City Must Has Minimum 3 Letters 
-    </div>
-    <!-- need to add counrty list -->
-    <div class="country">
-      <label for="country">Enter Country</label>
-      <select
-        formControlName="country">
-        <option [value]="country" *ngFor="let country of countries">
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="country">
+      <mat-select formControlName="country" placeholder="Choose Country">
+        <mat-option [value]="country" *ngFor="let country of countries">
           {{ country }}
-        </option>
-      </select>
-      <!-- <input
-       type="text"
-       formControlName="country"
-       > -->
-    </div>
-    <div
-    class="errorMsg"
-    *ngIf="shippingForm.get('country').invalid && shippingForm.get('country').touched">
-    country Must Has Minimum 3 Letters 
-  </div>
-    <div class="phone">
-      <label for="phone">Enter Phone Number</label>
-      <input
-       type="tel"
-       formControlName="phone"
-       >
-    </div>
-      <div
-      class="errorMsg"
-      *ngIf="shippingForm.get('phone').invalid && shippingForm.get('phone').touched">
-    Phone Number Must Has Minimum 8 Letters 
-    </div>
+        </mat-option>
+      </mat-select>
+      <mat-error class="errorMsg" *ngIf="shippingForm.get('country').invalid 
+        && shippingForm.get('country').touched">
+          country Must Has Minimum 3 Letters 
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="phone">
+      <input matInput type="tel" formControlName="phone" placeholder="Enter Phone Number" >
+      <mat-error class="errorMsg" *ngIf="shippingForm.get('phone').invalid
+        && shippingForm.get('phone').touched">
+         Phone Number Must Has Minimum 8 Letters 
+      </mat-error>
+    </mat-form-field>
 
     <div class="button">
-      <button
-       type="submit"
-       [disabled]="shippingForm.invalid"
-       >Next</button>
-
-      <button type="button" (click)="back()" >Back</button>
+      <button mat-button type="submit" [disabled]="shippingForm.invalid">
+        Next
+      </button>
+      <button mat-button type="button" (click)="back()">
+        Back
+      </button>
     </div>
-    </form>
+
+  </form>
 </div>

@@ -3,8 +3,8 @@ import { Product } from './product.model';
 
 export class Order {
     public shipDetails: ShipDetails;
-    public productsId: number[];
-    public productsQty: number[];
+    public productsId: number[] = [];
+    public productsQty: number[] = [];
 }
 
 export class OrderDetails {

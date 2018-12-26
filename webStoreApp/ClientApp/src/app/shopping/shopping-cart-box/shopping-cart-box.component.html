@@ -7,6 +7,8 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <button mat-button (click)="addToCart()">Add To Cart</button>
+  <button mat-button
+     (click)="addToCart()" 
+     matTooltip="Add To Cart" 
+     [disabled]="wasBuy">Add To Cart</button>
 </div>
-<span *ngIf="hasProducts">has in cart</span>

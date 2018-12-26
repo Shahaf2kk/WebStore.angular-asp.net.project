@@ -23,18 +23,6 @@ export class AuthService {
     this.StartUpIsAuth();
   }
 
-  // onInitBehavior() {
-  //   this.userDetailsSubject = new Rx.BehaviorSubject<{User: User, isAuth: boolean}>( { User: this.user, isAuth: false } );
-  //   this.userDetails = this.userDetailsSubject.asObservable();
-  // }
-  // onDestroyBehavior() {
-  //   this.userDetailsSubject.unsubscribe();
-  // }
-
-
-  // getHasProduct() {
-  //   return this.hasProduct;
-  // }
   getBaseUrl() {
     return this.baseUrl;
   }
@@ -63,11 +51,10 @@ export class AuthService {
   }
 
   signinUser(usernmae: string, pass: string): Rx.Observable<any> {
-    return this.http.get(this.baseUrl + 'users/signin',
-    { params: { 'username': usernmae, 'pass': pass },
-    responseType: 'text', observe: 'response'});
-    }
-
+    return this.http.get(this.baseUrl + 'users/signin', {
+       params: { 'username': usernmae, 'pass': pass },
+       responseType: 'text', observe: 'response'});
+  }
 
   signupUser(user: User): Rx.Observable<any> {
     return this.http.post(this.baseUrl + 'users/signup', {}, { params: {
@@ -75,7 +62,6 @@ export class AuthService {
       'pass': user.pass,
       'email': user.email
     }, responseType: 'text', observe: 'response'});
-
   }
 
   afterSignInOrUp(data: string, url: string) {
@@ -99,13 +85,14 @@ export class AuthService {
 
   getUserNavData() {
     if (this.getTokenAndSetHeaders()) {
-      return this.http.get(this.baseUrl + 'data', { headers: this.headers, responseType: 'json', observe: 'response' });
+      return this.http.get(this.baseUrl + 'data', {
+        headers: this.headers, responseType: 'json', observe: 'response' });
     }
   }
 
   setToken(token: string) {
-  this.delToken();
-  localStorage.setItem('t', 'Bearer ' + token);
+    this.delToken();
+    localStorage.setItem('t', 'Bearer ' + token);
   }
 
   getTokenAndSetHeaders() {
@@ -117,11 +104,13 @@ export class AuthService {
     this.delToken();
     return false;
   }
+
   delToken() {
     localStorage.clear();
     this.user = new User();
     this.userDetailsSubject.next({ User: this.user, isAuth: false });
   }
+
   StartUpIsAuth() {
     if (this.getTokenAndSetHeaders()) {
       this.getUserNavData().subscribe(
@@ -137,16 +126,6 @@ export class AuthService {
     } else {
       this.userDetailsSubject.next({ User: this.user, isAuth: false });
     }
-  }
-
-  insertCartDetailsData(data) {
-    // let list: [{ productId: number, qty: number }];
-    // for (let i = 0; i < data.length; i++) {
-    //   const id = data[i]['productDetails']['id'];
-    //   const qty = data[i]['qty'];
-    //   list.push({ productId: id, qty: qty });
-    // }
-    // this.user.listOfCart = list;
   }
 
   isAuth() {
@@ -180,45 +159,5 @@ export class AuthService {
       }
     }
   }
-
-  // this.http.post(this.baseUrl + 'users/signup', {},
-    // {params: {
-      //   'username': username,
-      //   'pass': pass,
-      //   'email': email }, responseType: 'text', observe: 'body' }).pipe(catchError(this.handleError)).subscribe(
-        //     (res) => {
-          //       const token = JSON.parse(res['token']);
-          //       this.setToken(token);
-          //       this.homeUrl();
-          //     }
-          //   );
-  // signinUser(username: string, pass: string) {
-        //   const request = new HttpRequest<string>('GET', this.baseUrl + 'users/signin?username=' + username + '&pass=' + pass,
-        //      { reportProgress: true }, );
-        //   this.http.request(request).subscribe(
-        //     (event: HttpEvent<any>) => {
-        //       switch (event.type) {
-        //         case HttpEventType.Sent:
-        //         console.log('request started');
-        //         break;
-        //         case HttpEventType.ResponseHeader:
-        //         console.log('Headers received ->', event.headers);
-        //         break;
-        //         case HttpEventType.DownloadProgress:
-        //         const loaded = Math.round(event.loaded / 1024);
-        //         console.log(`Downloading ${ loaded } kb downloaded`);
-        //         break;
-        //         case HttpEventType.Response:
-        //         console.log('Finished -> ', JSON.parse(event.body));
-        //         break;
-        //       }
-        //     }
-        //   );
-        // }
-      // localStorage.setItem('Authorization', 'Bearer ' + res.body );
-      //  //  localStorage.clear();
-      // // console.log(JSON.parse(localStorage.getItem('Authorization')));
-     // this.http.get(this.baseUrl + 'users/signin?username=' + usernmae + '&pass=' + pass)
-
 
 }

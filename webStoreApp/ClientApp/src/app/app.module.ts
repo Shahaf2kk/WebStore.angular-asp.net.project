@@ -5,8 +5,6 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ClickOutsideModule } from 'ng4-click-outside';
-
 import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
 import { ShoppingModule } from './shopping/shopping.module';
@@ -15,10 +13,11 @@ import { OrderModule } from './order/order.module';
 import { ProductsDataService } from './shared/products-data.service';
 import { AppLoadService } from './app-load.service';
 import { ShoppingService } from './shopping/shopping.service';
-import { AuthGuard } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
 import { CartService } from './cart/cart.service';
 import { OrderService } from './order/order.service';
+
+import { AuthGuard } from './auth/auth-guard.service';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DesignModule } from './design.module';
@@ -33,6 +32,7 @@ import { CartNavComponent } from './core/header/cart-nav/cart-nav.component';
 import { SearchComponent } from './core/header/search/search.component';
 import { UserNavComponent } from './core/header/user-nav/user-nav.component';
 import { LoadingService } from './loading-progress/loading.service';
+import { OrderGuard } from './order/order-guard.service';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -52,7 +52,6 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     BrowserModule,
     FontAwesomeModule,
     FormsModule,
-    ClickOutsideModule,
     HttpClientModule,
     HttpModule,
     DesignModule,
@@ -69,6 +68,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     AppLoadService,
     ShoppingService,
     AuthGuard,
+    OrderGuard,
     CartService,
     OrderService,
     LoadingService,

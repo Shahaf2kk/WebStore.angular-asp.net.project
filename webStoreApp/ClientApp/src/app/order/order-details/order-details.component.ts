@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { OrderService } from '../order.service';
 
 import { OrderDetails } from 'src/app/model/order.model';
-import { Product } from 'src/app/model/product.model';
 import { CartItem } from 'src/app/model/cart-item.model';
 
 @Component({

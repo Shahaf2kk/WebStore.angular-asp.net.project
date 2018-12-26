@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from '../app-routing.module';
+import { DesignModule } from '../design.module';
 
 import { ShipDetailsComponent } from './ship-details/ship-details.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
@@ -19,6 +20,7 @@ import { OrderComponent } from './order.component';
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
+        DesignModule,
         AppRoutingModule
     ]
 })

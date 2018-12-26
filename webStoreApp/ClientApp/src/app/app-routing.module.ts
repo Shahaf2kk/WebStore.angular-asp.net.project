@@ -13,6 +13,7 @@ import { ShipDetailsComponent } from './order/ship-details/ship-details.componen
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { OrderComponent } from './order/order.component';
 import { HomeShoppingComponent } from './shopping/home-shopping/home-shopping.component';
+import { OrderGuard } from './order/order-guard.service';
 
 
 const appRoutes: Routes = [
@@ -23,7 +24,7 @@ const appRoutes: Routes = [
         { path: ':cate/:sub', component: ShoppingListComponent }
     ]},
     { path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
-    { path: 'order', component: OrderComponent, canActivate: [AuthGuard], children: [
+    { path: 'order', component: OrderComponent, canActivate: [AuthGuard, OrderGuard ], children: [
         { path: '', component: ShipDetailsComponent},
         { path: 'orderDetails', component: OrderDetailsComponent}
     ]},

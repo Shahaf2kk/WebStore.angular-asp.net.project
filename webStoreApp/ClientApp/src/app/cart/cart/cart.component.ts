@@ -15,6 +15,7 @@ export class CartComponent implements OnInit, OnDestroy {
   cartProduct: CartItem[];
   errorMsg = '';
   hasProduct: boolean;
+  checkedAll = false;
 
   constructor(private cartService: CartService,
               private productsData: ProductsDataService) { }
@@ -22,7 +23,6 @@ export class CartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.cartService.onInitSubject();
     this.productsData.getCartProduct();
-    this.cartService.cartProductSelected = [];
     this.cartService.hasProductInCart
       .subscribe((data: boolean) => this.hasProduct = data);
   }
@@ -41,6 +41,8 @@ export class CartComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.cartService.hasProductInCart.unsubscribe();
-    console.log('unsubscribe hasproductcart on ng Destroy');
+  }
+  pickEverything() {
+    this.checkedAll = true;
   }
 }

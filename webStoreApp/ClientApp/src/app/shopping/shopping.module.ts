@@ -6,8 +6,6 @@ import { AppRoutingModule } from '../app-routing.module';
 import { DesignModule } from '../design.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ImagePipe } from './image.pipe';
-
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
 import { ShoppingComponent } from './shopping.component';
@@ -28,9 +26,7 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
         NavDetailsComponent,
         HomeShoppingComponent,
         NavBarUrlComponent,
-        PhotoGalleryComponent,
-        ImagePipe,
-
+        PhotoGalleryComponent
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 
+import { ImagePipe } from './shared/image.pipe';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -15,10 +17,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
-        LoadingProgressComponent
+        LoadingProgressComponent,
+        ImagePipe
     ],
     imports: [
         BrowserAnimationsModule,
@@ -34,9 +40,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatPaginatorModule,
         MatSelectModule,
         MatSnackBarModule,
-        MatBadgeModule
+        MatCheckboxModule,
+        MatBadgeModule,
+        MatDividerModule,
+        MatTooltipModule
     ],
     exports: [
+        ImagePipe,
         BrowserAnimationsModule,
         MatToolbarModule,
         MatListModule,
@@ -51,7 +61,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatPaginatorModule,
         MatSelectModule,
         MatSnackBarModule,
-        MatBadgeModule
+        MatCheckboxModule,
+        MatBadgeModule,
+        MatDividerModule,
+        MatTooltipModule
     ]
 })
 

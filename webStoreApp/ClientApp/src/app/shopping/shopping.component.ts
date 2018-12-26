@@ -11,7 +11,4 @@ export class ShoppingComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-
 }

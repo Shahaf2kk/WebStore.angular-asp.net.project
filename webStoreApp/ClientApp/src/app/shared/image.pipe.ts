@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'stringSplit'
+    name: 'oneImage'
 })
 export class ImagePipe implements PipeTransform {
     transform(array: string): any {

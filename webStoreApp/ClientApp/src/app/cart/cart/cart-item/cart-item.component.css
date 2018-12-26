@@ -1,0 +1,71 @@
+.cart-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+}
+.title {
+    width: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+img {
+    cursor: pointer;
+}
+.qty {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.fQty {
+    border-bottom: 1px solid #333333;
+    padding-bottom: 5px;
+}
+.addToCart {
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.addToCart p {
+    border-bottom: 1px solid #333333;
+    padding-bottom: 5px;
+}
+.box {
+    border-radius: 4px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
+    0 2px 2px 0 rgba(0,0,0,.14),
+     0 1px 5px 0 rgba(0,0,0,.12);
+}
+.mat-card-content {
+    margin-bottom: 0;
+}
+@media screen and (max-width: 568px) {
+    .addToCart {
+        margin-top: 7px;
+    }
+}
+@media screen and (max-width: 451px) {
+    .qty {
+        margin-top: 7px;
+    }
+}
+@media screen and (max-width: 401px) {
+    .cart-item-container {
+        justify-content: center;
+        align-items: stretch;
+    }
+}
+@media screen and (max-width: 372px) {
+    .title {
+        margin-top: 7px;
+    }
+}

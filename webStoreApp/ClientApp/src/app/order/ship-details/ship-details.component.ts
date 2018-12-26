@@ -29,11 +29,11 @@ export class ShipDetailsComponent implements OnInit {
       'phone': new FormControl(null, [ Validators.required, Validators.minLength(8)])
     });
 
-    const res = this.orderService.checkIfHasProducts();
-    if (res === false) {
-      alert('Select Some Product To checkout With');
-      this.router.navigate(['']);
-    }
+    // const res = this.orderService.checkIfHasProducts();
+    // if (res === false) {
+    //   alert('Select Some Product To checkout With');
+    //   this.router.navigate(['']);
+    // }
 
   }
 

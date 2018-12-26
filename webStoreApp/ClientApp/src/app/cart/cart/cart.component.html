@@ -1,25 +1,20 @@
 <div class="cart-container">
-
-  <div
-  *ngIf="hasProduct"
-   class="has-product">
+  <div *ngIf="hasProduct" class="cart-items">
     <app-cart-item *ngFor="let item of getCartProduct(); let i = index"
-    [item]="item"
-    [index]="i"
-    ></app-cart-item>
+      [item]="item" [index]="i" [checkbox]="checkedAll">
+    </app-cart-item>
+    <mat-divider></mat-divider>
     <div class="button">
-      <button (click)="goToOrders()"> Next </button>
-      <!-- <button routerLink=""> Back </button> -->
+      <button mat-button (click)="goToOrders()"> Next </button>
+      <button mat-button [routerLink]="['']"> Back </button>
+      <button mat-button (click)="pickEverything()"> Pick Everything </button>
     </div>
-    <div 
-    *ngIf="errorMsg !== ''"
-     class="errorMsg">
-      {{ errorMsg | titlecase }}
-    </div>
+    <mat-error *ngIf="errorMsg !== ''" class="errorMsg">
+        {{ errorMsg | titlecase }}
+    </mat-error>
   </div>
 
-  <div *ngIf="!hasProduct" class="empty-cart">
-    cart empty
-  </div>
-
-  </div>
+  <button mat-button [routerLink]="['']" *ngIf="!hasProduct" class="empty-cart">
+    Cart is Empty - Go To Shopping Area
+  </button>
+</div>

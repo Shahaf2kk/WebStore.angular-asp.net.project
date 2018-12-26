@@ -1,22 +1,24 @@
 <div class="order-details-container">
   <div class="title"><h1>Order Details</h1></div>
-  <hr>
   <div class="order-details">
-   <div
-    class="products"
-    *ngFor="let product of orderDetails.products; let i = index"
-    >
-    <div class="product">
-      <div class="title"> {{ product.name }} </div>
-      <hr>
-      <div class="qty"> {{ orderDetails.productsQty[i] }} </div>
+    <mat-card class="item"
+      *ngFor="let item of orderDetails.products; let i = index">
+        <img mat-card-sm-image [src]="item.imagePath | oneImage">
+        <mat-card-header class="item-title">
+          <p> {{ item.name | titlecase }} </p>
+        </mat-card-header>
+        <mat-card-content class="qty">
+            <p class="fQty">Qty</p>
+            <p> {{ orderDetails.productsQty[i] }} </p>
+        </mat-card-content>
+    </mat-card>
+    <div class="total box">
+      <p> Total Cost: </p>
+      <p> {{ orderDetails.totalCost }}$ </p>
     </div>
-   </div>
-   <hr>
-   <div class="total"> {{ orderDetails.totalCost }} </div>
   </div>
   <div class="button">
-    <button type="button" (click)="setOrder()">Pay!</button>
-    <button type="button" (click)="cancelOrder()">Cancel Order</button>
+    <button mat-button type="button" (click)="setOrder()">Pay!</button>
+    <button mat-button type="button" (click)="cancelOrder()">Cancel Order</button>
   </div>
 </div>
