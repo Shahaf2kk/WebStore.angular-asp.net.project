@@ -7,10 +7,22 @@ div {
 app-nav-categories {
     width: 100%;
 }
-app-nav-bar-url {
-    width: 100%;
-}
 .loading {
+    margin-top: 20px;
     height: 100%;
 }
+.mat-accordion .mat-expansion-panel:last-of-type {
+    margin-top: 23px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+mat-expansion-panel-header {
+    max-height: 25px; 
+    position: absolute;
+    background-color:#f5f5f5;
+}
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+    margin-top: -24px;
 
+}

@@ -12,14 +12,14 @@ import { ShoppingComponent } from './shopping/shopping.component';
 import { ShipDetailsComponent } from './order/ship-details/ship-details.component';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { OrderComponent } from './order/order.component';
-import { HomeShoppingComponent } from './shopping/home-shopping/home-shopping.component';
 import { OrderGuard } from './order/order-guard.service';
+import { TopProductComponent } from './shopping/top-product/top-product.component';
 
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'shopping', pathMatch: 'full'},
     { path: 'shopping', component: ShoppingComponent, children: [
-        { path: '', component: HomeShoppingComponent, pathMatch: 'full'},
+        { path: '', component: TopProductComponent, pathMatch: 'full'},
         { path: 'i/:item', component: ShoppingItemComponent },
         { path: ':cate/:sub', component: ShoppingListComponent }
     ]},

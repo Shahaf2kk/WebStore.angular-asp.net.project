@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { LoadingService } from './loading.service';
 
@@ -7,21 +7,17 @@ import { LoadingService } from './loading.service';
   templateUrl: './loading-progress.component.html',
   styleUrls: ['./loading-progress.component.css']
 })
-export class LoadingProgressComponent implements OnInit,
-OnDestroy {
+export class LoadingProgressComponent implements OnInit {
 
   constructor(private loadingService: LoadingService) { }
 
   hasLoading: boolean;
 
   ngOnInit() {
-    this.hasLoading = false;
+    this.hasLoading = true;
     this.loadingService.getLoadingSubject
       .subscribe( (data: boolean) => {
         this.hasLoading = data;
       });
-  }
-  ngOnDestroy () {
-    // this.loadingService.unsubscribe();
   }
 }

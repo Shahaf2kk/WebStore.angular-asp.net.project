@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductsDataService } from '../../shared/products-data.service';
 import { ShoppingService } from '../shopping.service';
@@ -11,7 +11,7 @@ import { PageEvent } from '@angular/material';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css']
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListComponent implements OnInit, DoCheck {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -31,6 +31,7 @@ export class ShoppingListComponent implements OnInit {
   ngOnInit() {
     this.pageEvent = new PageEvent;
     this.pageEvent.pageIndex = 0;
+    this.paginator.firstPage();
     this.activateRoute.params
       .subscribe(
         (params: Params) => {
@@ -40,6 +41,9 @@ export class ShoppingListComponent implements OnInit {
           this.setProducts();
         }
       );
+  }
+  ngDoCheck() {
+    this.setProducts();
   }
 
   callToProducts() {
@@ -66,7 +70,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   setProducts() {
-    this.paginator.firstPage();
     const data = this.shoppingService.getProducts();
     if (data === undefined) {
       setTimeout(() => {

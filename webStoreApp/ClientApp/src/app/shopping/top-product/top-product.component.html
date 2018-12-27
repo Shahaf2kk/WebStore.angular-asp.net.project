@@ -1,0 +1,25 @@
+<div class="top-products-container">
+  <div *ngFor="let cate of cateNames" class="cate-products-list">
+    <div class="cate-container">
+      <div class="cate-title" [routerLink]="['/shopping', cate, 'e']" ><h1 [matTooltip]="cate | titlecase"> {{ cate | titlecase}} </h1></div>
+        <div class="products">
+          <div *ngFor="let product of getProductByCate(cate)" class="product">
+            <mat-card>
+              <img mat-card-image
+                class="image"
+                [matTooltip]="product.name" 
+                [routerLink]="['/shopping/i', product.id]"
+                [src]="product.imagePath | oneImage">
+              <mat-card-actions>
+                  <button mat-button
+                    [routerLink]="['/shopping/i', product.id]" matTooltip="Go To Product Details">Read More</button>
+                  <span class="price"> Price: {{ product.price }}$ </span>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</div>
+

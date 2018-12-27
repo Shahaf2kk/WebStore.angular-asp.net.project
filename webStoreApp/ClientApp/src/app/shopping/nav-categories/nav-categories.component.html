@@ -1,17 +1,17 @@
-<div class="shopping-category-container">
-  <div class="catetories">
-    <div class="category"
-      *ngFor="let item of categories; let i = index">
-        <button mat-raised-button [ngClass]="indexCelected === i ? 'active' : ''" (click)="selectSubCate(i)"> {{ item }}</button>
+  <div class="shopping-category-container">
+    <div class="catetories">
+      <div class="category"
+        *ngFor="let item of categories; let i = index">
+          <button mat-raised-button [ngClass]="indexCelected === i ? 'active' : ''" (click)="selectSubCate(i)"> {{ item }}</button>
+      </div>
+    </div>
+    <div class="sub-categories">
+      <div class="sub-category"
+        *ngFor="let item of categories; let i = index">
+          <app-nav-details *ngIf="i === indexCelected" [categorySelected]="item"></app-nav-details>
+      </div>
     </div>
   </div>
-  <div class="sub-categories">
-    <div class="sub-category"
-      *ngFor="let item of categories; let i = index">
-        <app-nav-details *ngIf="i === indexCelected" [categorySelected]="item"></app-nav-details>
-    </div>
-  </div>
-</div>
 
 <!-- 
 <div class="category-container">

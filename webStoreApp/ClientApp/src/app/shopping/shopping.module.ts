@@ -12,9 +12,9 @@ import { ShoppingComponent } from './shopping.component';
 import { ShoppingCartBoxComponent } from './shopping-cart-box/shopping-cart-box.component';
 import { NavCategoriesComponent } from './nav-categories/nav-categories.component';
 import { NavDetailsComponent } from './nav-categories/nav-details/nav-details.component';
-import { HomeShoppingComponent } from './home-shopping/home-shopping.component';
 import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
+import { TopProductComponent } from './top-product/top-product.component';
 
 @NgModule({
     declarations: [
@@ -24,9 +24,9 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
         ShoppingCartBoxComponent,
         NavCategoriesComponent,
         NavDetailsComponent,
-        HomeShoppingComponent,
         NavBarUrlComponent,
-        PhotoGalleryComponent
+        PhotoGalleryComponent,
+        TopProductComponent
     ],
     imports: [
         BrowserModule,

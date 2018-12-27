@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -20,6 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatToolbarModule,
         MatListModule,
         MatButtonModule,
-        MatExpansionModule,
         MatCardModule,
         MatInputModule,
         MatFormFieldModule,
@@ -43,7 +43,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatCheckboxModule,
         MatBadgeModule,
         MatDividerModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatExpansionModule,
+        MatIconModule
     ],
     exports: [
         ImagePipe,
@@ -51,7 +53,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatToolbarModule,
         MatListModule,
         MatButtonModule,
-        MatExpansionModule,
         MatCardModule,
         MatInputModule,
         LoadingProgressComponent,
@@ -64,7 +65,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatCheckboxModule,
         MatBadgeModule,
         MatDividerModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatExpansionModule,
+        MatIconModule
     ]
 })
 

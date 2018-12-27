@@ -9,7 +9,7 @@ export class ShoppingService {
 
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
     private productsNames: ProductsName[];
-    private topProducts: [{ categoryes: string, products: Product[] }];
+    private topProducts: Product[];
 
 
     constructor ( ) { }
@@ -22,22 +22,20 @@ export class ShoppingService {
         this.itemSubject = new Rx.BehaviorSubject<Product>(new Product);
         this.changeItem = this.itemSubject.asObservable();
     }
-    // --------------
+
     setTopProducts(data: Product[]) {
-        const cate = this.productsCategoryNames[0].categoryNames;
-        const pro: Product[] = [];
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].category === cate) {
-                const el = data[i];
-                pro.push(el);
-            }
-        }
-        console.log(cate);
-        console.log(pro);
-        // this.topProducts.push({categoryes: cate, products: pro});
-        console.log(this.topProducts);
+        this.topProducts = data;
     }
-    // --------------
+
+    getTopProductsByCate(cate: string): Product[] {
+        const products: Product[] = [];
+        this.topProducts.forEach(el => {
+            if (el.category === cate) {
+                products.push(el);
+            }
+        });
+        return products;
+    }
 
     setProductsNames(data: ProductsName[]) {
         this.productsNames = data;
@@ -51,7 +49,7 @@ export class ShoppingService {
         this.productsCategoryNames = cateName;
     }
 
-    getCategoryName() {
+    getCategoryName(): string[] {
         const categoriesNames = [];
         this.productsCategoryNames.forEach(e => {
             categoriesNames.push(e.categoryNames);
@@ -61,10 +59,10 @@ export class ShoppingService {
 
     getSubCategory(cate: string): string[] {
         let sub = [];
-     this.productsCategoryNames.forEach( e => {
-         if (e.categoryNames === cate) {
-             sub = e.subCategoryNamesArray;
-         }
+        this.productsCategoryNames.forEach( e => {
+            if (e.categoryNames === cate) {
+                sub = e.subCategoryNamesArray;
+            }
         });
         return sub;
     }
@@ -85,7 +83,6 @@ export class ShoppingService {
         if (this.items !== undefined) {
             const product = this.items.find(x => x.id === id);
             if (product !== undefined) {
-                console.log('call from local');
                 this.itemSubject.next(product);
                 return true;
             }

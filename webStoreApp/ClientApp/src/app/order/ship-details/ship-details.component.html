@@ -24,11 +24,14 @@
     </mat-form-field>
 
     <mat-form-field class="country">
-      <mat-select formControlName="country" placeholder="Choose Country">
+        <input matInput type="text"
+        placeholder="Choose Country"
+        formControlName="country">
+      <!-- <mat-select formControlName="country" placeholder="Choose Country">
         <mat-option [value]="country" *ngFor="let country of countries">
           {{ country }}
         </mat-option>
-      </mat-select>
+      </mat-select> -->
       <mat-error class="errorMsg" *ngIf="shippingForm.get('country').invalid 
         && shippingForm.get('country').touched">
           country Must Has Minimum 3 Letters 

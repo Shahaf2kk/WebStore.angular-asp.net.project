@@ -18,8 +18,7 @@ export class AppLoadService {
                 data => {
                     this.shoppingService.setCategoryName(data.body['productsCateNames']);
                     this.shoppingService.setProductsNames(data.body['productsNames']);
-                    // this.shoppingService.setTopProducts(data.body['topProducts']);
-                    console.log(data.body['topProducts']);
+                    this.shoppingService.setTopProducts(data.body['topProducts']);
                     res(true);
                 },
                 error => {

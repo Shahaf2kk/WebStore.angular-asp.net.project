@@ -46,6 +46,16 @@ export class ProductsDataService {
             }
         );
     }
+    // -------------
+    deleteCartProduct(productId: number) {
+        this.http.get(this.baseUrl + 'cart', { headers: this.authService.getHeaders(),
+        observe: 'response'}).subscribe(
+            data => {
+            }
+        );
+    }
+    // -------------
+
 
     getProductByCategory(cate: string) {
         this.loadingService.setLoading(false);
