@@ -9,6 +9,7 @@ export class ShoppingService {
 
     private productsCategoryNames: [{categoryNames: string, subCategoryNamesArray: string[] }];
     private productsNames: ProductsName[];
+    private topProducts: [{ categoryes: string, products: Product[] }];
 
 
     constructor ( ) { }
@@ -21,6 +22,22 @@ export class ShoppingService {
         this.itemSubject = new Rx.BehaviorSubject<Product>(new Product);
         this.changeItem = this.itemSubject.asObservable();
     }
+    // --------------
+    setTopProducts(data: Product[]) {
+        const cate = this.productsCategoryNames[0].categoryNames;
+        const pro: Product[] = [];
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].category === cate) {
+                const el = data[i];
+                pro.push(el);
+            }
+        }
+        console.log(cate);
+        console.log(pro);
+        // this.topProducts.push({categoryes: cate, products: pro});
+        console.log(this.topProducts);
+    }
+    // --------------
 
     setProductsNames(data: ProductsName[]) {
         this.productsNames = data;

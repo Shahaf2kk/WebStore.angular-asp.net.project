@@ -25,7 +25,9 @@ namespace webStoreApp.Model
     {
         public List<productsCategoryNames> productsCateNames { get; set; }
         public List<productsNames> productsNames { get; set; }
+        public List<product> topProducts { get; set; }
     }
+ 
     public class productsNames
     {
         public int id { get; set; }

@@ -112,10 +112,12 @@ namespace webStoreApp
                     conn.Open();
                     productData.productsCateNames = GetProductsCate(conn);
                     productData.productsNames = GetProductsNames(conn);
+                    productData.topProducts = getTopProducts(conn, productData.productsCateNames);
                 }
                 return new OkObjectResult(productData);
-
             }
+
+
             public static IActionResult GetProductsById(int id)
             {
                 using (SqlConnection conn = new SqlConnection(con))
@@ -145,62 +147,6 @@ namespace webStoreApp
                         }
                     }
                 }
-            }
-            private static List<productsNames> GetProductsNames(SqlConnection conn)
-            {
-                List<productsNames> productsNames = new List<productsNames>();
-                using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_name FROM product", conn))
-                {
-                    using (SqlDataReader rd = cmd.ExecuteReader())
-                    {
-                        while (rd.Read())
-                        {
-                            productsNames _productsNames = new productsNames();
-                            _productsNames.id = rd.IsDBNull(0) ? -1 : rd.GetInt32(0);
-                            _productsNames.name = rd.IsDBNull(1) ? "" : rd.GetString(1);
-                            if (_productsNames.id == -1|| _productsNames.name == "")
-                                continue;
-                            productsNames.Add(_productsNames);
-                        }
-                        return productsNames;
-                    }
-                }
-            }
-
-            private static List<productsCategoryNames> GetProductsCate(SqlConnection conn)
-            {
-                List<productsCategoryNames> categoriesNames = new List<productsCategoryNames>();
-
-                    using (SqlCommand cmd = new SqlCommand("SELECT product_category, product_sub_category FROM product", conn))
-                    {
-                        using (SqlDataReader rd = cmd.ExecuteReader())
-                        {
-                            while (rd.Read())
-                            {
-                                productsCategoryNames names = new productsCategoryNames();
-                                names.categoryNames = rd.GetString(0);
-                                names.subCategoryNamesArray = new List<string> { rd.GetString(1) };
-
-                                if (categoriesNames.Count == 0)
-                                {
-                                    categoriesNames.Add(names);
-                                    continue;
-                                }
-
-                                int index = categoriesNames.FindIndex(x => x.categoryNames == names.categoryNames);
-                                if (index != -1)
-                                {
-                                    if (!categoriesNames[index].subCategoryNamesArray.Exists(x => x == names.subCategoryNamesArray[0]))
-                                    {
-                                        categoriesNames[index].subCategoryNamesArray.Add(names.subCategoryNamesArray[0]);
-                                    }
-                                    continue;
-                                }
-                                categoriesNames.Add(names);
-                            }
-                            return categoriesNames;
-                        }
-                    }
             }
 
             public static IActionResult GetProductsByCate(string category)
@@ -271,6 +217,96 @@ namespace webStoreApp
                             }
                             return new OkObjectResult(products);
                         }
+                    }
+                }
+            }
+
+            private static List<product> getTopProducts(SqlConnection conn, List<productsCategoryNames> listOfCategoriesNames)
+            {
+                List<product> topFiveProduct = new List<product>();
+                foreach (productsCategoryNames cate in listOfCategoriesNames)
+                {
+                    StringBuilder commandB = new StringBuilder();
+                    commandB.Append("SELECT TOP(5) * FROM product WHERE product.product_category = '");
+                    commandB.Append(cate.categoryNames);
+                    commandB.Append("'");
+                    using (SqlCommand cmd = new SqlCommand(commandB.ToString(), conn))
+                    {
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+
+                            while (rd.Read())
+                            {
+                                product product = new product();
+                                product.id = rd.GetInt32(0);
+                                product.category = rd.GetString(1);
+                                product.subCategory = rd.GetString(2);
+                                product.name = rd.GetString(3);
+                                product.description = rd.GetString(4);
+                                product.price = (decimal)rd.GetDecimal(5);
+                                product.imagePath = rd.GetString(6);
+
+                                topFiveProduct.Add(product);
+                            }
+                        }
+                    }
+                }
+                return topFiveProduct;
+            }
+
+            private static List<productsCategoryNames> GetProductsCate(SqlConnection conn)
+            {
+                List<productsCategoryNames> categoriesNames = new List<productsCategoryNames>();
+
+                    using (SqlCommand cmd = new SqlCommand("SELECT product_category, product_sub_category FROM product", conn))
+                    {
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            while (rd.Read())
+                            {
+                                productsCategoryNames names = new productsCategoryNames();
+                                names.categoryNames = rd.GetString(0);
+                                names.subCategoryNamesArray = new List<string> { rd.GetString(1) };
+
+                                if (categoriesNames.Count == 0)
+                                {
+                                    categoriesNames.Add(names);
+                                    continue;
+                                }
+
+                                int index = categoriesNames.FindIndex(x => x.categoryNames == names.categoryNames);
+                                if (index != -1)
+                                {
+                                    if (!categoriesNames[index].subCategoryNamesArray.Exists(x => x == names.subCategoryNamesArray[0]))
+                                    {
+                                        categoriesNames[index].subCategoryNamesArray.Add(names.subCategoryNamesArray[0]);
+                                    }
+                                    continue;
+                                }
+                                categoriesNames.Add(names);
+                            }
+                            return categoriesNames;
+                        }
+                    }
+            }
+
+            private static List<productsNames> GetProductsNames(SqlConnection conn)
+            {
+                List<productsNames> productsNames = new List<productsNames>();
+                using (SqlCommand cmd = new SqlCommand("SELECT product_id, product_name FROM product", conn))
+                {
+                    using (SqlDataReader rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            productsNames _productsNames = new productsNames();
+                            _productsNames.id = rd.IsDBNull(0) ? -1 : rd.GetInt32(0);
+                            _productsNames.name = rd.IsDBNull(1) ? "" : rd.GetString(1);
+                            if (_productsNames.id == -1|| _productsNames.name == "")
+                                continue;
+                            productsNames.Add(_productsNames);
+                        }
+                        return productsNames;
                     }
                 }
             }

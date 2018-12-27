@@ -13,11 +13,3 @@ export class HomeComponent implements OnInit {
   }
 
 }
-
-
-// <div class="container">
-//     <app-nav-categories></app-nav-categories>
-//   <div class="router">
-//       <router-outlet></router-outlet>
-//   </div>
-// </div>
