@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 
 import { CartService } from '../cart.service';
-import { ProductsDataService } from 'src/app/shared/products-data.service';
-
-import { CartItem } from 'src/app/model/cart-item.model';
+import { CartItem } from '../../model/cart-item.model';
+import { ProductsDataService } from '../../shared/products-data.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit, OnDestroy, OnChanges {
 
   cartProduct: CartItem[];
   errorMsg = '';
@@ -27,6 +26,13 @@ export class CartComponent implements OnInit, OnDestroy {
       .subscribe((data: boolean) => this.hasProduct = data);
   }
 
+  deleteCartItem(index: number) {
+    if (index === null) {
+      return;
+    }
+    this.cartService.deleteCartItem(index);
+  }
+
   getCartProduct() {
     this.cartProduct = this.cartService.getCartItem();
     return this.cartProduct;
@@ -39,9 +45,16 @@ export class CartComponent implements OnInit, OnDestroy {
       this.cartService.setOrder();
     }
   }
+
   ngOnDestroy() {
     this.cartService.hasProductInCart.unsubscribe();
   }
+
+  ngOnChanges() {
+    // console.log('onchan ');
+    // this.getCartProduct();
+  }
+
   pickEverything() {
     this.checkedAll = true;
   }

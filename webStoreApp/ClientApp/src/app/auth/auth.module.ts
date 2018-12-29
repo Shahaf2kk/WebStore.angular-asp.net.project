@@ -1,9 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { DesignModule } from '../design.module';
-import { AppRoutingModule } from '../app-routing.module';
+import { AuthRoutingModule } from './auth-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
@@ -14,11 +14,11 @@ import { SignupComponent } from './signup/signup.component';
         SignupComponent
     ],
     imports: [
-        BrowserModule,
+        CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        DesignModule,
-        AppRoutingModule
+        AuthRoutingModule,
+        SharedModule
     ]
 })
 export class AuthModule { }

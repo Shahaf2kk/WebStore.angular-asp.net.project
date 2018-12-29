@@ -2,7 +2,15 @@
     <div class="catetories">
       <div class="category"
         *ngFor="let item of categories; let i = index">
-          <button mat-raised-button [ngClass]="indexCelected === i ? 'active' : ''" (click)="selectSubCate(i)"> {{ item }}</button>
+          <button mat-raised-button 
+            [ngClass]="indexCelected === i ? 'active' : ''"
+            (click)="selectSubCate(i)"> {{ item }}
+               <!-- <mat-icon [ngClass]="indexCelected === i ? 'hideIcon' : ''">keyboard_arrow_down</mat-icon> -->
+               <mat-icon [ngClass]="{
+                 'hiden': !(indexCelected === i),
+                 'show': (indexCelected === i)
+                }">keyboard_arrow_up</mat-icon>
+          </button>
       </div>
     </div>
     <div class="sub-categories">

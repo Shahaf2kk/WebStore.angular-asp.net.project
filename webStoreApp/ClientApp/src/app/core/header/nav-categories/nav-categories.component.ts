@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ShoppingService } from 'src/app/shopping/shopping.service';
 
-import { ShoppingService } from '../shopping.service';
 
 @Component({
   selector: 'app-nav-categories',

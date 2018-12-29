@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { CartService } from '../../cart.service';
 
 import { CartItem } from '../../../model/cart-item.model';
-import { ProductsDataService } from 'src/app/shared/products-data.service';
-
+import { ProductsDataService } from '../../../shared/products-data.service';
 
 @Component({
   selector: 'app-cart-item',
@@ -16,6 +15,8 @@ export class CartItemComponent implements OnInit, OnChanges {
   @Input() item: CartItem;
   @Input() index: number;
   @Input() checkbox: boolean;
+  @Output() hasDelete = new EventEmitter<number>();
+
   constructor(private cartService: CartService,
               private dataProduct: ProductsDataService) { }
 
@@ -27,7 +28,8 @@ export class CartItemComponent implements OnInit, OnChanges {
   }
 
   deleteFromCart() {
-    this.dataProduct.deleteCartProduct(this.item.productDetails.id);
+    this.dataProduct.deleteCartItem(this.item.productDetails.id);
+    this.hasDelete.emit(this.index);
   }
   ngOnChanges() {
     if (this.checkbox) {

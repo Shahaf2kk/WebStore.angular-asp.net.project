@@ -33,13 +33,6 @@ namespace webStoreApp.Controllers
         }
 
 
-        // need to add best sells.
-        //[HttpGet("top")] 
-        //public IActionResult GetTopProduct()
-        //{
-
-        //}
-
         [HttpGet("id")]
         public IActionResult GetProductById(int? id)
         {

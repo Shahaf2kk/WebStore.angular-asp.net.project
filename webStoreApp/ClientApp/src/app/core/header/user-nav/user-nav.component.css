@@ -1,107 +1,24 @@
-div {
+.authTrue {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.authFalse {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-p {
+.user {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: baseline;
 }
 .fill {
     flex: 1 1 auto;
 }
-div.authTrue {
+.username {
     font-size: 16px;
-    font-family: 500;
-    justify-content: space-between;
-}
-/* * {
-    font-family: 'Raleway', sans-serif; 
-    font-weight: 500;
-    font-size: 15px;
-    color: black;
-    background-color: #F7F4F3;
-    
-}
-.container {
-    padding-top: 4px;
-    height: 35px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas: ". ul";
-    border-bottom: 2px solid #ffffff;
-}
-ul {
-    min-width: 200px;
-    grid-area: ul;
-    list-style: none;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
-}
-ul li {
-    min-width: 90px;
-    align-self: center; 
-    text-align: center;
-    padding-right: 15px;
-}
-a {
-    cursor: pointer;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-.active {
-    font-weight: 600;
-    /* text-decoration: underline; */
-/* }
-@media screen and (max-width: 500px) {
-    .container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas: "ul ul"
-    }
-}
-fa-icon {
-    padding-left: 5px;
+    padding-right: 7px;
+    font-weight: 400;
 }
 
-.inputDiv {
-    width: 360px;
-    display: flex;
-    justify-content: space-around;
-}
-.inputDiv input {
-    padding: 1px 0 1px 3px;
-    color: #333;
-    width: 150px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    font-weight: 500;
-    transition: 0.3s;
-}
-.quickLogin div input:focus {
-    box-shadow: 0 0 4px 0 dodgerblue;
-}
-.buttom{
-    display: flex;
-    justify-content: space-around;
-}
-
-.button button {
-    background-color: #ffffff;
-    border: 0;
-}
-.cancel , .submit {
-    cursor: pointer;
-    color: gray;
-    position: relative;
-}   
-.cancel:hover {
-    color: rgb(250, 84, 84);
-}
-.submit:hover {
-    color: rgb(19, 110, 19);
-} */

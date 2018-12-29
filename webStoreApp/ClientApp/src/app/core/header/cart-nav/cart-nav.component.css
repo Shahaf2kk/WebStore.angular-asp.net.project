@@ -1,9 +1,10 @@
 div {
+    padding: 0 3px;
+    min-width: 120px;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: baseline;
 }
 ul {
     list-style: none;
@@ -13,4 +14,8 @@ ul {
 }
 .title {
     font-size: 25px;
+}
+mat-icon {
+    margin: 2px 5px 0;
+    cursor: pointer;
 }

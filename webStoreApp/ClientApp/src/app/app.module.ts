@@ -1,38 +1,20 @@
+import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+
 import { HttpClientModule } from '@angular/common/http';
 
+import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
-import { ShoppingModule } from './shopping/shopping.module';
 import { OrderModule } from './order/order.module';
 
-import { ProductsDataService } from './shared/products-data.service';
 import { AppLoadService } from './app-load.service';
-import { ShoppingService } from './shopping/shopping.service';
-import { AuthService } from './auth/auth.service';
-import { CartService } from './cart/cart.service';
-import { OrderService } from './order/order.service';
-
-import { AuthGuard } from './auth/auth-guard.service';
-
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DesignModule } from './design.module';
-
-import { SearchPipePipe } from './core/header/search/search-pipe.pipe';
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CoreModule } from './core/core.module';
-import { HeaderComponent } from './core/header/header.component';
-import { CartNavComponent } from './core/header/cart-nav/cart-nav.component';
-import { SearchComponent } from './core/header/search/search.component';
-import { UserNavComponent } from './core/header/user-nav/user-nav.component';
-import { LoadingService } from './loading-progress/loading.service';
-import { OrderGuard } from './order/order-guard.service';
+import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -42,36 +24,20 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    HeaderComponent,
-    CartNavComponent,
-    SearchComponent,
-    UserNavComponent,
-    SearchPipePipe
+    LoadingProgressComponent
   ],
   imports: [
-    BrowserModule,
-    FontAwesomeModule,
-    FormsModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule,
-    DesignModule,
+    SharedModule,
     AppRoutingModule,
     CartModule,
     AuthModule,
-    ShoppingModule,
     CoreModule,
     OrderModule
   ],
   providers: [
-    ProductsDataService,
-    AuthService,
-    AppLoadService,
-    ShoppingService,
-    AuthGuard,
-    OrderGuard,
-    CartService,
-    OrderService,
-    LoadingService,
     {
      provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadService], multi: true
     }

@@ -1,16 +1,5 @@
 <app-header></app-header>
-<!-- <app-loading-progress></app-loading-progress> -->
-<router-outlet></router-outlet>
-
-<!-- todo -->
-<!-- 
-    1. sign in
-    2. sign up
-    3. logout
-    4. add headers to get and post method.
-    5. read from server headers and get AUTH token
-    6. method only if AUTH header exist ofter auth get username and login.
-    7. return user object
-    8. cart client + user - Nav client data.
-
- -->
+<div class="loading">
+        <app-loading-progress></app-loading-progress>
+        <router-outlet></router-outlet>
+</div>

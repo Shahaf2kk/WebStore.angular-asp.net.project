@@ -1,20 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from '../app-routing.module';
-import { DesignModule } from '../design.module';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { SharedModule } from '../shared/shared.module';
+import { ShoppingRoutingModule } from './shopping-routing.module';
 
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
 import { ShoppingComponent } from './shopping.component';
 import { ShoppingCartBoxComponent } from './shopping-cart-box/shopping-cart-box.component';
-import { NavCategoriesComponent } from './nav-categories/nav-categories.component';
-import { NavDetailsComponent } from './nav-categories/nav-details/nav-details.component';
 import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
-import { TopProductComponent } from './top-product/top-product.component';
 
 @NgModule({
     declarations: [
@@ -22,19 +18,15 @@ import { TopProductComponent } from './top-product/top-product.component';
         ShoppingItemComponent,
         ShoppingComponent,
         ShoppingCartBoxComponent,
-        NavCategoriesComponent,
-        NavDetailsComponent,
         NavBarUrlComponent,
-        PhotoGalleryComponent,
-        TopProductComponent
+        PhotoGalleryComponent
     ],
     imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
         CommonModule,
-        AppRoutingModule,
-        DesignModule
+        ReactiveFormsModule,
+        FormsModule,
+        ShoppingRoutingModule,
+        SharedModule
     ]
 })
 export class ShoppingModule { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/model/product.model';
-import { ShoppingService } from '../shopping.service';
+
+import { Product } from '../../model/product.model';
+import { ShoppingService } from 'src/app/shopping/shopping.service';
 
 @Component({
   selector: 'app-top-product',

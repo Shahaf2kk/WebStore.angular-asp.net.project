@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 import { User } from '../model/user.model';
 import { CartItem } from '../model/cart-item.model';
 import { Product } from '../model/product.model';
+
 import * as Rx from 'rxjs';
 
 @Injectable()
@@ -18,8 +20,7 @@ export class AuthService {
   userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
-  constructor (private http: HttpClient,
-                private router: Router) {
+  constructor (private http: HttpClient, private router: Router) {
     this.StartUpIsAuth();
   }
 
@@ -141,6 +142,7 @@ export class AuthService {
   }
 
   handleError(errorRes: HttpErrorResponse) {
+    console.log('status is ' + errorRes.status);
     if (errorRes.error instanceof ErrorEvent) {
       console.error('client side: ' + errorRes.error.message);
       console.error('status code ' + errorRes.status);

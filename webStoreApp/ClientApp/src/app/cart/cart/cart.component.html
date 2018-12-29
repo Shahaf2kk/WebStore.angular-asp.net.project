@@ -1,7 +1,7 @@
 <div class="cart-container">
   <div *ngIf="hasProduct" class="cart-items">
     <app-cart-item *ngFor="let item of getCartProduct(); let i = index"
-      [item]="item" [index]="i" [checkbox]="checkedAll">
+      [item]="item" [index]="i" [checkbox]="checkedAll" (hasDelete)="deleteCartItem($event)">
     </app-cart-item>
     <mat-divider></mat-divider>
     <div class="button">

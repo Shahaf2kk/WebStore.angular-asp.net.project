@@ -1,23 +1,23 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { BehaviorSubject } from 'rxjs';
+import * as Rx from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    private lastUrl = new BehaviorSubject<string>('/');
+
+    private lastUrl = new Rx.BehaviorSubject<string>('/');
     getLastUrl = this.lastUrl.asObservable();
     constructor(private authService: AuthService,
                 private router: Router) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.authService.isAuth()) {
-            return true;
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Rx.Observable<boolean> | Promise<boolean> | boolean {
+        if (!this.authService.isAuth()) {
+            this.lastUrl.next(state.url);
+            this.router.navigate(['/signin']);
+            return false;
         }
-        this.lastUrl.next(state.url);
-        this.router.navigate(['/signin']);
-        return false;
-
+        return true;
     }
 
     setUrlReturn(url: string) {

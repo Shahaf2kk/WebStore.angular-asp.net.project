@@ -8,7 +8,8 @@
     <p> {{ item.qty }} </p>
   </mat-card-content>
   <mat-card-content class="addToCart">
-    <p>Add To The Order</p>
+    <p>Choose For Ship</p>
     <mat-checkbox (change)="addToOrder()" [(ngModel)]="checkbox"></mat-checkbox>
+    <button mat-button (click)="deleteFromCart()">Edit</button>
   </mat-card-content>
 </mat-card>

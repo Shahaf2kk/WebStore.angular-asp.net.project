@@ -22,7 +22,7 @@ export class UserNavComponent implements OnInit {
   userAuth: boolean;
   errorMsg: string;
   afterSubmit: boolean;
-
+  username: string;
 
   constructor(private router: Router,
               private authService: AuthService) { }
@@ -31,6 +31,7 @@ export class UserNavComponent implements OnInit {
         this.authService.userDetails
           .subscribe( userData => {
         this.userAuth = userData.isAuth;
+        this.username = userData.User.userName;
       });
     // this.authService.userDetails.subscribe( userData => {
     //     this.userAuth = userData.isAuth;

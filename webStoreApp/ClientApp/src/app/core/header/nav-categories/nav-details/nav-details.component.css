@@ -1,4 +1,5 @@
 .sub-cate-details {
+    padding-top: 6px;
     height: auto;
     padding: 0 10px;
     display: flex;
@@ -11,7 +12,8 @@
     flex-wrap: wrap;
 }
 button {
-    height: 32px;
+    height: 30px;
+    padding: 0 6px;
 }
 .sub-categories > button {
     margin: 8px;
@@ -26,6 +28,9 @@ button {
     transition: 0.8s;
     color: #ffffff;
     background-color: #e7b6b3;
+}
+mat-divider {
+    margin-bottom: 1%;
 }
 
 @media screen and (min-width: 1200px) {
