@@ -21,7 +21,6 @@ export class ShoppingCartBoxComponent implements OnInit {
   @Input() product: Product;
   qty = 1;
   qtyInCart = 0;
-  numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   wasBuy = false;
 
   constructor(private authService: AuthService,
@@ -31,34 +30,12 @@ export class ShoppingCartBoxComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() { }
-  //     this.authService.userDetails
-  //       .subscribe((userData: {User: User, isAuth: boolean}) => {
-  //         this.user = userData.User;
-  //         this.checkQtyCart();
-  //       });
-  // }
-
-  // ngOnChanges() {
-  //   this.checkQtyCart();
-  // }
 
   openSnackBar() {
     this.snackBar.open('You Are Add ' + this.qty + ' To The Cart!!', 'Ok', {
       duration: 3000,
     });
   }
-  // checkQtyCart() {
-  // if (this.user.listOfCart !== undefined) {
-  //   for (let i = 0; i < this.user.listOfCart.length; i++) {
-  //     const el = this.user.listOfCart[i];
-  //     if (el.productDetails.id === this.product.id) {
-  //       this.qtyInCart = el.qty;
-  //       this.hasProducts = true;
-  //     }
-  //   }
-  // }
-  // console.log(this.qtyInCart);
-  // }
 
   addToCart() {
     if (!this.authService.isAuth()) {
@@ -66,6 +43,10 @@ export class ShoppingCartBoxComponent implements OnInit {
       this.authGuard.setUrlReturn('/shopping/i/' + this.product.id.toString());
       return;
     } else {
+      if (this.qty < 1) {
+        this.qty = 1;
+        return;
+      }
       this.productData.addCartProduct(this.product.id, this.qty);
       this.openSnackBar();
       this.wasBuy = true;

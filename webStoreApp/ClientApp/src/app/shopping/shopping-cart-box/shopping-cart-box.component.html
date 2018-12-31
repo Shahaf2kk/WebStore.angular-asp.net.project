@@ -1,11 +1,12 @@
 
 <div class="cart-box-container">
   <mat-form-field class="formField">
-    <mat-select placeholder="Qty" [(ngModel)]="qty" name="number">
+    <input matInput type="number" placeholder="Qty" min="1" [(ngModel)]="qty" name="number">
+    <!-- <mat-select placeholder="Qty" [(ngModel)]="qty" name="number">
       <mat-option *ngFor="let number of numbers" [value]="number"> 
         {{ number }} 
       </mat-option>
-    </mat-select>
+    </mat-select> -->
   </mat-form-field>
   <button mat-button
      (click)="addToCart()" 

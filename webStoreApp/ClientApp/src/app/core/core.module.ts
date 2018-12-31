@@ -5,11 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
+import { ImagePipe } from '../shared/image.pipe';
+
 import { ProductsDataService } from '../shared/products-data.service';
-import { ShoppingService } from '../shopping/shopping.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
-import { LoadingService } from '../loading-progress/loading.service';
 import { AppLoadService } from '../app-load.service';
 
 import { HomeComponent } from './home/home.component';
@@ -21,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { SearchPipePipe } from './header/search/search-pipe.pipe';
 import { NavCategoriesComponent } from './header/nav-categories/nav-categories.component';
 import { NavDetailsComponent } from './header/nav-categories/nav-details/nav-details.component';
+import { OrderService } from '../order/order.service';
 
 @NgModule({
     declarations: [
@@ -47,10 +48,9 @@ import { NavDetailsComponent } from './header/nav-categories/nav-details/nav-det
     providers: [
         ProductsDataService,
         CartService,
-        ShoppingService,
+        OrderService,
         AuthService,
         AppLoadService,
-        LoadingService
     ]
 })
 

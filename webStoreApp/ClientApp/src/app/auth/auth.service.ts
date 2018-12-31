@@ -32,7 +32,13 @@ export class AuthService {
     this.userDetailsSubject.next({ User: this.user, isAuth: isAuth });
   }
 
-  addToCart(id: number, qty: number) {
+  addToCart(id: number, qty: number, del: boolean = false) {
+    if (del) {
+      const delIndex = this.user.listOfCart.findIndex(e => e.productDetails.id === id);
+      this.user.listOfCart.splice(delIndex, 1);
+      this.userDetailsSubject.next({ User: this.user, isAuth: true});
+      return;
+    }
     for (let i = 0; i < this.user.listOfCart.length; i++) {
       const el = this.user.listOfCart[i];
       if (el.productDetails.id === id) {

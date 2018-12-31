@@ -314,7 +314,7 @@ namespace webStoreApp
 
         public static class CartShop
         {
-            public static IActionResult AddOrUpdateCartProduct(string username, int productId, int qty)
+            public static IActionResult AddOrUpdateCartProduct(string username, int productId, int qty, bool updateLow)
             {
                 using (SqlConnection conn = new SqlConnection(con))
                 {
@@ -325,6 +325,19 @@ namespace webStoreApp
                         cartId = SetCart(username, conn);
                         if (cartId == -1)
                             return new BadRequestResult();
+                    }
+                    if (updateLow)
+                    {
+                        int newQty = qty;
+                        using (SqlCommand cmd = new SqlCommand("UPDATE cartDetails SET cartDetails.qty = @newQty " +
+                            "WHERE cartDetails.product_id = @product_id AND cartDetails.cart_id = @cart_id", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@newQty", newQty);
+                            cmd.Parameters.AddWithValue("@product_id", productId);
+                            cmd.Parameters.AddWithValue("@cart_id", cartId);
+                            if (cmd.ExecuteNonQuery() == 1)
+                                return new OkObjectResult(newQty);
+                        }
                     }
 
                     int oldQty = GetQty(productId, cartId, conn);

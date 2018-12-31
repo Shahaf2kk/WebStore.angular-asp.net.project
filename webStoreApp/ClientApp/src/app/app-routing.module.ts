@@ -10,9 +10,9 @@ import { HomeComponent } from './core/home/home.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent},
+    { path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
     { path: 'shopping', loadChildren: './shopping/shopping.module#ShoppingModule'},
-    { path: 'order', loadChildren: './order/order.module#OrderModule', canLoad: [OrderGuard] },
-    { path: 'cart', component: CartComponent, canActivate: [AuthGuard]}
+    { path: 'order', loadChildren: './order/order.module#OrderModule', canLoad: [OrderGuard] }
 
 
     // { path: '**', redirectTo: 'notfound', pathMatch: 'full'},

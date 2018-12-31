@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { CartService } from '../cart.service';
 import { CartItem } from '../../model/cart-item.model';
 import { ProductsDataService } from '../../shared/products-data.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,9 +18,11 @@ export class CartComponent implements OnInit, OnDestroy, OnChanges {
   checkedAll = false;
 
   constructor(private cartService: CartService,
+              private authService: AuthService,
               private productsData: ProductsDataService) { }
 
   ngOnInit() {
+    console.log('sdsadsadsdasad');
     this.cartService.onInitSubject();
     this.productsData.getCartProduct();
     this.cartService.hasProductInCart
@@ -30,8 +33,10 @@ export class CartComponent implements OnInit, OnDestroy, OnChanges {
     if (index === null) {
       return;
     }
+    this.authService.addToCart(index, 0, true);
     this.cartService.deleteCartItem(index);
   }
+
 
   getCartProduct() {
     this.cartProduct = this.cartService.getCartItem();
@@ -51,8 +56,7 @@ export class CartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    // console.log('onchan ');
-    // this.getCartProduct();
+    console.log('on changes');
   }
 
   pickEverything() {

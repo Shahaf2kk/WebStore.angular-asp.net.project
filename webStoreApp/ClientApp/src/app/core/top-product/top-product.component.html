@@ -6,11 +6,11 @@
         <div class="products">
           <div *ngFor="let product of getProductByCate(cate)" class="product">
             <mat-card>
-              <img mat-card-image
+              <!-- <img mat-card-image
                 class="image"
                 [matTooltip]="product.name" 
                 [routerLink]="['/shopping/i', product.id]"
-                [src]="product.imagePath | oneImage">
+                [src]="product.imagePath | oneImage"> -->
               <mat-card-actions>
                   <button mat-button
                     [routerLink]="['/shopping/i', product.id]" matTooltip="Go To Product Details">Read More</button>

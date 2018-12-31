@@ -3,13 +3,24 @@
   <mat-card-header class="title" matTooltip="Go To Product Details" [routerLink]="['/shopping/i', item.productDetails.id]">
     <p> {{ item.productDetails.name | titlecase }} </p>
   </mat-card-header>
-  <mat-card-content class="qty">
+  <mat-card-content *ngIf="!edit" class="qty">
     <p class="fQty">Qty</p>
     <p> {{ item.qty }} </p>
   </mat-card-content>
-  <mat-card-content class="addToCart">
+  <mat-card-content *ngIf="edit" class="editQty qty">
+    <p class="fQty">Qty</p>
+    <input matInput type="number" min="1" [(ngModel)]="newQty"> 
+  </mat-card-content>
+  <mat-card-content *ngIf="!edit" class="addToCart">
     <p>Choose For Ship</p>
     <mat-checkbox (change)="addToOrder()" [(ngModel)]="checkbox"></mat-checkbox>
-    <button mat-button (click)="deleteFromCart()">Edit</button>
+  </mat-card-content>
+  <mat-card-content *ngIf="!edit">
+      <button mat-button (click)="editBtn()">Edit</button>
+  </mat-card-content>
+  <mat-card-content *ngIf="edit" class="editItem">
+    <button mat-button (click)="cancelBtn()">Cancel</button>
+    <button mat-button (click)="saveBtn()">Save</button>
+    <button mat-button (click)="deleteFromCart()">Delete</button>
   </mat-card-content>
 </mat-card>

@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CoreModule } from './core/core.module';
 import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
+import { ShoppingService } from './shopping/shopping.service';
+import { LoadingService } from './loading-progress/loading.service';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
  return () => appLoad.getCategoriesNames();
@@ -38,6 +40,8 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     OrderModule
   ],
   providers: [
+    LoadingService,
+    ShoppingService,
     {
      provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadService], multi: true
     }

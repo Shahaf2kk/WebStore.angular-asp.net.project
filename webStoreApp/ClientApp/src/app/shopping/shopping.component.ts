@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingService } from '../loading-progress/loading.service';
 
 @Component({
   selector: 'app-shopping',
@@ -7,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingComponent implements OnInit {
 
-  constructor ( ) { }
+  constructor (private loadingService: LoadingService ) { }
 
   ngOnInit() {
+    this.loadingService.setLoading(true);
   }
 }

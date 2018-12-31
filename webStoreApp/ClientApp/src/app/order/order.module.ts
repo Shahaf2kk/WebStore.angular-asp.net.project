@@ -3,10 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
-import { OrderService } from './order.service';
-
 import { OrderRoutingModule } from './order-routing.module';
-import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { ShipDetailsComponent } from './ship-details/ship-details.component';
@@ -24,10 +21,9 @@ import { OrderComponent } from './order.component';
         OrderRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        AppRoutingModule,
         SharedModule
     ],
-    providers: [OrderService]
+    providers: []
 })
 
 export class OrderModule { }

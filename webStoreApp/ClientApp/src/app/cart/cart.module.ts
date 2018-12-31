@@ -16,9 +16,9 @@ import { CartItemComponent } from './cart/cart-item/cart-item.component';
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        SharedModule,
         FormsModule,
         AppRoutingModule,
-        SharedModule
     ]
 })
 export class CartModule { }

@@ -10,18 +10,19 @@ using webStoreApp.Model;
 namespace webStoreApp.Controllers
 {
     [Authorize]
-    [Route("cart")]
+    [Route("cartt")]
     [ApiController]
     public class CartController : ControllerBase
     {
         [HttpPost]
-        public IActionResult PostCartProduct(int? productId, int? qty)
+        public IActionResult PostCartProduct(int? productId, int? qty, bool? updateLow)
         {
+            bool lower = updateLow == true ? true : false;
             if (productId == null || productId == 0 || qty == null || qty == 0)
                 return new NotFoundResult();
             string userName = User.Identity.Name;
             Cart cart = new Cart { productDetails = new product { id = (int)productId }, qty = (int)qty };
-            return DB.CartShop.AddOrUpdateCartProduct(userName, (int)productId, (int)qty);
+            return DB.CartShop.AddOrUpdateCartProduct(userName, (int)productId, (int)qty, lower);
         }
         [HttpGet]
         public IActionResult DeleteCartProduct(int? productId)

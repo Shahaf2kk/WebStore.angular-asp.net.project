@@ -52,7 +52,7 @@ export class ProductsDataService {
     }
 
     deleteCartItem(productId: number) {
-        this.http.get(this.baseUrl + 'cart', { params: { 'productId': productId.toString() }, headers: this.authService.getHeaders(),
+        this.http.get(this.baseUrl + 'cartt', { params: { 'productId': productId.toString() }, headers: this.authService.getHeaders(),
         observe: 'response'}).subscribe(
             data => {
                 console.log(data);
@@ -116,11 +116,12 @@ export class ProductsDataService {
         });
     }
 
-    addCartProduct(id: number, qty: number) {
-        this.http.post<number>(this.baseUrl + 'cart', { }, { headers: this.authService.getHeaders(),
+    addCartProduct(id: number, qty: number, lower: boolean = false) {
+        this.http.post<number>(this.baseUrl + 'cartt', { }, { headers: this.authService.getHeaders(),
             params: {
              'productId': id.toString(),
-             'qty': qty.toString()
+             'qty': qty.toString(),
+             'updateLow': lower.toString()
             }, responseType: 'json', observe: 'response' })
             .subscribe(
                 data => {

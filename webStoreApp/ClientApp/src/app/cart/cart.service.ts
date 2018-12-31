@@ -28,6 +28,11 @@ export class CartService {
     }
 
     getCartItem() {
+        if (this.cartItems.length > 0 ) {
+            this.hasProductInCart.next(true);
+        } else {
+            this.hasProductInCart.next(false);
+        }
         return this.cartItems;
     }
 
