@@ -39,7 +39,7 @@ export class OrderService {
     }
 
     setOrderProducts(cartProducts: CartItem[]) {
-        if (cartProducts === undefined) {
+        if (cartProducts.length === 0) {
             this.canEntry = false;
             this.router.navigate(['']);
             return;

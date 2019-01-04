@@ -10,7 +10,7 @@ import * as Rx from 'rxjs';
 
 @Injectable()
 export class AuthService {
-  private baseUrl = 'https://localhost:44327/';
+  private baseUrl = 'https://localhost:44327/api/';
   private headers: HttpHeaders;
   private user: User = new User();
   hasProduct: boolean;
@@ -20,9 +20,7 @@ export class AuthService {
   userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
-  constructor (private http: HttpClient, private router: Router) {
-    this.StartUpIsAuth();
-  }
+  constructor (private http: HttpClient, private router: Router) { }
 
   getBaseUrl() {
     return this.baseUrl;
@@ -128,6 +126,7 @@ export class AuthService {
         },
         (error) => {
           this.handleError(error);
+          this.userDetailsSubject.next({ User: this.user, isAuth: false });
         }
       );
     } else {
@@ -148,7 +147,6 @@ export class AuthService {
   }
 
   handleError(errorRes: HttpErrorResponse) {
-    console.log('status is ' + errorRes.status);
     if (errorRes.error instanceof ErrorEvent) {
       console.error('client side: ' + errorRes.error.message);
       console.error('status code ' + errorRes.status);

@@ -11,7 +11,7 @@ using webStoreApp.Model;
 namespace webStoreApp.Controllers
 {
     [Authorize]
-    [Route("order")]
+    [Route("api/order")]
     [ApiController]
     public class OrderController : ControllerBase
     {

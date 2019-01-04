@@ -1,6 +1,7 @@
-<div style="display: flex; justify-content: center; text-align: center;">
-  <p>
-    Page Dont Found.... <br>
-    if u looked for product named: "{{ errorMassege }}" <br> is not exits
-  </p>
+<div class="not-found-container">
+  <div class="not-found box">
+    <mat-icon>error</mat-icon>
+    <h1>Page Not Found</h1>
+    <button mat-button [routerLink]="['']">Go Home</button>
+  </div>
 </div>

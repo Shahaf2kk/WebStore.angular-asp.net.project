@@ -10,7 +10,7 @@ using webStoreApp.Model;
 
 namespace webStoreApp.Controllers
 {
-    [Route("product")]
+    [Route("api/product")]
     [ApiController]
     public class CategoryController : ControllerBase
     {

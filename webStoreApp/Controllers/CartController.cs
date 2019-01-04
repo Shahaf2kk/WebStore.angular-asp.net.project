@@ -10,7 +10,7 @@ using webStoreApp.Model;
 namespace webStoreApp.Controllers
 {
     [Authorize]
-    [Route("cartt")]
+    [Route("api/cart")]
     [ApiController]
     public class CartController : ControllerBase
     {

@@ -13,12 +13,10 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Rx.Observable<boolean> | Promise<boolean> | boolean {
         if (!this.authService.isAuth()) {
-            console.log('false');
             this.lastUrl.next(state.url);
             this.router.navigate(['/signin']);
             return false;
         }
-        console.log('true');
         return true;
     }
 

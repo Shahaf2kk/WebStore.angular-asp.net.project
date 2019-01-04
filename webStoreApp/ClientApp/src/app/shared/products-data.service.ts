@@ -13,7 +13,7 @@ import { Order, OrderDetails } from '../model/order.model';
 
 @Injectable()
 export class ProductsDataService {
-    private baseUrl = 'https://localhost:44327/';
+    private baseUrl = 'https://localhost:44327/api/';
 
     constructor(private http: HttpClient,
                 private authService: AuthService,
@@ -52,7 +52,7 @@ export class ProductsDataService {
     }
 
     deleteCartItem(productId: number) {
-        this.http.get(this.baseUrl + 'cartt', { params: { 'productId': productId.toString() }, headers: this.authService.getHeaders(),
+        this.http.get(this.baseUrl + 'cart', { params: { 'productId': productId.toString() }, headers: this.authService.getHeaders(),
         observe: 'response'}).subscribe(
             data => {
                 console.log(data);
@@ -117,7 +117,7 @@ export class ProductsDataService {
     }
 
     addCartProduct(id: number, qty: number, lower: boolean = false) {
-        this.http.post<number>(this.baseUrl + 'cartt', { }, { headers: this.authService.getHeaders(),
+        this.http.post<number>(this.baseUrl + 'cart', { }, { headers: this.authService.getHeaders(),
             params: {
              'productId': id.toString(),
              'qty': qty.toString(),

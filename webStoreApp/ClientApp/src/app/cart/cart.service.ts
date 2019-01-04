@@ -9,10 +9,10 @@ import * as Rx from 'rxjs';
 @Injectable()
 export class CartService {
 
-    cartItems: CartItem[];
-    cartProductSelected: CartItem[];
+    cartItems: CartItem[] = [];
+    cartProductSelected: CartItem[] = undefined;
 
-    hasProductInCart: Rx.Subject<{}>;
+    hasProductInCart: Rx.Subject<{}> = new Rx.Subject();
 
     constructor(private orderService: OrderService,
                 private router: Router) { }
@@ -34,11 +34,6 @@ export class CartService {
             this.hasProductInCart.next(false);
         }
         return this.cartItems;
-    }
-
-    onInitSubject() {
-        this.hasProductInCart = new Rx.Subject();
-        this.cartProductSelected = undefined;
     }
 
     setCartItem(items: any) {

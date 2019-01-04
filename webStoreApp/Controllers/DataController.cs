@@ -15,7 +15,7 @@ using webStoreApp.Model;
 namespace webStoreApp.Controllers
 {
     [Authorize]
-    [Route("data")]
+    [Route("api/data")]
     [ApiController]
     public class DataController : ControllerBase
     {

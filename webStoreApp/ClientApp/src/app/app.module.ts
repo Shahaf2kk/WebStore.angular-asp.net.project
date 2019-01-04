@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
+import { PageNotFoundRoutingModule } from './page-not-found/page-not-found-routing.module';
 
 import { AppLoadService } from './app-load.service';
 
@@ -37,7 +38,8 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     CartModule,
     AuthModule,
     CoreModule,
-    OrderModule
+    OrderModule,
+    PageNotFoundRoutingModule
   ],
   providers: [
     LoadingService,

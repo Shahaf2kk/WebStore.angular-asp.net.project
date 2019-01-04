@@ -5,7 +5,7 @@ import { ShoppingService } from './shopping/shopping.service';
 
 @Injectable()
 export class AppLoadService {
-    private baseUrl = 'https://localhost:44327/';
+    private baseUrl = 'https://localhost:44327/api/';
 
     constructor(private http: HttpClient,
                 private shoppingService: ShoppingService) { }
