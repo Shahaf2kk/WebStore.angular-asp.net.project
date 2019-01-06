@@ -9,7 +9,6 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
 import { ShoppingComponent } from './shopping.component';
 import { ShoppingCartBoxComponent } from './shopping-cart-box/shopping-cart-box.component';
-import { NavBarUrlComponent } from './nav-bar-url/nav-bar-url.component';
 import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { PhotoGalleryComponent } from './photo-gallery/photo-gallery.component';
         ShoppingItemComponent,
         ShoppingComponent,
         ShoppingCartBoxComponent,
-        NavBarUrlComponent,
         PhotoGalleryComponent
     ],
     imports: [

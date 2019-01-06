@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-
-import { ShoppingService } from 'src/app/shopping/shopping.service';
+import { ShoppingService } from '../../../../shopping/shopping.service';
 
 @Component({
   selector: 'app-nav-details',
   templateUrl: './nav-details.component.html',
   styleUrls: ['./nav-details.component.css']
 })
+
 export class NavDetailsComponent implements OnInit {
   @Input() categorySelected: string;
   subCate: string[] = [];
@@ -17,4 +17,5 @@ export class NavDetailsComponent implements OnInit {
   ngOnInit() {
     this.subCate = this.shoppingService.getSubCategory(this.categorySelected);
   }
+
 }

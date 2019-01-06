@@ -21,6 +21,8 @@ export class ShoppingListComponent implements OnInit, DoCheck {
 
   cate: string;
   subCate: string;
+  search: string;
+  hasResults = false;
   listOfProducts: Product[];
 
   constructor(private router: Router,
@@ -29,6 +31,7 @@ export class ShoppingListComponent implements OnInit, DoCheck {
               private shoppingService: ShoppingService) { }
 
   ngOnInit() {
+    this.search = '';
     this.pageEvent = new PageEvent;
     this.pageEvent.pageIndex = 0;
     this.paginator.firstPage();
@@ -37,6 +40,7 @@ export class ShoppingListComponent implements OnInit, DoCheck {
         (params: Params) => {
           this.cate = params['cate'];
           this.subCate = params['sub'];
+          this.search = params['res'];
           this.callToProducts();
           this.setProducts();
         }
@@ -47,13 +51,28 @@ export class ShoppingListComponent implements OnInit, DoCheck {
   }
 
   callToProducts() {
-    if (this.cate === null) {
-      this.router.navigate(['/notfound']);
-    }
-    if (this.subCate === 'e') {
-      this.productsData.getProductByCategory(this.cate);
+    this.shoppingService.restartProducts();
+    if (this.search === 'e') {
+      this.search = '';
+      if (this.cate === null) {
+        this.router.navigate(['/notfound']);
+        return;
+      }
+      if (this.subCate === 'e') {
+        this.productsData.getProductByCategory(this.cate);
+      } else {
+        this.productsData.getProductBySubCategory(this.cate, this.subCate);
+      }
     } else {
-      this.productsData.getProductBySubCategory(this.cate, this.subCate);
+      this.productsData.setLoading(true);
+      const res = this.shoppingService.getProductsBySearchWord(this.search);
+      if (res.length > 0 ) {
+        this.hasResults = true;
+        this.productsData.getProductsByProductsId(res);
+      } else {
+        this.hasResults = false;
+        this.productsData.setLoading(false);
+      }
     }
   }
 
@@ -71,18 +90,11 @@ export class ShoppingListComponent implements OnInit, DoCheck {
 
   setProducts() {
     const data = this.shoppingService.getProducts();
-    if (data === undefined) {
-      setTimeout(() => {
-        this.setProducts();
-      }, 200);
-    } else {
+    if (data !== undefined) {
       this.listOfProducts = data;
       this.pageEvent.length = this.listOfProducts.length;
       this.length = this.pageEvent.length;
     }
-  }
-  getProducts() {
-    return this.listOfProducts;
   }
 
 }

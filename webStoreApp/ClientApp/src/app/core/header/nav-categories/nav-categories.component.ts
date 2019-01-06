@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingService } from 'src/app/shopping/shopping.service';
 
+import { ShoppingService } from '../../../shopping/shopping.service';
 
 @Component({
   selector: 'app-nav-categories',
   templateUrl: './nav-categories.component.html',
   styleUrls: ['./nav-categories.component.css']
 })
+
 export class NavCategoriesComponent implements OnInit {
-
-
   categories: string[];
   indexCelected: number;
 
   constructor(private shoppingService: ShoppingService) { }
-
 
   ngOnInit() {
     this.categories = this.shoppingService.getCategoryName();
@@ -27,4 +25,5 @@ export class NavCategoriesComponent implements OnInit {
     }
     this.indexCelected = index;
   }
+
 }

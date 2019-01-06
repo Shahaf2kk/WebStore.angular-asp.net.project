@@ -1,21 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ProductsDataService } from '../../../shared/products-data.service';
 import { CartService } from '../../../cart/cart.service';
 import { AuthService } from '../../../auth/auth.service';
-
-import { faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
-
 
 @Component({
   selector: 'app-cart-nav',
   templateUrl: './cart-nav.component.html',
   styleUrls: ['./cart-nav.component.css']
 })
-export class CartNavComponent implements OnInit, OnDestroy {
-  faShoppingCart = faShoppingCart;
-  faCartArrowDown = faCartArrowDown;
 
+export class CartNavComponent implements OnInit {
   userAuth: boolean;
   productNumber: number;
 
@@ -35,10 +30,6 @@ export class CartNavComponent implements OnInit, OnDestroy {
   goDirToOrder() {
     this.dataProduct.getCartProduct();
     this.cartService.setOrderDir();
-  }
-
-  ngOnDestroy() {
-    // this.authService.onDestroyBehavior();
   }
 
 }

@@ -16,7 +16,6 @@ const orderRoutes: Routes = [
 @NgModule({
     imports: [RouterModule.forChild(orderRoutes)],
     exports: [RouterModule]
-    // providers: [OrderGuard]
 })
 
 export class OrderRoutingModule { }

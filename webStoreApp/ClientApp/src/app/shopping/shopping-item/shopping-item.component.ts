@@ -4,7 +4,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ProductsDataService } from '../../shared/products-data.service';
 import { Product } from '../../model/product.model';
 import { ShoppingService } from '../shopping.service';
-import { LoadingService } from 'src/app/loading-progress/loading.service';
 
 @Component({
   selector: 'app-shopping-item',
@@ -12,8 +11,6 @@ import { LoadingService } from 'src/app/loading-progress/loading.service';
   styleUrls: ['./shopping-item.component.css']
 })
 export class ShoppingItemComponent implements OnInit, OnDestroy {
-
-
   id: number;
   product: Product;
   constructor(private activeRouter: ActivatedRoute,
@@ -34,13 +31,14 @@ export class ShoppingItemComponent implements OnInit, OnDestroy {
       });
   }
 
-    getProduct() {
-      if (!this.shoppingService.getProductByResProducts(this.id)) {
-         this.productsData.getProductById(this.id);
-      }
-    }
-
-    ngOnDestroy() {
-      this.shoppingService.unsubscribeitemSubject();
+  getProduct() {
+    if (!this.shoppingService.getProductByResProducts(this.id)) {
+        this.productsData.getProductById(this.id);
     }
   }
+
+  ngOnDestroy() {
+    this.shoppingService.unsubscribeitemSubject();
+  }
+
+}

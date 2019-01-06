@@ -12,7 +12,9 @@ export class CartService {
     cartItems: CartItem[] = [];
     cartProductSelected: CartItem[] = undefined;
 
-    hasProductInCart: Rx.Subject<{}> = new Rx.Subject();
+    private hasProductInCart = new Rx.BehaviorSubject<boolean>(false);
+    hasProductSubject = this.hasProductInCart.asObservable();
+
 
     constructor(private orderService: OrderService,
                 private router: Router) { }
@@ -23,8 +25,12 @@ export class CartService {
             this.cartItems.splice(delIndex, 1);
         }
     }
+
+    initCartProductSelected() {
+        this.cartProductSelected = undefined;
+    }
     areSelected(): boolean {
-        return this.cartProductSelected === undefined ? false : true;
+        return this.cartProductSelected === undefined || this.cartProductSelected.length === 0 ? false : true;
     }
 
     getCartItem() {
@@ -60,7 +66,7 @@ export class CartService {
     }
 
     addToSelectedProduct(index: number) {
-        if (this.cartProductSelected === undefined) {
+        if (this.cartProductSelected === undefined || this.cartProductSelected.length === 0) {
             this.cartProductSelected = [];
             this.cartProductSelected.push(this.cartItems[index]);
             return;
@@ -73,6 +79,7 @@ export class CartService {
         if (indexEl !== -1) {
             this.cartProductSelected.splice(indexEl, 1);
         }
+
     }
 
 }

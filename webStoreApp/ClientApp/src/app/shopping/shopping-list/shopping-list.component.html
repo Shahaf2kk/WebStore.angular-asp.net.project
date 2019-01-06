@@ -1,14 +1,21 @@
+<div class="shopping-header">
+  <div class="title" *ngIf="search !== ''"><h1>Search Results: "{{ search }}"</h1></div>
+  <mat-divider></mat-divider>
+</div>
 <div class="container">
+  <div class="hasResults" *ngIf="!hasResults && search !== ''">
+    <p>Not Found Results</p>
+  </div>
   <div class="shopping-item"
-   *ngFor="let item of getProducts() | slice: sliceFrom(pageEvent) : sliceTo(pageEvent) ">
+   *ngFor="let item of listOfProducts | slice: sliceFrom(pageEvent) : sliceTo(pageEvent) ">
     <mat-card>
         <mat-card-header>
           <mat-card-title> {{ item.name | titlecase }}</mat-card-title>
         </mat-card-header>
         <mat-card-content class="image"> 
-        <!-- <img mat-card-md-image
+        <img mat-card-md-image
         [routerLink]="['/shopping/i', item.id]"
-         [src]="item.imagePath | oneImage" [alt]="item.name"> -->
+         [src]="item.imagePath | oneImage" [alt]="item.name">
         </mat-card-content>
         <mat-card-content>
           <p>

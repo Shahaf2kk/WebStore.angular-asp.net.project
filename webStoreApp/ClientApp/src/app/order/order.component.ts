@@ -7,6 +7,7 @@ import { OrderService } from './order.service';
   selector: 'app-order',
   templateUrl: './order.component.html',
 })
+
 export class OrderComponent implements OnInit {
 
   constructor(private orderService: OrderService,

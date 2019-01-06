@@ -8,7 +8,7 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 const shoppingRoutes: Routes = [
     { path: '', component: ShoppingComponent, children: [
         { path: 'i/:item', component: ShoppingItemComponent },
-        { path: ':cate/:sub', component: ShoppingListComponent }
+        { path: ':cate/:sub/:res', component: ShoppingListComponent }
     ]},
 ];
 

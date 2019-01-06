@@ -3,7 +3,7 @@ import * as Rx from 'rxjs';
 
 export class ShoppingService {
 
-    items: Product[];
+    private items: Product[];
     private itemSubject: Rx.BehaviorSubject<Product>;
     changeItem: Rx.Observable<Product>;
 
@@ -27,6 +27,27 @@ export class ShoppingService {
         this.topProducts = data;
     }
 
+    getProductsBySearchWord(word: string) {
+        let resArray: number[] = [];
+        const resId = this.productsNames.filter(e => {
+            const el = e.id.toString().includes(word);
+            return el;
+        }).map(e => e.id);
+        const resNames = this.productsNames.filter(e => {
+            const el = e.name.toLowerCase().includes(word.toLowerCase());
+            return el;
+        }).map(e => e.id);
+        if (resId.length > 0) {
+            if (resNames.length > 0) {
+                resArray = resId.concat(resNames);
+            } else {
+                resArray = resId;
+            }
+        } else if (resNames.length > 0 ) {
+            resArray = resNames;
+        }
+        return resArray;
+    }
     getTopProductsByCate(cate: string): Product[] {
         const products: Product[] = [];
         this.topProducts.forEach(el => {
@@ -36,6 +57,7 @@ export class ShoppingService {
         });
         return products;
     }
+
 
     setProductsNames(data: ProductsName[]) {
         this.productsNames = data;
@@ -69,6 +91,10 @@ export class ShoppingService {
 
     setProducts(items: any) {
         this.items = items;
+    }
+
+    restartProducts() {
+        this.items = [];
     }
 
     getProducts(): Product[] {

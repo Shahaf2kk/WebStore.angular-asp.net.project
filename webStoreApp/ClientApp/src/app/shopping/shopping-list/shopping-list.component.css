@@ -1,8 +1,25 @@
+.shopping-header {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.title h1 {
+    padding-left: 5px;
+    font-size: 25px;
+    font-weight: 500;
+}
+.mat-divider {
+    margin-top: 5px;
+    padding: 0 10px;
+}
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: baseline;
+}
+.hasResults {
+    display: flex;
 }
 mat-card {
     margin: 5px 0;
@@ -44,3 +61,4 @@ button {
     align-items: center;
     width: 100%;
 }
+

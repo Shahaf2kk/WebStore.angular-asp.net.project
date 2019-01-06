@@ -20,23 +20,27 @@ export class AuthService {
   userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
-  constructor (private http: HttpClient, private router: Router) { }
+  constructor (private http: HttpClient, private router: Router) {
+    this.StartUpIsAuth();
+  }
 
   getBaseUrl() {
     return this.baseUrl;
   }
 
-  changeIfAuth(isAuth: boolean) {
+  private changeIfAuth(isAuth: boolean) {
     this.userDetailsSubject.next({ User: this.user, isAuth: isAuth });
   }
 
   addToCart(id: number, qty: number, del: boolean = false) {
+    // delete
     if (del) {
       const delIndex = this.user.listOfCart.findIndex(e => e.productDetails.id === id);
       this.user.listOfCart.splice(delIndex, 1);
       this.userDetailsSubject.next({ User: this.user, isAuth: true});
       return;
     }
+    // update
     for (let i = 0; i < this.user.listOfCart.length; i++) {
       const el = this.user.listOfCart[i];
       if (el.productDetails.id === id) {
@@ -45,6 +49,7 @@ export class AuthService {
         return;
       }
     }
+    // new
     const list = this.user.listOfCart;
     const cart = new CartItem();
     cart.qty = qty;

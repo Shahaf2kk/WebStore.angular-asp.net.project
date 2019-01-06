@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using webStoreApp.Model;
 
 namespace webStoreApp.Controllers
@@ -14,6 +15,15 @@ namespace webStoreApp.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        [HttpPost("search")]
+        public IActionResult GetProductsByArrayOfProductsId([FromBody] JObject data)
+        {
+            int[] products = data["products"].ToObject<int[]>();
+            if (products.Length > 0)
+                return DB.Products.GetProductsSearch(products);
+            return new BadRequestResult();
+        }
+
         [HttpGet("names")]
         public IActionResult GetStartUpData()
         {

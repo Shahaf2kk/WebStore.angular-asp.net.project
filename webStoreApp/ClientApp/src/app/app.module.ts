@@ -1,6 +1,5 @@
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from './shared/shared.module';

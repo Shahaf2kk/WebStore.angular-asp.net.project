@@ -25,94 +25,119 @@ export class ProductsDataService {
                  }
 
     postOrder(order: Order) {
+        this.setLoading(true);
         this.http.post<OrderDetails>(this.baseUrl + 'order', { order },
             { headers: this.authService.getHeaders()
             .set('Content-Type', 'application/json'), observe: 'response'})
             .subscribe(
             data => {
-            this.orderService.setOrderDetails(data.body);
+                this.orderService.setOrderDetails(data.body);
+                this.setLoading(false);
             },
             error => {
                 this.authService.handleError(error);
+                this.setLoading(false);
             });
     }
 
+
     getCartProduct() {
+        this.setLoading(true);
         this.http.get(this.baseUrl + 'data/cart', { headers: this.authService.getHeaders(),
         responseType: 'json', observe: 'response'})
         .subscribe(
             (data) => {
+                this.setLoading(false);
                 this.cartService.setCartItem(data.body);
             },
             (error) => {
                 this.authService.handleError(error);
                 this.router.navigate(['']);
+                this.setLoading(false);
             }
         );
     }
 
     deleteCartItem(productId: number) {
+        this.setLoading(true);
         this.http.get(this.baseUrl + 'cart', { params: { 'productId': productId.toString() }, headers: this.authService.getHeaders(),
         observe: 'response'}).subscribe(
             data => {
-                console.log(data);
+                this.setLoading(false);
+                this.authService.addToCart(productId, 0, true);
             },
             error => {
                 console.log(error);
+                this.setLoading(false);
             }
-        );
+            );
+        }
+
+    setLoading(isLoading: boolean) {
+        this.loadingService.setLoading(!isLoading);
     }
 
+    getProductsByProductsId(products: number[]) {
+        this.http.post<Product[]>(this.baseUrl + 'product/search', { products },
+         {responseType: 'json', observe: 'response'})
+        .subscribe(
+            data => {
+                this.shoppingService.setProducts(data.body);
+                this.setLoading(false);
+            },
+            error => {
+                console.log(error);
+                this.setLoading(false);
+            });
+    }
 
     getProductByCategory(cate: string) {
-        this.loadingService.setLoading(false);
+        this.setLoading(true);
         this.http.get<Product[]>(this.baseUrl + 'product/category', { params: {
             'category': cate
         }, responseType: 'json', observe: 'response'})
         .subscribe(
             (data) => {
+                this.setLoading(false);
                 this.shoppingService.setProducts(data.body);
-                this.loadingService.setLoading(true);
             },
             (error) => {
                 console.log(error);
-                this.loadingService.setLoading(true);
-
-            }
-        );
+                this.setLoading(false);
+            });
     }
 
     getProductBySubCategory(cate: string, subCate: string) {
-        this.loadingService.setLoading(false);
+        this.setLoading(true);
         this.http.get(this.baseUrl + 'product/category', { params: {
             'category': cate,
             'subCategory': subCate
         }, responseType: 'json', observe: 'response'})
         .subscribe(
             (data) => {
+                this.setLoading(false);
                 this.shoppingService.setProducts(data.body);
-                this.loadingService.setLoading(true);
             },
             (error) => {
                 console.log(error);
-                this.loadingService.setLoading(true);
+                this.setLoading(false);
             }
-        );
+            );
     }
 
     getProductById(id: number) {
-        this.loadingService.setLoading(false);
+        this.setLoading(true);
         this.http.get(this.baseUrl + 'product/id', { params: {
             'id': id.toString()
         }, responseType: 'json', observe: 'response' })
         .subscribe(
         (data) => {
+            this.setLoading(false);
             this.shoppingService.setProduct(data.body);
-            this.loadingService.setLoading(true);
         },
         (error) => {
+            this.setLoading(false);
             console.log(error);
-            this.loadingService.setLoading(true);
         });
     }
 
@@ -123,12 +148,12 @@ export class ProductsDataService {
              'qty': qty.toString(),
              'updateLow': lower.toString()
             }, responseType: 'json', observe: 'response' })
-            .subscribe(
-                data => {
-                    this.authService.addToCart(id, data.body);
-                },
-                error => console.log(error)
-            );
+                .subscribe(
+                    data => {
+                        this.authService.addToCart(id, data.body);
+                    },
+                    error => console.log(error)
+                );
     }
 
 }

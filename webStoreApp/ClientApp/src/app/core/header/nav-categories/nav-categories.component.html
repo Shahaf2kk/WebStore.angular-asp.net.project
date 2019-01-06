@@ -5,7 +5,6 @@
           <button mat-raised-button 
             [ngClass]="indexCelected === i ? 'active' : ''"
             (click)="selectSubCate(i)"> {{ item }}
-               <!-- <mat-icon [ngClass]="indexCelected === i ? 'hideIcon' : ''">keyboard_arrow_down</mat-icon> -->
                <mat-icon [ngClass]="{
                  'hiden': !(indexCelected === i),
                  'show': (indexCelected === i)
@@ -20,34 +19,3 @@
       </div>
     </div>
   </div>
-
-<!-- 
-<div class="category-container">
-  <div class="category-items">
-    <div class="category-item"
-    *ngFor="let item of categories; let i = index">
-      <div class="item" (click)="onCategory(i)"> {{ item }} </div>
-      <app-nav-details *ngIf="categorySelected[i]"
-        [categorySelected]="item"></app-nav-details>
-    </div>
-
-  </div>
-</div> -->
-
-<!-- 
-<div class="container">
-  <div class="div-category">
-    <ul class="category clickOut">
-      <li
-      class="li clickOut"
-      *ngFor="let item of categories; let i = index"
-      (click)="clickOnCategory(item, i)"
-      [class.active-category]="i == itemSelected"
-      (clickOutside)="outSideClick($event)"
-      >
-        <span [title]="item | titlecase" class="clickOut"> {{ item | titlecase }} </span>
-      </li>
-    </ul>
-  <app-nav-details class="clickOut" *ngIf="activeSubCateDiv" [categorySelected]="categorySelected"></app-nav-details>
-</div>
-</div> -->

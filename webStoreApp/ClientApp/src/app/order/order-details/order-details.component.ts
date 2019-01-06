@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-
-import { MatDialog, MatDialogRef } from '@angular/material';
-
-import { OrderService } from '../order.service';
-
-import { OrderDetails } from '../../model/order.model';
 import { CartItem } from '../../model/cart-item.model';
-
+import { OrderDetails } from '../../model/order.model';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.css']
 })
+
 export class OrderDetailsComponent implements OnInit {
 
   orderDetails: OrderDetails;
@@ -48,9 +45,3 @@ export class OrderDetailsComponent implements OnInit {
 })
 
 export class AfterPayDialog { }
-  // constructor(public dialogRef: MatDialogRef<AfterPayDialog>) { }
-
-  // onClose() {
-  //   this.dialogRef.close();
-  // }
-

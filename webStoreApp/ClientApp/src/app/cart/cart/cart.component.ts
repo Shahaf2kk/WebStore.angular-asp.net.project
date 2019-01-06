@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { CartService } from '../cart.service';
 import { ProductsDataService } from '../../shared/products-data.service';
@@ -11,7 +11,7 @@ import { CartItem } from '../../model/cart-item.model';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit {
 
   cartProduct: CartItem[];
   errorMsg = '';
@@ -23,9 +23,12 @@ export class CartComponent implements OnInit, OnDestroy {
               private productsData: ProductsDataService) { }
 
   ngOnInit() {
+    this.cartService.initCartProductSelected();
     this.productsData.getCartProduct();
-    this.cartService.hasProductInCart
-      .subscribe((data: boolean) => this.hasProduct = data);
+    this.cartService.hasProductSubject
+      .subscribe((data: boolean) => {
+        this.hasProduct = data;
+      });
   }
 
   deleteCartItem(index: number) {
@@ -48,10 +51,6 @@ export class CartComponent implements OnInit, OnDestroy {
     } else {
       this.cartService.setOrder();
     }
-  }
-
-  ngOnDestroy() {
-    this.cartService.hasProductInCart.unsubscribe();
   }
 
   pickEverything() {

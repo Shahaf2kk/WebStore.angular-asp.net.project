@@ -149,6 +149,41 @@ namespace webStoreApp
                 }
             }
 
+            public static IActionResult GetProductsSearch(int[] ArrayProducts)
+            {
+
+                using (SqlConnection conn = new SqlConnection(con))
+                {
+                    List<product> products = new List<product>();
+                    conn.Open();
+                    for (int i = 0; i < ArrayProducts.Length; i++)
+                    {
+                        string command = "SELECT * FROM product WHERE product.product_id = " + ArrayProducts[i].ToString();
+                        using (SqlCommand cmd = new SqlCommand(command, conn))
+                        {
+                            using (SqlDataReader rd = cmd.ExecuteReader())
+                            {
+                                if (rd.Read())
+                                {
+                                    product product = new product
+                                    {
+                                        id = rd.GetInt32(0),
+                                        category = rd.GetString(1),
+                                        subCategory = rd.GetString(2),
+                                        name = rd.GetString(3),
+                                        description = rd.GetString(4),
+                                        price = (decimal)rd.GetDecimal(5),
+                                        imagePath = rd.IsDBNull(6) ? null : rd.GetString(6)
+                                    };
+                                    products.Add(product);
+                                }
+                            }
+                        }
+                    }
+                    return new OkObjectResult(products);
+                }
+            }
+
             public static IActionResult GetProductsByCate(string category)
             {
                 if (string.IsNullOrEmpty(category))

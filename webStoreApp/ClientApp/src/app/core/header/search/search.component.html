@@ -1,17 +1,18 @@
 <div class="search-container"> 
-        <mat-form-field class="form-input">
+        <mat-form-field class="form-input" [floatLabel]="'never'">
             <input
             [(ngModel)]="searchInput"
             matInput
             type="search"
-            [matAutocomplete]="auto">
-            <mat-placeholder class="placeholder">Search</mat-placeholder>
-            
+            [matAutocomplete]="auto"
+            (keyup.enter)="onSearch()">
+            <mat-placeholder class="placeholder" >Search For Product</mat-placeholder>
         </mat-form-field>
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option 
-        *ngFor="let item of productsName | searchProduct: searchInput; let i = index"
-        [routerLink]="['/shopping/i/', item.id]">
-            {{ item.name | titlecase }} </mat-option>
-        </mat-autocomplete>
+            *ngFor="let item of productsName | searchProduct: searchInput; let i = index"
+            [routerLink]="['/shopping/i/', item.id]" [matTooltip]="item.name">
+              {{ item.name | titlecase }} 
+        </mat-option>
+    </mat-autocomplete>
 </div>

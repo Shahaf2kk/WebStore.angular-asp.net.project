@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { ImagePipe } from '../shared/image.pipe';
-
 import { ProductsDataService } from '../shared/products-data.service';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart/cart.service';
