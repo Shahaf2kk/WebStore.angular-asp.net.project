@@ -29,6 +29,7 @@ export class SignupComponent implements OnInit {
   }
   onSubmit() {
     if (this.signUpForm.valid) {
+      this.authService.setLoading(true);
       this.user.userName = this.signUpForm.value['username'];
       this.user.pass = this.signUpForm.value['password'];
       this.user.email = this.signUpForm.value['email'];
@@ -38,9 +39,11 @@ export class SignupComponent implements OnInit {
           this.user = JSON.parse(data.body);
           const userData = this.user.token;
           this.authService.afterSignInOrUp(userData, '');
+          this.authService.setLoading(false);
         }, (error) => {
           this.errorMsg = this.authService.handleError(error);
           this.afterSubmit = true;
+          this.authService.setLoading(false);
         });
     }
   }

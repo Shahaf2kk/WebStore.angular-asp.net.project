@@ -4,11 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'oneImage'
 })
 export class ImagePipe implements PipeTransform {
-    transform(array: string): any {
-        if (!array) {
-            return '';
-        }
-        const newArray = array.split(',', array.length);
-        return newArray[0];
+    transform(array: {url: string, show: boolean}[]): string {
+        return array[0].url;
     }
 }

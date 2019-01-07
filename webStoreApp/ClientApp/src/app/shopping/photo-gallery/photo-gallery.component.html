@@ -2,9 +2,9 @@
 <div class="image-container">
   <div class="content">
     <div class="images"
-      *ngFor="let image of images; let i = index">
-        <img *ngIf="i === 0"
-         [src]="image">
+      *ngFor="let image of inputImages; let i = index" (deferLoad)="image.show = true">
+        <img *ngIf="i === 0 && image.show"
+         [src]="image.url" (error)="image.url = defImage">
     </div>
     <div
       *ngIf="!hasOneImage"

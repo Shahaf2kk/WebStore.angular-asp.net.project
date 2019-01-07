@@ -2,15 +2,20 @@
   <h1>Top Selles</h1>
   <div *ngFor="let cate of cateNames" class="cate-products-list">
     <div class="cate-container">
-      <div class="cate-title" [routerLink]="['/shopping', cate, 'e']" ><h1 [matTooltip]="cate | titlecase"> {{ cate | titlecase}} </h1></div>
+      <div class="cate-title" [routerLink]="['/shopping', cate, 'e', 'e']" ><h1 [matTooltip]="cate | titlecase"> {{ cate | titlecase}} </h1></div>
         <div class="products">
           <div *ngFor="let product of getProductByCate(cate)" class="product">
             <mat-card>
-              <img mat-card-image
-                class="image"
-                [matTooltip]="product.name" 
-                [routerLink]="['/shopping/i', product.id]"
-                [src]="product.imagePath | oneImage">
+              <div class="imageDeferLoad" (deferLoad)="product.imageArray[0].show = true">
+                <ng-container class="imageDeferLoad" *ngIf="product.imageArray[0].show">
+                  <img mat-card-image
+                    class="image"
+                    [matTooltip]="product.name" 
+                    [routerLink]="['/shopping/i', product.id]"
+                    [src]="product.imageArray[0].url" 
+                    (error)="product.imageArray[0].url = defImage">
+                </ng-container>
+              </div>
               <mat-card-actions>
                   <button mat-button
                     [routerLink]="['/shopping/i', product.id]" matTooltip="Go To Product Details">Read More</button>

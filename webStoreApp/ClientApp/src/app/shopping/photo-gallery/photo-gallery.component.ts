@@ -1,43 +1,40 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
+import { ShoppingService } from '../shopping.service';
+
+import { ImageArray } from '../../model/product.model';
+
 @Component({
   selector: 'app-photo-gallery',
   templateUrl: './photo-gallery.component.html',
   styleUrls: ['./photo-gallery.component.css']
 })
+
 export class PhotoGalleryComponent implements OnInit, OnChanges {
 
-  @Input() inputImages: string;
-  images: string[];
+  @Input() inputImages: ImageArray[];
   hasOneImage: boolean;
+  defImage: string;
 
-  constructor() { }
+  constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    this.convertStringToArray(this.inputImages);
+    this.defImage = this.shoppingService.defImage;
+    this.checkImageArray();
   }
 
-
-  convertStringToArray(array: string) {
-      if (array === undefined || array === '' || array === null) {
-        return;
-      }
-      const el = array.split(',');
-      for (let i = 0; i < el.length; i++) {
-        const ele = el[i].split(' ');
-        if (ele[0] === '') {
-          el[i] = ele[1];
-        }
-      }
-      this.images = el;
-      if (this.images.length === 1) {
-        this.hasOneImage = true;
-      } else {
-        this.hasOneImage = false;
-      }
+  checkImageArray() {
+    if (this.inputImages === undefined) {
+      return;
     }
+    if (this.inputImages.length === 1) {
+      this.hasOneImage = true;
+    } else {
+      this.hasOneImage = false;
+    }
+  }
 
-    imageMove(arr: string[], moveRight: boolean) {
+    imageMove(arr: {url: string, show: boolean}[], moveRight: boolean) {
       if (!moveRight) {
         arr.push(arr.shift());
         return;
@@ -46,13 +43,13 @@ export class PhotoGalleryComponent implements OnInit, OnChanges {
     }
 
     next() {
-      this.imageMove(this.images, false);
+      this.imageMove(this.inputImages, false);
     }
 
     back() {
-      this.imageMove(this.images, true);
+      this.imageMove(this.inputImages, true);
     }
     ngOnChanges() {
-      this.convertStringToArray(this.inputImages);
+      this.checkImageArray();
     }
 }

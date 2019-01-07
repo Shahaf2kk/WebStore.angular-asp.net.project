@@ -141,6 +141,7 @@ namespace webStoreApp
                                     price = (decimal)rd.GetDecimal(5),
                                     imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
                                 };
+                                product.splitImageToArray(product.imagePath);
                                 return new OkObjectResult(product);
                             }
                             return new BadRequestResult();
@@ -175,6 +176,7 @@ namespace webStoreApp
                                         price = (decimal)rd.GetDecimal(5),
                                         imagePath = rd.IsDBNull(6) ? null : rd.GetString(6)
                                     };
+                                    product.splitImageToArray(product.imagePath);
                                     products.Add(product);
                                 }
                             }
@@ -210,6 +212,7 @@ namespace webStoreApp
                                     price = (decimal)rd.GetDecimal(5),
                                     imagePath = rd.IsDBNull(6) ? null : rd.GetString(6)
                                 };
+                                product.splitImageToArray(product.imagePath);
                                 products.Add(product);
                             }
                             if (products == null)
@@ -248,6 +251,7 @@ namespace webStoreApp
                                     price = (decimal)rd.GetDecimal(5),
                                     imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
                                 };
+                                product.splitImageToArray(product.imagePath);
                                 products.Add(product);
                             }
                             return new OkObjectResult(products);
@@ -280,7 +284,7 @@ namespace webStoreApp
                                 product.description = rd.GetString(4);
                                 product.price = (decimal)rd.GetDecimal(5);
                                 product.imagePath = rd.GetString(6);
-
+                                product.splitImageToArray(product.imagePath);
                                 topFiveProduct.Add(product);
                             }
                         }
@@ -776,21 +780,24 @@ namespace webStoreApp
                             List<Cart> productsCart = new List<Cart>();
                             while (rd.Read())
                             {
+                                product product = new product
+                                {
+                                    id = rd.GetInt32(0),
+                                    category = rd.GetString(1),
+                                    subCategory = rd.GetString(2),
+                                    name = rd.GetString(3),
+                                    description = rd.GetString(4),
+                                    price = (decimal)rd.GetDecimal(5),
+                                    imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
+                                };
+                                product.splitImageToArray(product.imagePath);
                                 Cart cart = new Cart
                                 {
-                                    productDetails = new product
-                                    {
-                                        id = rd.GetInt32(0),
-                                        category = rd.GetString(1),
-                                        subCategory = rd.GetString(2),
-                                        name = rd.GetString(3),
-                                        description = rd.GetString(4),
-                                        price = (decimal)rd.GetDecimal(5),
-                                        imagePath = !rd.IsDBNull(6) ? rd.GetString(6) : null
-                                    },
+                                    productDetails = product,
                                     qty = rd.GetInt32(7),
                                     totalCost = rd.GetDecimal(8)
                                 };
+                               
                                 productsCart.Add(cart);
                             }
                             if (productsCart != null)

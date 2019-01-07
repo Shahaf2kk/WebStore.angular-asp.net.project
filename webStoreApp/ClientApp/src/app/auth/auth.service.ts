@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { LoadingService } from '../loading-progress/loading.service';
+
 import { User } from '../model/user.model';
 import { CartItem } from '../model/cart-item.model';
 import { Product } from '../model/product.model';
 
 import * as Rx from 'rxjs';
+
 
 @Injectable()
 export class AuthService {
@@ -20,8 +23,12 @@ export class AuthService {
   userDetails = this.userDetailsSubject.asObservable();
 // ---- object for nav user - if isAuth - end
 
-  constructor (private http: HttpClient, private router: Router) {
+  constructor (private http: HttpClient, private router: Router, private loadingService: LoadingService) {
     this.StartUpIsAuth();
+  }
+
+  setLoading(isLoading: boolean) {
+    this.loadingService.setLoading(!isLoading);
   }
 
   getBaseUrl() {

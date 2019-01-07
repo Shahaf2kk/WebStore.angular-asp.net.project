@@ -25,12 +25,15 @@ export class ShoppingListComponent implements OnInit, DoCheck {
   hasResults = false;
   listOfProducts: Product[];
 
+  defImage: string;
+
   constructor(private router: Router,
               private activateRoute: ActivatedRoute,
               private productsData: ProductsDataService,
               private shoppingService: ShoppingService) { }
 
   ngOnInit() {
+    this.defImage = this.shoppingService.defImage;
     this.search = '';
     this.pageEvent = new PageEvent;
     this.pageEvent.pageIndex = 0;

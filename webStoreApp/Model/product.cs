@@ -14,6 +14,33 @@ namespace webStoreApp.Model
         public string description { get; set; }
         public decimal price { get; set; }
         public string imagePath { get; set; }
+        public List<newImage> imageArray { get; set; }
+     
+
+        public void splitImageToArray(string imagesString)
+        {
+            imageArray = new List<newImage>();
+            string[] res = imagesString.Split(",");
+            
+            for (int i = 0; i < res.Length; i++)
+            {
+                string[] el = res[i].Split(" ");
+                if (el[0] == "")
+                {
+                    imageArray.Add(new newImage() { url = el[1] });
+                    continue;
+                }
+
+                imageArray.Add(new newImage() { url = res[i] });
+            }
+            imagePath = null;
+        }
+    }
+
+    public class newImage
+    {
+        public string url { get; set; }
+        public bool show = false;
     }
    
     public class productsCategoryNames
@@ -35,3 +62,4 @@ namespace webStoreApp.Model
     }
     
 }
+

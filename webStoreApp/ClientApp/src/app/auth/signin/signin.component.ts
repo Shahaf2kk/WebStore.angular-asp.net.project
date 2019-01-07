@@ -44,19 +44,23 @@ export class SigninComponent implements OnInit {
   }
   onSubmit() {
     if (this.signInForm.valid) {
+      this.authService.setLoading(true);
       const username = this.signInForm.value['username'];
       const pass = this.signInForm.value['password'];
       this.authService.signinUser(username, pass)
       .subscribe((data) => {
         const userData = data.body;
         this.authService.afterSignInOrUp(userData, this.url);
+        this.signInForm.reset();
+        this.authService.setLoading(false);
       },
       (error) => {
         this.errorMsg = this.authService.handleError(error);
         this.afterSubmit = true;
+        this.signInForm.reset();
+        this.authService.setLoading(false);
       });
     }
-    this.signInForm.reset();
     setTimeout(() => {
       this.afterSubmit = false;
     }, 10000);

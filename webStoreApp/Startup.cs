@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
 using System.Text;
 
 namespace webStoreApp
@@ -23,11 +24,11 @@ namespace webStoreApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            //// In production, the Angular files will be served from this directory
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/dist";
+            //});
             DB.con = Configuration.GetConnectionString("_CONN");
             UserService.SetAppSetting(Configuration.GetValue<string>("AppSetting:Secret"));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -54,19 +55,24 @@ namespace webStoreApp
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
 
-            app.UseAuthentication();
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
+
             app.UseDefaultFiles();
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
+
+
+            //app.UseHttpsRedirection();
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

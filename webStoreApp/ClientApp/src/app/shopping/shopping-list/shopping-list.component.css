@@ -38,6 +38,12 @@ button {
     display: flex;
     flex-direction: column;
 }
+.imageDeferLoad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+}
 .image {
     justify-content: center;
     align-items: center;

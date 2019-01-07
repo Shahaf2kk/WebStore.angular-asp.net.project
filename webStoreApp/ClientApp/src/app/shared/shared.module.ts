@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,7 +39,8 @@ import { ImagePipe } from './image.pipe';
         MatDividerModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatIconModule
+        MatIconModule,
+        DeferLoadModule
     ],
     exports: [
         ImagePipe,
@@ -58,7 +60,8 @@ import { ImagePipe } from './image.pipe';
         MatDividerModule,
         MatTooltipModule,
         MatExpansionModule,
-        MatIconModule
+        MatIconModule,
+        DeferLoadModule
     ]
 })
 

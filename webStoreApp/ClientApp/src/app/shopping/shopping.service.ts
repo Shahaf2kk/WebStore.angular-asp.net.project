@@ -11,6 +11,8 @@ export class ShoppingService {
     private productsNames: ProductsName[];
     private topProducts: Product[];
 
+    defImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+
 
     constructor ( ) { }
 

@@ -13,9 +13,13 @@
           <mat-card-title> {{ item.name | titlecase }}</mat-card-title>
         </mat-card-header>
         <mat-card-content class="image"> 
-        <img mat-card-md-image
-        [routerLink]="['/shopping/i', item.id]"
-         [src]="item.imagePath | oneImage" [alt]="item.name">
+            <div class="imageDeferLoad" (deferLoad)="item.imageArray[0].show = true">
+              <ng-container *ngIf="item.imageArray[0].show">
+                <img mat-card-md-image
+                [routerLink]="['/shopping/i', item.id]"
+                 [src]="item.imageArray[0].url" [alt]="item.name" (error)="item.imageArray[0].url = defImage">
+              </ng-container>
+            </div>
         </mat-card-content>
         <mat-card-content>
           <p>

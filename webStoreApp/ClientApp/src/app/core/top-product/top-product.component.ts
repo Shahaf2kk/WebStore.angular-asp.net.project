@@ -15,6 +15,8 @@ export class TopProductComponent implements OnInit {
   topProduct: Product[];
   cateNames: string[];
 
+  defImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit() {
