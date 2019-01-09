@@ -25,10 +25,10 @@ namespace webStoreApp
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //// In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/dist";
-            //});
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "/wwwroot";
+            });
             DB.con = Configuration.GetConnectionString("_CONN");
             UserService.SetAppSetting(Configuration.GetValue<string>("AppSetting:Secret"));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -73,14 +73,14 @@ namespace webStoreApp
 
 
             //app.UseHttpsRedirection();
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseAngularCliServer(npmScript: "start");
+            //    }
+            //});
 
         }
     }

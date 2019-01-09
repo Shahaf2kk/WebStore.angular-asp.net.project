@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
 using System.Net.Http.Headers;
-using System.Net;
-using System.Net.Http;
-using static System.Net.Http.HttpResponseHeadersExtensions;
 using webStoreApp.Model;
 
 namespace webStoreApp.Controllers
