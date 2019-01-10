@@ -59,7 +59,7 @@ export class CartService {
     }
 
     setOrderDir() {
-        if (this.cartItems !== null) {
+        if (this.cartItems !== []) {
             this.orderService.setOrderProducts(this.getCartItem());
             this.router.navigate(['/order']);
         }

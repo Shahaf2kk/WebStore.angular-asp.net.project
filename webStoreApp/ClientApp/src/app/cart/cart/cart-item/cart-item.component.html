@@ -1,5 +1,13 @@
 <mat-card class="cart-item-container box">
-    <img mat-card-sm-image [src]="item.productDetails.imagePath | oneImage" matTooltip="Go To Product Details" [routerLink]="['/shopping/i', item.productDetails.id]">
+  <div class="imageDeferLoad" (deferLoad)="item.productDetails.imageArray[0].show = true">
+    <ng-container *ngIf="item.productDetails.imageArray[0].show">
+        <img mat-card-sm-image 
+        [src]="item.productDetails.imageArray[0].url"  
+        (error)="item.imageArray[0].url = defImage"
+        matTooltip="Go To Product Details"
+        [routerLink]="['/shopping/i', item.productDetails.id]">
+    </ng-container>
+  </div>
   <mat-card-header class="title" matTooltip="Go To Product Details" [routerLink]="['/shopping/i', item.productDetails.id]">
     <p> {{ item.productDetails.name | titlecase }} </p>
   </mat-card-header>

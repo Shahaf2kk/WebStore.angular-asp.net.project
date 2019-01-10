@@ -12,7 +12,15 @@
     align-items: center;
     cursor: pointer;
 }
+.imageDeferLoad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
 img {
+    max-width: 120px;
+    max-height: 100px;
     cursor: pointer;
 }
 .qty {

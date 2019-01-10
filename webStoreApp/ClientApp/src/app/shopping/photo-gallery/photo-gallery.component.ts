@@ -3,6 +3,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ShoppingService } from '../shopping.service';
 
 import { ImageArray } from '../../model/product.model';
+import { ProductsDataService } from '../../shared/products-data.service';
 
 @Component({
   selector: 'app-photo-gallery',
@@ -16,10 +17,11 @@ export class PhotoGalleryComponent implements OnInit, OnChanges {
   hasOneImage: boolean;
   defImage: string;
 
-  constructor(private shoppingService: ShoppingService) { }
+  constructor(private shoppingService: ShoppingService,
+              private productData: ProductsDataService ) { }
 
   ngOnInit() {
-    this.defImage = this.shoppingService.defImage;
+    this.defImage = this.productData.defImage;
     this.checkImageArray();
   }
 

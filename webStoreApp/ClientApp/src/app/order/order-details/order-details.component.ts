@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CartItem } from '../../model/cart-item.model';
 import { OrderDetails } from '../../model/order.model';
 import { OrderService } from '../order.service';
+import { ProductsDataService } from '../../shared/products-data.service';
 
 @Component({
   selector: 'app-order-details',
@@ -15,11 +16,14 @@ export class OrderDetailsComponent implements OnInit {
 
   orderDetails: OrderDetails;
   orderProduct: CartItem[];
+  defImage: string;
   constructor(private orderService: OrderService,
+              private productsData: ProductsDataService,
               private router: Router,
               public dialogRef: MatDialog) { }
 
   ngOnInit() {
+    this.defImage = this.productsData.defImage;
     if (!this.orderService.checkIfHasProducts()) {
       this.router.navigate(['/cart']);
     }

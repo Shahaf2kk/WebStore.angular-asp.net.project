@@ -20,13 +20,3 @@ becouse the whole website is generated from DB data it cant build on ur machine 
 until im deploy on my server :) - 
 
 https://imgur.com/a/k3O0LH3
-
-
-
-
-
-
-
-
-
-

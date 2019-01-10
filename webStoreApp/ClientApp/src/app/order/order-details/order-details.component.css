@@ -10,6 +10,7 @@
     display: flex;
 }
 .order-details {
+    padding: 0 5px;
     margin-top: 7px;
     display: flex;
     flex-wrap: wrap;
@@ -19,13 +20,25 @@
 }
 .item {
     margin-top: 5px;
-    justify-self: stretch;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     font-weight: 600;
 }
+.imageDeferLoad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+img {
+    max-width: 120px;
+    max-height: 100px;
+    cursor: pointer;
+}
+
 .fQty {
     border-bottom: 1px solid #333333;
     padding-bottom: 5px;
@@ -43,8 +56,7 @@
     margin-top: 15px;
     justify-self: stretch;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     font-weight: 600;
 }

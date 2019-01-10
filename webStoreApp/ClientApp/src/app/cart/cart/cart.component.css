@@ -11,13 +11,16 @@
     justify-content: center;
     align-items: center;
 }
+.title {
+    display: flex;
+}
 .button {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 app-cart-item {
-    margin: 5px;
+    margin: 7px 5px;
 }
 .mat-divider {
     margin: 5px;

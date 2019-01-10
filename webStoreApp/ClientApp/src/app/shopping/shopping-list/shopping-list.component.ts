@@ -33,7 +33,7 @@ export class ShoppingListComponent implements OnInit, DoCheck {
               private shoppingService: ShoppingService) { }
 
   ngOnInit() {
-    this.defImage = this.shoppingService.defImage;
+    this.defImage = this.productsData.defImage;
     this.search = '';
     this.pageEvent = new PageEvent;
     this.pageEvent.pageIndex = 0;

@@ -17,15 +17,20 @@ export class CartItemComponent implements OnInit, OnChanges {
   @Input() checkbox: boolean;
   @Output() hasDelete = new EventEmitter<number>();
 
+  defImage: string;
   newQty: number;
   edit = false;
 
   constructor(private cartService: CartService,
               private dataProduct: ProductsDataService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.item);
+    this.defImage = this.dataProduct.defImage;
+   }
 
   addToOrder() {
+    console.log(this.item);
     this.cartService.addToSelectedProduct(this.index);
   }
 

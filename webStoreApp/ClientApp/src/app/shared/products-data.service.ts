@@ -15,6 +15,8 @@ import { Order, OrderDetails } from '../model/order.model';
 export class ProductsDataService {
     private baseUrl = 'https://localhost:44327/api/';
 
+    defImage = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg';
+
     constructor(private http: HttpClient,
                 private authService: AuthService,
                 private cartService: CartService,
@@ -31,6 +33,7 @@ export class ProductsDataService {
             .set('Content-Type', 'application/json'), observe: 'response'})
             .subscribe(
             data => {
+                console.log(data);
                 this.orderService.setOrderDetails(data.body);
                 this.setLoading(false);
             },

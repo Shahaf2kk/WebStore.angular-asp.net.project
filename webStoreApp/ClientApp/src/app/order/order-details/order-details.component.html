@@ -3,18 +3,24 @@
   <div class="order-details">
     <mat-card class="item"
       *ngFor="let item of orderDetails.products; let i = index">
-        <img mat-card-sm-image [src]="item.imagePath | oneImage">
-        <mat-card-header class="item-title">
-          <p> {{ item.name | titlecase }} </p>
-        </mat-card-header>
-        <mat-card-content class="qty">
-            <p class="fQty">Qty</p>
-            <p> {{ orderDetails.productsQty[i] }} </p>
-        </mat-card-content>
+      <div class="imageDeferLoad" (deferLoad)="item.imageArray[0].show = true">
+        <ng-container *ngIf="item.imageArray[0].show">
+          <img mat-card-sm-image 
+            [src]="item.imageArray[0].url"
+            (error)="item.imageArray[0].url = defImage"
+            [matTooltip]="item.name">
+        </ng-container>
+      </div>
+      <mat-card-header class="item-title">
+        <p> {{ item.name | titlecase }} </p>
+      </mat-card-header>
+      <mat-card-content class="qty">
+          <p class="fQty">Qty</p>
+          <p> {{ orderDetails.productsQty[i] }} </p>
+      </mat-card-content>
     </mat-card>
     <div class="total box">
-      <p> Total Cost: </p>
-      <p> {{ orderDetails.totalCost }}$ </p>
+      <p> Total Cost: {{ orderDetails.totalCost }}$</p>
     </div>
   </div>
   <div class="button">
