@@ -12225,11 +12225,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Code\\app\\angular store project\\webStoreProject - v1 - untouched\\webStoreApp\\webStoreApp.csproj",
+      "projectUniqueName": "D:\\Code\\app\\angular store project\\firs\\WebStore.angular-asp.net.project\\webStoreApp\\webStoreApp.csproj",
       "projectName": "webStoreApp",
-      "projectPath": "D:\\Code\\app\\angular store project\\webStoreProject - v1 - untouched\\webStoreApp\\webStoreApp.csproj",
+      "projectPath": "D:\\Code\\app\\angular store project\\firs\\WebStore.angular-asp.net.project\\webStoreApp\\webStoreApp.csproj",
       "packagesPath": "C:\\Users\\haray\\.nuget\\packages\\",
-      "outputPath": "D:\\Code\\app\\angular store project\\webStoreProject - v1 - untouched\\webStoreApp\\obj\\",
+      "outputPath": "D:\\Code\\app\\angular store project\\firs\\WebStore.angular-asp.net.project\\webStoreApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

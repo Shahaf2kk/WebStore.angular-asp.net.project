@@ -37,35 +37,38 @@ namespace webStoreApp
 
             public static User SignUp(User user)
             {
-                if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
+                lock (user)
                 {
-                    user.pass = null;
-                    return user;
-                }
-                using (SqlConnection conn = new SqlConnection(con))
-                {
-                    conn.Open();
-                    if (!CheckUsername(user, conn) || !CheckUserEmail(user, conn))
+                    if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
                     {
-                        user = null;
+                        user.pass = null;
                         return user;
                     }
-
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO users(userName, userEmail, userPass, lastLogin) " +
-                        "VALUES (@userName, @userEmail, @userPass, @lastLogin)", conn))
+                    using (SqlConnection conn = new SqlConnection(con))
                     {
-                        cmd.Parameters.AddWithValue("@userName", user.userName);
-                        cmd.Parameters.AddWithValue("@userEmail", user.email);
-                        cmd.Parameters.AddWithValue("@userPass", user.pass);
-                        cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
-                        if (cmd.ExecuteNonQuery() != 1)
-                            return null;
+                        conn.Open();
+                        if (!CheckUsername(user, conn) || !CheckUserEmail(user, conn))
+                        {
+                            user = null;
+                            return user;
+                        }
+
+                        using (SqlCommand cmd = new SqlCommand("INSERT INTO users(userName, userEmail, userPass, lastLogin) " +
+                            "VALUES (@userName, @userEmail, @userPass, @lastLogin)", conn))
+                        {
+                            cmd.Parameters.AddWithValue("@userName", user.userName);
+                            cmd.Parameters.AddWithValue("@userEmail", user.email);
+                            cmd.Parameters.AddWithValue("@userPass", user.pass);
+                            cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
+                            if (cmd.ExecuteNonQuery() != 1)
+                                return null;
+                        }
                     }
+                    user = UserService.GetToken(user);
+                    if (user == null)
+                        return null;
+                    return user;
                 }
-                user = UserService.GetToken(user);
-                if (user == null)
-                    return null;
-                return user;
             }
 
 
