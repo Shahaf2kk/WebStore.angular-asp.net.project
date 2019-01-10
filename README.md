@@ -1,8 +1,8 @@
 ## WebStore.angular-asp.net.Core.project
 
-online store, dynemic create categories and sub categories from db to UI (angular), 
+online store, dynamic create categories and sub categories from db to UI (angular), 
 client (angular):
-to create dynemic categories and sub categories from DB - im use APP_INITIALIZER (start up service).
+to create dynamic categories and sub categories from DB - im use APP_INITIALIZER (start up service).
 Rxjs library. 
 Angular material,
 lazy loading module,
@@ -18,6 +18,11 @@ I have finished my project and i now learning to deploy it and the sql server da
 
 becouse the whole website is generated from DB data it cant build on ur machine please be impressed by the pictures 
 until im deploy on my server :) - 
+
+https://imgur.com/a/k3O0LH3
+
+
+
 
 
 
