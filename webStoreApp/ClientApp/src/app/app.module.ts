@@ -19,7 +19,7 @@ import { ShoppingService } from './shopping/shopping.service';
 import { LoadingService } from './loading-progress/loading.service';
 
 export function categoryNamesProviderFactory(appLoad: AppLoadService) {
- return () => appLoad.getCategoriesNames();
+return () => appLoad.getCategoriesNames();
 }
 
 @NgModule({
@@ -44,7 +44,7 @@ export function categoryNamesProviderFactory(appLoad: AppLoadService) {
     LoadingService,
     ShoppingService,
     {
-     provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadService], multi: true
+    provide: APP_INITIALIZER, useFactory: categoryNamesProviderFactory, deps: [AppLoadService], multi: true
     }
   ],
   bootstrap: [AppComponent]

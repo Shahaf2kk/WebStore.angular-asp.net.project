@@ -19,6 +19,7 @@ export class CartService {
     constructor(private orderService: OrderService,
                 private router: Router) { }
 
+    
     deleteCartItem(id: number) {
         const delIndex = this.cartItems.findIndex(e => e.productDetails.id === id);
         if (delIndex !== -1) {

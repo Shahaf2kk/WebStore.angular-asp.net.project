@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using webStoreApp.Model;
@@ -13,7 +14,7 @@ namespace webStoreApp
 {
     public class UserService
     {
-        private static string appSetting; //"tfdxdrtg636278534utheiuv776g76g7g67yu9iiuiuytreww34567890iuytfghjkjhgfdfghjiuyt5t6y7u8ioi9o9ikjuyhbgfrdcdswsxsaqq12w23e34r45rt";
+        private static string appSetting; 
 
         public static void SetAppSetting(string value)
         {
@@ -50,6 +51,33 @@ namespace webStoreApp
                 user.pass = null;
                 return user;
         }
+
+        public static string SetHashPassword(string pass)
+        {
+            return GetHash(pass);
+        }
+
+        public static bool VerifyHash(string hash, string pass)
+        {
+            string passHash = GetHash(pass);
+            StringComparer coperer = StringComparer.OrdinalIgnoreCase;
+            return coperer.Compare(passHash, hash) == 0;
+        }
+
+        private static string GetHash(string data)
+        {
+            using (SHA256 sha256Alg = SHA256.Create())
+            {
+                byte[] hashByte = sha256Alg.ComputeHash(Encoding.UTF8.GetBytes(data));
+                StringBuilder res = new StringBuilder();
+                for (int i = 0; i < hashByte.Length; i++)
+                {
+                    res.Append(hashByte[i].ToString("x2"));
+                }
+                return res.ToString();
+            }
+        }
+
     }
 }
 

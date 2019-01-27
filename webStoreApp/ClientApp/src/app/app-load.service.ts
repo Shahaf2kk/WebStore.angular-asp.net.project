@@ -10,7 +10,11 @@ export class AppLoadService {
     constructor(private http: HttpClient,
                 private shoppingService: ShoppingService) { }
 
+    getBaseUrl() {
+      return this.baseUrl;
+    }
 // --- call from APP_INITIALIZER
+
     getCategoriesNames(): Promise<any> {
         return new Promise((res, req) => {
             this.http.get(this.baseUrl + 'product/names', { responseType: 'json', observe: 'response'})

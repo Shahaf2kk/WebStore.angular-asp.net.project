@@ -59,8 +59,11 @@ namespace webStoreApp
             app.Use(async (context, next) =>
             {
                 await next();
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
-                {
+                if (context.Response.StatusCode == 404 
+                && !Path.HasExtension(context.Request.Path.Value) ||
+                context.Response.StatusCode == 0
+                && !Path.HasExtension(context.Request.Path.Value))
+                {   
                     context.Request.Path = "/index.html";
                     await next();
                 }
@@ -78,14 +81,14 @@ namespace webStoreApp
 
 
             //app.UseHttpsRedirection();
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "ClientApp";
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseAngularCliServer(npmScript: "start");
-            //    }
-            //});
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
 
         }
     }

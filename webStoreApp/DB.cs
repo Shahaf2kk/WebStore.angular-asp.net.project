@@ -19,14 +19,32 @@ namespace webStoreApp
                 {
                     return null;
                 }
+
+
                 using (SqlConnection conn = new SqlConnection(con))
                 {
+                    string hashdata;
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin WHERE userName=@userName AND userPass=@userPass", conn))
+                    using (SqlCommand cmd = new SqlCommand("SELECT users.userPass FROM users WHERE userName = @userName COLLATE SQL_Latin1_General_CP1_CS_AS", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@userName", user.userName);
+                        using (SqlDataReader rd = cmd.ExecuteReader())
+                        {
+                            if(rd.Read()) //has username
+                                hashdata = rd.GetString(0);
+                            else
+                                return null;
+                        }
+                    }
+
+                    // comperer hash value
+                    if (!UserService.VerifyHash(hashdata, user.pass))
+                        return null;
+
+                    using (SqlCommand cmd = new SqlCommand("UPDATE users SET lastLogin=@lastLogin WHERE userName=@userName COLLATE SQL_Latin1_General_CP1_CS_AS", conn))
                     {
                         cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
                         cmd.Parameters.AddWithValue("@userName", user.userName);
-                        cmd.Parameters.AddWithValue("@userPass", user.pass);
                         if (cmd.ExecuteNonQuery() != 1)
                             return null;
                     }
@@ -37,7 +55,7 @@ namespace webStoreApp
 
             public static User SignUp(User user)
             {
-                lock (user)
+                lock (user.pass)
                 {
                     if (string.IsNullOrEmpty(user.userName) || string.IsNullOrEmpty(user.pass) || string.IsNullOrEmpty(user.email))
                     {
@@ -49,7 +67,10 @@ namespace webStoreApp
                         conn.Open();
                         if (!CheckUsername(user, conn) || !CheckUserEmail(user, conn))
                         {
-                            user = null;
+                            user.pass = null;
+                            user.token = null;
+                            user.userName = null;
+                            user.email = null;
                             return user;
                         }
 
@@ -58,7 +79,7 @@ namespace webStoreApp
                         {
                             cmd.Parameters.AddWithValue("@userName", user.userName);
                             cmd.Parameters.AddWithValue("@userEmail", user.email);
-                            cmd.Parameters.AddWithValue("@userPass", user.pass);
+                            cmd.Parameters.AddWithValue("@userPass", UserService.SetHashPassword(user.pass));
                             cmd.Parameters.AddWithValue("@lastLogin", DateTimeOffset.Now);
                             if (cmd.ExecuteNonQuery() != 1)
                                 return null;
@@ -74,7 +95,7 @@ namespace webStoreApp
 
             private static bool CheckUsername(User user, SqlConnection conn)
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userName=@userName", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT userName FROM users WHERE userName=@userName COLLATE SQL_Latin1_General_CP1_CS_AS", conn))
                 {
                     cmd.Parameters.AddWithValue("@userName", user.userName);
                     using (SqlDataReader rd = cmd.ExecuteReader())
